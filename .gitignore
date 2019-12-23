@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+.next
+/sample/app/*.map
+dist
+
+yarn\.lock
+distsample
