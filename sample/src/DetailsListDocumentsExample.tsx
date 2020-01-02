@@ -103,73 +103,18 @@ const columns: IColumn[] = [
     },
 ];
 
-function useTBTable(columns: ColumnModel[], source: string | any[] | Request | ITubularHttpClient,tubularOptions?: Partial<ITbOptions> ){
-    return useTbTable(columns, source); 
+function useTBTable(columns: ColumnModel[], source: string | any[] | Request | ITubularHttpClient, tubularOptions?: Partial<ITbOptions> ){
+    return useTbTable(columns, source, tubularOptions); 
 }
 
 const DetailsListDocumentsExample: React.FunctionComponent = () => {
-    const [allItems, setAllItems] = React.useState([
-        {
-          OrderID: 1,
-          CustomerName: 'Microsoft',
-          ShipperCity: 'Guadalajara, JAL, Mexico',
-          Amount: 300.00,
-        },
-        {
-          OrderID: 2,
-          CustomerName: 'Microsoft',
-          ShipperCity: 'Los Angeles, CA, USA',
-          Amount: 9.00,
-        },
-        {
-          OrderID: 3,
-          CustomerName: 'Unosquare LLC',
-          ShipperCity: 'Guadalajara, JAL, Mexico',
-          Amount: 92.00,
-        },
-    ]);
-    const { api, state } = useTBTable(columnsTR, 'https://tubular.azurewebsites.net/api/orders/paged')
 
-    React.useEffect(() => {
-        generateDocuments();
-    }, []);
-
-        const generateDocuments = () => {
-            // const tbTableInstance = useTbTable(columnsTR, 'https://tubular.azurewebsites.net/api/orders/paged');
-            console.log('Quiero ver si mi hook funciono****');
-             console.log(api);
-             console.log(state);
-             console.log('*********************************');
-            const items: IDocument[] = [
-                {
-                  OrderID: 1,
-                  CustomerName: 'Microsoft',
-                  ShipperCity: 'Guadalajara, JAL, Mexico',
-                  Amount: 300.00,
-                },
-                {
-                  OrderID: 2,
-                  CustomerName: 'Microsoft',
-                  ShipperCity: 'Los Angeles, CA, USA',
-                  Amount: 9.00,
-                },
-                {
-                  OrderID: 3,
-                  CustomerName: 'Unosquare LLC',
-                  ShipperCity: 'Guadalajara, JAL, Mexico',
-                  Amount: 92.00,
-                },
-            ];
-            setAllItems(items);
-            //   for (let i = 0; i < 500; i++) {
-            //   }
-            return items;
-        }        
+     const { state } = useTBTable(columnsTR, 'https://tubular.azurewebsites.net/api/orders/paged');       
 
     return (
             <Fabric>
                 <DetailsList
-                    items={allItems}
+                    items={state.data}
                     compact={false}
                     columns={columns}
                     selectionMode={SelectionMode.none}
