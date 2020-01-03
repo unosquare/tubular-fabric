@@ -3,12 +3,12 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList/Detai
 
 export const IColumnTRansformer = (trColumns: ColumnModel[]): IColumn[] => {
 
-    const creatingIColumn = (trColumn: ColumnModel) => {
+    const creatingIColumn = (trColumn: ColumnModel): IColumn => {
         let transformedIColumn = {
             key: trColumn.Name,
             name: trColumn.Name,
             fieldName: trColumn.Name,            
-            data: trColumn.DataType.toString(),
+            data: trColumn.DataType,
             minWidth: 200,
             isFiltered: trColumn.hasFilter,
         }
