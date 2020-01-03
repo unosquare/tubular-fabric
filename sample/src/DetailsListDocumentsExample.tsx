@@ -8,6 +8,7 @@ import {
 } from 'office-ui-fabric-react/lib/DetailsList';
 import { useTbTable, ITbOptions } from 'tubular-react-common';
 import { ITubularHttpClient, ColumnDataType, ColumnModel, ColumnSortDirection } from 'tubular-common';
+import { IColumnTRansformer } from './IColumTRansformer';
 
 export interface IDetailsListDocumentsExampleState {
     columns: IColumn[];
@@ -44,65 +45,6 @@ const columnsTR = [
     }),
 ];
 
-const columns: IColumn[] = [
-    {
-        key: 'OrderID',
-        name: 'Order ID',
-        fieldName: 'OrderID',
-        minWidth: 210,
-        maxWidth: 350,
-        isRowHeader: true,
-        isResizable: true,
-        isSorted: true,
-        isSortedDescending: false,
-        sortAscendingAriaLabel: 'Sorted A to Z',
-        sortDescendingAriaLabel: 'Sorted Z to A',
-        data: 'string',
-        isPadded: true,
-    },
-    {
-        key: 'CustomerName',
-        name: 'Customer Name',
-        fieldName: 'CustomerName',
-        minWidth: 210,
-        maxWidth: 350,
-        isRowHeader: true,
-        isResizable: true,
-        isSorted: true,
-        isSortedDescending: false,
-        sortAscendingAriaLabel: 'Sorted A to Z',
-        sortDescendingAriaLabel: 'Sorted Z to A',
-        data: 'string',
-        isPadded: true,
-    },    
-    {
-        key: 'ShipperCity',
-        name: 'Shipper City',
-        fieldName: 'ShipperCity',
-        minWidth: 210,
-        maxWidth: 350,
-        isRowHeader: true,
-        isResizable: true,
-        isSorted: true,
-        isSortedDescending: false,
-        sortAscendingAriaLabel: 'Sorted A to Z',
-        sortDescendingAriaLabel: 'Sorted Z to A',
-        data: 'string',
-        isPadded: true,
-    },
-    {
-        key: 'Amount',
-        name: 'Amount',
-        fieldName: 'Amount',
-        minWidth: 70,
-        maxWidth: 90,
-        isResizable: true,
-        isCollapsible: true,
-        data: 'number',
-        isPadded: true,
-    },
-];
-
 function useTBTable(columns: ColumnModel[], source: string | any[] | Request | ITubularHttpClient, tubularOptions?: Partial<ITbOptions> ){
     return useTbTable(columns, source, tubularOptions); 
 }
@@ -116,7 +58,7 @@ const DetailsListDocumentsExample: React.FunctionComponent = () => {
                 <DetailsList
                     items={state.data}
                     compact={false}
-                    columns={columns}
+                    columns={IColumnTRansformer(columnsTR)}
                     selectionMode={SelectionMode.none}
                     setKey="none"
                     layoutMode={DetailsListLayoutMode.justified}
