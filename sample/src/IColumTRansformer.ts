@@ -13,8 +13,8 @@ export const IColumnTRansformer = (trColumns: ColumnModel[]): IColumn[] => {
             isFiltered: trColumn.hasFilter,
         }
 
-        if (trColumn.SortDirection !== ColumnSortDirection.NONE) {
-            return { ...transformedIColumn, isSortedDescending: trColumn.SortDirection === ColumnSortDirection.DESCENDING ? true: false,}
+        if (trColumn.SortDirection !== ColumnSortDirection.None) {
+            return { ...transformedIColumn, isSortedDescending: trColumn.SortDirection === ColumnSortDirection.Descending }
         }
 
         return transformedIColumn;

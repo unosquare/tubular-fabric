@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import DetailsListDocumentsExample from './DetailsListDocumentsExample';
+import Content from './DetailsListBasicExample';
+import DetailsListGrid from './DetailsListGrid';
 
 const Main: React.FunctionComponent = () => {
     return (
         <div>
-            <DetailsListDocumentsExample />
+            <DetailsListGrid />
         </div>
     );
 };
