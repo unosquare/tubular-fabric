@@ -1,14 +1,9 @@
 import * as React from 'react';
-import { DetailsList, DetailsListLayoutMode, SelectionMode, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
 import { IColumnTRansformer } from './IColumTRansformer';
 import { columnsTR } from './ColumnsDefinition';
 import { ITbListInstance, useTbList, ITbOptions } from 'tubular-react-common';
-import { ColumnModel, TubularHttpClient } from 'tubular-common';
 import { Fabric } from 'office-ui-fabric-react';
-import { IDetailsRowProps } from 'office-ui-fabric-react';
-export interface TbListProps {
-    tbInstance: ITbListInstance;
-}
 
 const DetailsListGrid: React.FunctionComponent<TbListProps> = () => {
     const [rows, setRows] = React.useState([]);
@@ -43,24 +38,38 @@ const DetailsListGrid: React.FunctionComponent<TbListProps> = () => {
         alert('you are sclrolling delayedLoadNextpage');
         return loadNextPage();
     };
-
-    // const handleMissingItems = (index?: number, rowProps?: IDetailsRowProps): React.ReactNode => {
-    //     const DEFAULT_MISSING_ITEM = {
-    //       key: 'missing',
-    //       name: 'Missing Item',
-    //       value: '-1'
-    //     }
-    //     return <Fabric.DetailsRow {...rowProps} item={DEFAULT_MISSING_ITEM} styles={{ root: { 'background': 'red', color: 'white' }}} />
-    //   }
+    const DEFAULT_MISSING_ITEM = {
+        key: 'bannanas',
+        OrderID: 'missing',
+        CustomerName: 'Missing Item',
+        ShipperCity: '-1',
+        Amount: '-1',
+      }
+    const handleMissingItems = (index?: number, rowProps?: IDetailsRowProps): React.ReactNode => {
+        // console.log('index', index);
+        // console.log('rowProps', rowProps);
+        const DEFAULT_MISSING_ITEM = {
+          key: 'bannanas',
+          OrderID: 'missing',
+          CustomerName: 'Missing Item',
+          ShipperCity: '-1',
+          Amount: '-1',
+        }
+        alert('handleMissingItems');
+        // const DEFAULT_MISSING_ITEM = {
+        //   key: 'missing',
+        //   name: 'Missing Item',
+        //   value: '-1'
+        // }
+        return <DetailsRow {...rowProps} item={DEFAULT_MISSING_ITEM} styles={{ root: { 'background': 'red', color: 'white' }}} />
+      }
 
     return (
-        <Fabric>
             <DetailsList
                 items={rows}
                 columns={IColumnTRansformer(columnsTR)}
-                onRenderMissingItem={delayedLoadNextpage}
+                onRenderMissingItem={handleMissingItems}
             />
-        </Fabric>
     );
 };
 
