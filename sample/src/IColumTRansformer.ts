@@ -5,16 +5,16 @@ export const IColumnTRansformer = (trColumns: ColumnModel[]): IColumn[] => {
 
     const creatingIColumn = (trColumn: ColumnModel): IColumn => {
         let transformedIColumn = {
-            key: trColumn.Name,
-            name: trColumn.Name,
-            fieldName: trColumn.Name,            
-            data: trColumn.DataType,
+            key: trColumn.name,
+            name: trColumn.name,
+            fieldName: trColumn.name,            
+            data: trColumn.dataType,
             minWidth: 200,
             isFiltered: trColumn.hasFilter,
         }
 
-        if (trColumn.SortDirection !== ColumnSortDirection.None) {
-            return { ...transformedIColumn, isSortedDescending: trColumn.SortDirection === ColumnSortDirection.Descending }
+        if (trColumn.sortDirection !== ColumnSortDirection.None) {
+            return { ...transformedIColumn, isSortedDescending: trColumn.sortDirection === ColumnSortDirection.Descending }
         }
 
         return transformedIColumn;
