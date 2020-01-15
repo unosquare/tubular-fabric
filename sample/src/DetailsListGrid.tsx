@@ -1,20 +1,33 @@
 import * as React from 'react';
-import { DetailsList, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsRow, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
 import { IColumnTRansformer } from './IColumTRansformer';
 import { columnsTR } from './ColumnsDefinition';
 import { ITbListInstance, ITbOptions, useTubular } from 'tubular-react-common';
-import { ColumnModel, TubularHttpClientAbstract } from 'tubular-common';
+import { ColumnModel, TubularHttpClientAbstract, ColumnSortDirection, ColumnDataType } from 'tubular-common';
 import { IDetailsRowProps } from 'office-ui-fabric-react';
-export interface TbListProps {
-    tbInstance: ITbListInstance;
+import ColumnModelOptions from 'tubular-common/dist/Models/ColumnModelOptions';
+
+export interface ITbColumn extends IColumn {
+    tb?: ColumnModelOptions;
 }
 
 const useTbFabric = (
-    initColumns: ColumnModel[],
+    initColumns: ITbColumn[],
     source: string | Request | TubularHttpClientAbstract | {}[],
     tubularOptions?: Partial<ITbOptions>,
 ) => {
-    const tubular = useTubular(initColumns, source, tubularOptions);
+    const tbInitColumns = initColumns.map(column => {
+        return new ColumnModel(column.name, {
+            dataType: column.tb.dataType,
+            isKey: column.tb.isKey,
+            label: column.ariaLabel,
+            sortable: column.tb.sortable,
+            filterable: column.tb.filterable,
+        });
+    });
+
+    const tubular = useTubular(React.useMemo(() => tbInitColumns, [initColumns]), source, tubularOptions);
+    const [fabricColumns, setFabricColumns] = React.useState(initColumns);
     const [list, setListState] = React.useState({
         hasNextPage: false,
         // We need to hold all the items that we have loaded
@@ -22,16 +35,30 @@ const useTbFabric = (
         items: [],
     });
 
-    // Reset list is required to flush cache from
-    // Infinite loader
+    // Reset list is required
     const resetList = () => {
         setListState({ hasNextPage: false, items: [] });
         tubular.api.goToPage(0);
     };
 
-    const sortByColumn = (columnName: string) => {
+    const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
         resetList();
-        tubular.api.sortColumn(columnName);
+        const newFabricColumns = fabricColumns.map(col => {
+            if (col.name === column.name) {
+                const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
+
+                return {
+                    ...col,
+                    isSorted: isSorted,
+                    isSortedDescending: isSorted && !col.isSortedDescending
+                };
+            }
+
+            return col;
+        });
+
+        setFabricColumns(newFabricColumns)
+        tubular.api.sortColumn(column.name);
     };
 
     const search = (value: string) => {
@@ -54,8 +81,9 @@ const useTbFabric = (
                     mapped[col.name] = item[col.name];
                 });
 
-                mapped['key'] = `Order_${item.OrderID}`;
-                mapped['name'] = `Order_${item.OrderID}`;
+                const keyColumn = columnsTR.find(col => col.isKey);
+                mapped['key'] = `${keyColumn.name}_${item[keyColumn.name]}`;
+                mapped['name'] = mapped['key'];
 
                 return mapped;
             };
@@ -88,12 +116,57 @@ const useTbFabric = (
         state: {
             ...tubular.state,
             list,
+            fabricColumns,
         },
     };
 };
 
+const columns: ITbColumn[] = [
+    {
+        key: 'OrderID',
+        name: 'OrderID',
+        fieldName: 'OrderID',
+        minWidth: 100,
+        tb: {
+            isKey: true,
+            dataType: ColumnDataType.Numeric,
+            sortable: true,
+        }
+    },
+    {
+        key: 'CustomerName',
+        name: 'CustomerName',
+        fieldName: 'CustomerName',
+        minWidth: 100,
+        tb: {
+            dataType: ColumnDataType.String,
+            sortable: true,
+        }
+    },
+    {
+        key: 'ShipperCity',
+        name: 'ShipperCity',
+        fieldName: 'ShipperCity',
+        minWidth: 100,
+        tb: {
+            dataType: ColumnDataType.String,
+            sortable: true,
+        }
+    },
+    {
+        key: 'Amount',
+        name: 'Amount',
+        fieldName: 'Amount',
+        minWidth: 100,
+        tb: {
+            dataType: ColumnDataType.Numeric,
+            sortable: true,
+        }
+    }
+];
+
 const DetailsListGrid: React.FunctionComponent<any> = () => {
-    const tbFabricInstance = useTbFabric(columnsTR, 'https://tubular.azurewebsites.net/api/orders/paged', {
+    const tbFabricInstance = useTbFabric(columns, 'https://tubular.azurewebsites.net/api/orders/paged', {
         pagination: { itemsPerPage: 100 },
     });
 
@@ -104,7 +177,7 @@ const DetailsListGrid: React.FunctionComponent<any> = () => {
             value: '-1',
         };
 
-        tbFabricInstance.api.loadMoreItems(index);
+        // tbFabricInstance.api.loadMoreItems(index);
 
         return (
             <DetailsRow
@@ -115,14 +188,17 @@ const DetailsListGrid: React.FunctionComponent<any> = () => {
         );
     };
 
-    if (tbFabricInstance.state.list.items.length === 0) return null;
+    // if (tbFabricInstance.state.list.items.length === 0) return null;
 
+    console.log(tbFabricInstance.state.list.items)
+    console.log(tbFabricInstance.state.fabricColumns)
     return (
-        <div style={{ height: '200px', overflow: 'auto' }}>
+        <div style={{ height: '600px', overflow: 'auto' }}>
             <DetailsList
                 items={tbFabricInstance.state.list.items}
-                columns={IColumnTRansformer(columnsTR)}
+                columns={tbFabricInstance.state.fabricColumns}
                 onRenderMissingItem={handleMissingItems}
+                onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
             />
         </div>
     );
