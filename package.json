@@ -1,6 +1,6 @@
 {
   "name": "tubular-fabric",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Unosquare Tubular for Fabric",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "debug": "parcel ./sample/app/index.html --open --port 8989 -d ./distsample",
     "check": "npm run build && npm test",
     "lint": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet",
-    "lintfix": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet --fix",
+    "lint:fix": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet --fix",
     "test": "jest"
   },
   "jest": {
@@ -44,31 +44,31 @@
   },
   "homepage": "https://github.com/unosquare/tubular-fabric#readme",
   "dependencies": {
-    "office-ui-fabric-react": "^7.81.0",
-    "tubular-common": "^3.0.5",
-    "tubular-react-common": "1.0.7"
+    "office-ui-fabric-react": "^7.83.2",
+    "tubular-common": "^3.1.1",
+    "tubular-react-common": "1.0.9"
   },
   "devDependencies": {
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
-    "@typescript-eslint/eslint-plugin": "^2.16.0",
-    "@typescript-eslint/parser": "^2.16.0",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react": "^7.18.0",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-clean-easy": "^1.0.2",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.5"
   },
   "parcelCleanPaths": [
     "docs/*.*",
     "distsample/*.*"
   ],
-  "files":[
+  "files": [
     "dist"
   ]
 }

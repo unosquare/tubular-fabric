@@ -16,7 +16,7 @@ export const useTbFabric = (
             dataType: column.tb.dataType,
             filterable: column.tb.filterable ? column.tb.filterable : false,
             isKey: column.tb.isKey ? column.tb.isKey : false,
-            label: column.ariaLabel ? column.ariaLabel  : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+            label: column.ariaLabel ? column.ariaLabel : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
             searchable: column.tb.searchable ? column.tb.searchable : false,
             sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,
             sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
