@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "preserveConstEnums": true,
+        "outDir": "./dist",
+        "jsx": "react",
+        "lib": ["es5", "es6", "dom"],
+        "declaration": true,
+        "sourceMap": false,
+        "target": "es5",
+        "skipLibCheck": true
+    },
+    "include": ["./src/**/*.ts"],
+    "exclude": ["./node_modules"]
+}
