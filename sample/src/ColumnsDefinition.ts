@@ -20,7 +20,8 @@ export const columns: ITbColumn[] = [
         minWidth: 100,
         tb: {
             dataType: ColumnDataType.String,
-            sortable: true,
+            sortable: true,            
+            searchable: true,
         },
     },
     {
@@ -30,7 +31,8 @@ export const columns: ITbColumn[] = [
         minWidth: 100,
         tb: {
             dataType: ColumnDataType.String,
-            sortable: true,
+            sortable: true,            
+            searchable: true,
         },
     },
     {

@@ -1,7 +1,7 @@
 import { ITbColumn } from './ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common/dist/Http';
 import { ITbOptions } from 'tubular-react-common/dist/types';
-import { ColumnModel } from 'tubular-common/dist/Models';
+import { ColumnModel, ColumnSortDirection } from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
@@ -14,10 +14,14 @@ export const useTbFabric = (
     const tbInitColumns = initColumns.map(column => {
         return new ColumnModel(column.name, {
             dataType: column.tb.dataType,
-            isKey: column.tb.isKey,
-            label: column.ariaLabel,
-            sortable: column.tb.sortable,
-            filterable: column.tb.filterable,
+            filterable: column.tb.filterable ? column.tb.filterable : false,
+            isKey: column.tb.isKey ? column.tb.isKey : false,
+            label: column.ariaLabel ? column.ariaLabel  : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+            searchable: column.tb.searchable ? column.tb.searchable : false,
+            sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,
+            sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
+            sortable: column.tb.sortable ? column.tb.sortable : false,
+            visible: column.tb.visible ? column.tb.visible : false,
         });
     });
 
