@@ -12,11 +12,11 @@ export const useTbFabric = (
     tubularOptions?: Partial<ITbOptions>,
 ) => {
     const tbInitColumns = initColumns.map(column => {
-        return new ColumnModel(column.name, {
+        return new ColumnModel(column.fieldName, {
             dataType: column.tb.dataType,
             filterable: column.tb.filterable ? column.tb.filterable : false,
             isKey: column.tb.isKey ? column.tb.isKey : false,
-            label: column.ariaLabel ? column.ariaLabel : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+            label: column.name ? column.name : (column.fieldName || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
             searchable: column.tb.searchable ? column.tb.searchable : false,
             sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,
             sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
@@ -44,7 +44,7 @@ export const useTbFabric = (
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
         resetList();
         const newFabricColumns = fabricColumns.map(col => {
-            if (col.name === column.name) {
+            if (col.fieldName === column.fieldName) {
                 const isSortedDescending = col.isSorted && !col.isSortedDescending;
                 const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
 
@@ -63,7 +63,7 @@ export const useTbFabric = (
         });
 
         setFabricColumns(newFabricColumns);
-        tubular.api.sortColumn(column.name);
+        tubular.api.sortColumn(column.fieldName);
     };
 
     const search = (value: string) => {

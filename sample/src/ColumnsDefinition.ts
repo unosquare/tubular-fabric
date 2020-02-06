@@ -4,7 +4,7 @@ import { ITbColumn } from '../../src/ITbColumn';
 export const columns: ITbColumn[] = [
     {
         key: 'OrderID',
-        name: 'OrderID',
+        name: 'Order ID',
         fieldName: 'OrderID',
         minWidth: 100,
         tb: {
@@ -15,7 +15,7 @@ export const columns: ITbColumn[] = [
     },
     {
         key: 'CustomerName',
-        name: 'CustomerName',
+        name: 'Customer Name',
         fieldName: 'CustomerName',
         minWidth: 100,
         tb: {
@@ -26,7 +26,7 @@ export const columns: ITbColumn[] = [
     },
     {
         key: 'ShipperCity',
-        name: 'ShipperCity',
+        name: 'Shipper City',
         fieldName: 'ShipperCity',
         minWidth: 100,
         tb: {
@@ -37,7 +37,7 @@ export const columns: ITbColumn[] = [
     },
     {
         key: 'Amount',
-        name: 'Amount',
+        name: 'Amount asdf asdsa',
         fieldName: 'Amount',
         minWidth: 100,
         tb: {
