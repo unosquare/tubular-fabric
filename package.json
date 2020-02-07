@@ -46,7 +46,7 @@
   "dependencies": {
     "office-ui-fabric-react": "^7.89.1",
     "tubular-common": "^3.1.5",
-    "tubular-react-common": "1.0.13"
+    "tubular-react-common": "1.0.14"
   },
   "devDependencies": {
     "@types/react": "^16.9.19",
