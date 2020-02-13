@@ -27,7 +27,7 @@ export const useTbFabric = (
 
     const memoTbColumns = React.useMemo(() => tbInitColumns, [initColumns]);
     const tubular = useTubular(memoTbColumns, source, tubularOptions);
-    const [fabricColumns, setFabricColumns] = React.useState(initColumns);
+    const [fabricColumns, setFabricColumns] = React.useState(initColumns.filter(column => column.tb.visible !== false));
     const [list, setListState] = React.useState({
         hasNextPage: false,
         // We need to hold all the items that we have loaded

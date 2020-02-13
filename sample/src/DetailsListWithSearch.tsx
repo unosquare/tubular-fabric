@@ -8,11 +8,11 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
 const exampleChildClass = mergeStyles({
-  display: 'block',
-  marginBottom: '10px'
+    display: 'block',
+    marginBottom: '10px',
 });
 
-const DetailsListWithSearch: React.FunctionComponent<any> = () => { 
+const DetailsListWithSearch: React.FunctionComponent<any> = () => {
     const tbFabricInstance = useTbFabric(columns, 'https://tubular.azurewebsites.net/api/orders/paged', {
         pagination: { itemsPerPage: 100 },
     });
@@ -35,7 +35,8 @@ const DetailsListWithSearch: React.FunctionComponent<any> = () => {
         );
     };
 
-    const onSearch = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => tbFabricInstance.api.search(text);
+    const onSearch = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void =>
+        tbFabricInstance.api.search(text);
 
     return (
         <div style={{ height: '600px', overflow: 'auto' }}>

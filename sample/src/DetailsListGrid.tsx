@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { DetailsList, DetailsRow, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
 import { columns } from './ColumnsDefinition';
 import { IDetailsRowProps } from 'office-ui-fabric-react';
 import { useTbFabric } from '../../src/useTbFabric';
 
-const DetailsListGrid: React.FunctionComponent<any> = () => {
+const DetailsListGrid: React.FunctionComponent = () => {
     const tbFabricInstance = useTbFabric(columns, 'https://tubular.azurewebsites.net/api/orders/paged', {
         pagination: { itemsPerPage: 100 },
     });
