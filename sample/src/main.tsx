@@ -33,20 +33,20 @@ const Main: React.FunctionComponent = () => {
                 >
                     Details List Grid
                 </CompoundButton>
-                <CompoundButton
+                {/* <CompoundButton
                     primary={showSearchable}
                     secondaryText="Details list grid with searchable field"
                     onClick={searchableOnClick}
                 >
                     Searchable DetailsListGrid
-                </CompoundButton>
+                </CompoundButton> */}
             </Stack>
             <div style={{ display: showDetailsListGrid ? 'block' : 'none' }}>
                 <TbDetailsListSample />
             </div>
-            <div style={{ display: showSearchable ? 'block' : 'none' }}>
+            {/* <div style={{ display: showSearchable ? 'block' : 'none' }}>
                 <DetailsListWithSearch />
-            </div>
+            </div> */}
         </div>
     );
 };

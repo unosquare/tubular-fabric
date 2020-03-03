@@ -24,7 +24,7 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
             onDismiss={() => close()}
             dialogContentProps={{
                 type: DialogType.normal,
-                title: 'Filters',
+                title: 'Toggle Columns',
                 closeButtonAriaLabel: 'Close',
             }}
             modalProps={{

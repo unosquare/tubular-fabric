@@ -5,7 +5,13 @@ import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-comm
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { FilterWrapper } from 'tubular-common/dist/Models/FilterWrapper';
+
+const getShimmerSlots = (itemCount): any[] => {
+    const initialShimmerItems = [];
+    [...Array(itemCount)].forEach(() => initialShimmerItems.push(null));
+
+    return initialShimmerItems;
+};
 
 export const useTbFabric = (
     initColumns: ITbColumn[],
@@ -30,19 +36,21 @@ export const useTbFabric = (
         return tbColumn;
     });
 
+    const { deps, ...rest } = tubularOptions;
+
     const memoTbColumns = React.useMemo(() => tbInitColumns, [initColumns]);
-    const tubular = useTubular(memoTbColumns, source, tubularOptions);
+    const tubular = useTubular(memoTbColumns, source, rest);
     const [fabricColumns, setFabricColumns] = React.useState(initColumns);
     const [list, setListState] = React.useState({
         hasNextPage: false,
         // We need to hold all the items that we have loaded
         // This will be a cumulated of all of the rows from tubular instance
-        items: [],
+        items: getShimmerSlots(tubular.state.itemsPerPage),
     });
 
     // Reset list is required
     const resetList = () => {
-        setListState({ hasNextPage: false, items: [] });
+        setListState({ hasNextPage: false, items: getShimmerSlots(tubular.state.itemsPerPage) });
         tubular.api.goToPage(0);
     };
 
@@ -88,8 +96,15 @@ export const useTbFabric = (
     };
 
     const loadMoreItems = (index?: number) => {
-        const pageToLoad = index / tubular.state.itemsPerPage;
-        if (!tubular.state.isLoading && pageToLoad >= tubular.state.page) {
+        // Tubular core will load the first page by default
+        // That's why we don't need to do any call for the first
+        // page set
+        if (index < tubular.state.itemsPerPage) {
+            return;
+        }
+
+        const pageToLoad = Math.ceil(index / tubular.state.itemsPerPage) - 1;
+        if (!tubular.state.isLoading && pageToLoad > tubular.state.page) {
             tubular.api.goToPage(pageToLoad);
         }
     };
@@ -137,13 +152,18 @@ export const useTbFabric = (
 
     React.useEffect(() => {
         setListState(state => {
+            // We don't want to override the state for shimmer
+            if (tubular.state.data.length === 0) {
+                return state;
+            }
+
             const mapped = tubular.state.data.map(fabricColumnsMapper);
 
-            const newItems = [...state.items].slice(0, -1).concat(mapped);
+            let newItems = [...state.items].slice(0, -1 * tubular.state.itemsPerPage).concat(mapped);
             let hasNextPage = false;
 
-            if (state.items.length + tubular.state.data.length < tubular.state.filteredRecordCount) {
-                newItems.push(null);
+            if (newItems.length < tubular.state.filteredRecordCount) {
+                newItems = newItems.concat(getShimmerSlots(tubular.state.itemsPerPage));
                 hasNextPage = true;
             }
 
@@ -153,6 +173,12 @@ export const useTbFabric = (
             };
         });
     }, [tubular.state.data]);
+
+    const listDeps = deps || [];
+
+    React.useEffect(() => {
+        resetList();
+    }, listDeps);
 
     return {
         // API fort a list should be simpler than
