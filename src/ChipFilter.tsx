@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
-import { Label } from 'office-ui-fabric-react/lib/components/Label/Label';
+import { Text } from 'office-ui-fabric-react/lib/components/Text/Text';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon/Icon';
 import { getOperatorIcon } from './utils';
 import { CompareOperators } from 'tubular-common';
@@ -26,12 +26,12 @@ export const ChipFilter: React.FunctionComponent<any> = ({ column, onRemoveFilte
                 inner: { margin: '0px 10px' },
             }}
         >
-            <Label>{column.label}</Label>
+            <Text styles={{ root: { marginRight: '5px' } }}>{column.label}</Text>
             <Icon
-                styles={{ root: { margin: '0px 5px' } }}
+                styles={{ root: { margin: '4px 5px 0px' } }}
                 iconName={getOperatorIcon(column.filter.operator as CompareOperators)}
             />
-            <Label styles={{ root: { marginRight: 5 } }}>{column.filter.text}</Label>
+            <Text styles={{ root: { marginRight: 5 } }}>{column.filter.text}</Text>
             <IconButton
                 onClick={onRemoveFilter(column.name)}
                 iconProps={closeIcon}

@@ -153,7 +153,7 @@ export const useTbFabric = (
     React.useEffect(() => {
         setListState(state => {
             // We don't want to override the state for shimmer
-            if (tubular.state.data.length === 0) {
+            if (tubular.state.data.length === 0 && tubular.state.totalRecordCount === 0) {
                 return state;
             }
 

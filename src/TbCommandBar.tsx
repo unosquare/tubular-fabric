@@ -3,7 +3,7 @@ import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/Com
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
 import { ColumnModel, CompareOperators } from 'tubular-common';
 import { FiltersDialog } from './FiltersDialog';
-import { getOperatorIcon, registerTbIcons } from './utils';
+import { registerTbIcons } from './utils';
 import { ChipFilter } from './ChipFilter';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';

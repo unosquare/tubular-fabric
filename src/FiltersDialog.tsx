@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
 import { Dialog } from 'office-ui-fabric-react/lib/components/Dialog/Dialog';
-import { DialogContent } from 'office-ui-fabric-react/lib/components/Dialog/DialogContent';
 import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/DialogFooter';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
 import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button/DefaultButton/DefaultButton';

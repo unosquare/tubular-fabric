@@ -27,7 +27,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
 
     const menuProps: IContextualMenuProps = {
         shouldFocusOnMount: true,
-        isBeakVisible: false,
+        isBeakVisible: true,
         items: options,
         onItemClick: (
             ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
