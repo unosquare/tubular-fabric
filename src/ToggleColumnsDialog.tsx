@@ -18,6 +18,30 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
 
     const [tempColumns, setTempColumns] = React.useState(copyOfCoumns);
 
+    const handleChange = column => (ev: React.MouseEvent<HTMLElement>, checked: boolean) => {
+        if (!checked && tempColumns.filter(c => !c.visible).length === tempColumns.length - 1) {
+            return;
+        }
+
+        const newColumns = tempColumns.map(tempColumn => {
+            if (tempColumn.name === column.name) {
+                return {
+                    ...tempColumn,
+                    visible: checked,
+                };
+            }
+
+            return { ...tempColumn };
+        });
+
+        setTempColumns(newColumns);
+    };
+
+    const onApply = () => {
+        applyColumnsChanges(tempColumns);
+        close();
+    };
+
     return (
         <Dialog
             hidden={false}
@@ -43,30 +67,12 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
                         checked={column.visible}
                         onText="On"
                         offText="Off"
-                        onChange={(ev: React.MouseEvent<HTMLElement>, checked: boolean) => {
-                            const newColumns = tempColumns.map(c => {
-                                if (c.name === column.name) {
-                                    return {
-                                        ...c,
-                                        visible: checked,
-                                    };
-                                }
-
-                                return { ...c };
-                            });
-                            setTempColumns(newColumns);
-                        }}
+                        onChange={handleChange(column)}
                     />
                 );
             })}
             <DialogFooter>
-                <PrimaryButton
-                    onClick={() => {
-                        applyColumnsChanges(tempColumns);
-                        close();
-                    }}
-                    text="Apply"
-                />
+                <PrimaryButton onClick={onApply} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />
             </DialogFooter>
         </Dialog>
