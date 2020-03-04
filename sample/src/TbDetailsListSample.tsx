@@ -5,9 +5,7 @@ import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 
 export const TbDetailsListSample: React.FunctionComponent<any> = () => {
     const [refresh, forceRefresh] = useGridRefresh();
-    const onForceRefresh = () => {
-        forceRefresh();
-    };
+    const onForceRefresh = () => forceRefresh();
 
     return (
         <>
@@ -21,6 +19,8 @@ export const TbDetailsListSample: React.FunctionComponent<any> = () => {
                 source="https://tubular.azurewebsites.net/api/orders/paged"
                 tbOptions={{
                     deps: [refresh],
+                    filterable: true,
+                    toggleColumns: true,
                 }}
             />
         </>

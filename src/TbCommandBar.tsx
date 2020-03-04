@@ -7,6 +7,7 @@ import { registerTbIcons } from './utils';
 import { ChipFilter } from './ChipFilter';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
+import { IStackStyles } from 'office-ui-fabric-react';
 
 registerTbIcons();
 
@@ -14,42 +15,53 @@ export interface TbCommandBarProps {
     columns: ColumnModel[];
     applyFilters: (columns: ColumnModel[]) => void;
     updateVisibleColumns: (columns: ColumnModel[]) => void;
+    filterable?: boolean;
+    toggleColumns?: boolean;
 }
 
-export const CommandBarBasicExample: React.FunctionComponent<TbCommandBarProps> = ({
+const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };
+
+export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     columns,
     updateVisibleColumns,
     applyFilters,
+    filterable,
+    toggleColumns,
 }: TbCommandBarProps) => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [showToggleColumns, setShowToggleColumns] = React.useState(false);
     const filteredColumns = columns.filter(c => c.hasFilter && c.filterable);
 
-    const _farItems: ICommandBarItemProps[] = [
-        {
+    const _farItems: ICommandBarItemProps[] = [];
+
+    if (filterable) {
+        _farItems.push({
             key: 'toggleColumns',
             text: 'Toggle Columns',
             ariaLabel: 'Toggle Columns',
             iconOnly: true,
             iconProps: { iconName: 'TripleColumn' },
             onClick: () => setShowToggleColumns(!showToggleColumns),
-        },
-        {
+        });
+    }
+
+    if (toggleColumns) {
+        _farItems.push({
             key: 'filter',
             text: 'Filter',
             ariaLabel: 'Filter',
             iconOnly: true,
             iconProps: { iconName: 'Filter' },
             onClick: () => setShowFilters(!showFilters),
-        },
-    ];
+        });
+    }
 
     const onRemoveFilter = (columnName: string) => {
         return () => {
-            const newColumns = columns.map(c => {
-                return c.name === columnName
+            const newColumns = columns.map(column => {
+                return column.name === columnName
                     ? {
-                          ...c,
+                          ...column,
                           hasFilter: false,
                           filter: {
                               operator: CompareOperators.None,
@@ -58,7 +70,7 @@ export const CommandBarBasicExample: React.FunctionComponent<TbCommandBarProps> 
                               hasFilter: false,
                           },
                       }
-                    : { ...c };
+                    : { ...column };
             });
 
             applyFilters(newColumns);
@@ -67,15 +79,10 @@ export const CommandBarBasicExample: React.FunctionComponent<TbCommandBarProps> 
 
     return (
         <div>
-            <CommandBar
-                items={[]}
-                overflowItems={[]}
-                farItems={_farItems}
-                ariaLabel="Use left and right arrow keys to navigate between commands"
-            />
-            <Stack horizontal horizontalAlign="start" wrap styles={{ root: { paddingLeft: 14 } }}>
+            <CommandBar items={[]} overflowItems={[]} farItems={_farItems} />
+            <Stack horizontal horizontalAlign="start" wrap styles={chipFilterContainerStyle}>
                 {filteredColumns.map(column => (
-                    <ChipFilter key={column.name} column={column} onRemoveFilter={onRemoveFilter} />
+                    <ChipFilter key={column.name} column={column} onRemoveFilter={onRemoveFilter(column.name)} />
                 ))}
             </Stack>
             {showToggleColumns && (

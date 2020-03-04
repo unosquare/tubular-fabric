@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTbFabric } from './useTbFabric';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
-import { CommandBarBasicExample } from './TbCommandBar';
+import { TbCommandBar } from './TbCommandBar';
 import { SelectionBar } from './SelectionBar';
 import { Selection, IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 import { ITbColumn } from './ITbColumn';
@@ -11,14 +11,19 @@ import {
     IDetailsRowStyleProps,
     IDetailsRowStyles,
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
-import { keyframes, mergeStyles } from 'office-ui-fabric-react/lib/Styling';
+import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+
+export interface ITbExtendedOptions extends ITbOptions {
+    filterable: boolean;
+    toggleColumns: boolean;
+}
 
 export interface ITbDetailsListProps {
     columns: ITbColumn[];
     source: string | Request | TubularHttpClientAbstract | {}[];
-    tbOptions: Partial<ITbOptions>;
+    tbOptions: Partial<ITbExtendedOptions>;
 }
 
 const holderAnimation = keyframes({
@@ -42,19 +47,25 @@ const shimmer = keyframes({
 mergeStyles(shimmer);
 mergeStyles(holderAnimation);
 
+const classes = mergeStyleSets({
+    tbContainer: { margin: 'auto', position: 'relative', height: '100%' },
+    tbDetailsList: { overflow: 'auto', height: '500px' },
+    shimmerAnimate: {
+        animationName: shimmer,
+        animationDuration: '2s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
+        background: 'linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%)',
+        backgroundSize: '1000px 100%',
+        width: '100%',
+        height: '100%',
+    },
+});
+
 const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowStyles> = {
     root: {
         animation: 'fullView 0.5s forwards cubic-bezier(0.250, 0.460, 0.450, 0.940)',
     },
-};
-
-const animate = {
-    animationName: shimmer,
-    animationDuration: '2s',
-    animationIterationCount: 'infinite',
-    animationTimingFunction: 'linear',
-    background: 'linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%)',
-    backgroundSize: '1000px 100%',
 };
 
 const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
@@ -89,31 +100,27 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         );
     };
 
+    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
+        if (item.value === '-1') {
+            return <div className={classes.shimmerAnimate}></div>;
+        }
+        return <span>{item[column.fieldName]}</span>;
+    };
+
     return (
-        <div style={{ margin: 'auto', position: 'relative', height: '100%' }}>
+        <div className={classes.tbContainer}>
             {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={() => console.log('a')} />}
-            <CommandBarBasicExample
+            <TbCommandBar
+                filterable={tbOptions.filterable}
+                toggleColumns={tbOptions.toggleColumns}
                 columns={tbFabricInstance.state.columns}
                 applyFilters={tbFabricInstance.api.applyFilters}
                 updateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
             />
-            <div style={{ overflow: 'auto', height: '500px' }} data-is-scrollable="true">
+            <div className={classes.tbDetailsList} data-is-scrollable="true">
                 <DetailsList
                     selection={selection}
-                    onRenderItemColumn={(item: any, index: number, column: IColumn) => {
-                        if (item.value === '-1') {
-                            return (
-                                <div
-                                    style={{
-                                        ...animate,
-                                        width: '100%',
-                                        height: '100%',
-                                    }}
-                                ></div>
-                            );
-                        }
-                        return <span>{item[column.fieldName]}</span>;
-                    }}
+                    onRenderItemColumn={onRenderItemColumn}
                     items={tbFabricInstance.state.list.items}
                     columns={tbFabricInstance.state.fabricColumns}
                     onRenderMissingItem={handleMissingItems}

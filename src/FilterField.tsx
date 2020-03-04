@@ -5,11 +5,19 @@ import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextF
 import { ColumnModel, CompareOperators } from 'tubular-common';
 import { IContextualMenuProps, IContextualMenuItem } from 'office-ui-fabric-react/lib/components/ContextualMenu';
 import { getOperatorIcon } from './utils';
+import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
 
 export interface IFilterFieldProps {
     column: ColumnModel;
 }
 
+const filterFieldWrapperStyles: IStackStyles = {
+    root: { marginTop: '10px' },
+};
+
+const filterButtonStyles: IStackItemStyles = {
+    root: { width: '60px' },
+};
 export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: IFilterFieldProps) => {
     const { column } = props;
     const [currentIcon, setCurrentIcon] = React.useState({
@@ -30,7 +38,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
         isBeakVisible: true,
         items: options,
         onItemClick: (
-            ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            _ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item?: IContextualMenuItem,
         ) => {
             setCurrentIcon({ iconName: item.iconProps.iconName });
@@ -39,15 +47,20 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
         },
     };
 
+    const handleFilterChange = (_event: React.FormEvent<HTMLInputElement>, newValue: string) => {
+        column.filter.text = newValue;
+        column.hasFilter = true;
+    };
+
     return (
         <Stack
             horizontal
             horizontalAlign="space-between"
             key={column.name}
             verticalAlign="end"
-            styles={{ root: { marginTop: '10px' } }}
+            styles={filterFieldWrapperStyles}
         >
-            <Stack.Item styles={{ root: { width: '60px' } }}>
+            <Stack.Item styles={filterButtonStyles}>
                 <IconButton
                     menuProps={menuProps}
                     iconProps={{ iconName: currentIcon.iconName }}
@@ -56,14 +69,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
                 />
             </Stack.Item>
             <Stack.Item grow>
-                <TextField
-                    label={column.label}
-                    onChange={(event: React.FormEvent<HTMLInputElement>, newValue: string) => {
-                        column.filter.text = newValue;
-                        column.hasFilter = true;
-                    }}
-                    defaultValue={column.filter.text}
-                />
+                <TextField label={column.label} onChange={handleFilterChange} defaultValue={column.filter.text} />
             </Stack.Item>
         </Stack>
     );

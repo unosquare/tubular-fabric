@@ -5,40 +5,49 @@ import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/Dialo
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
 import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button/DefaultButton/DefaultButton';
 import { FilterField } from './FilterField';
-import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
+import { DialogType, IDialogContentProps } from 'office-ui-fabric-react/lib/components/Dialog';
+import { IModalProps } from 'office-ui-fabric-react/lib/components/Modal';
+
+const dialogContentProps: IDialogContentProps = {
+    type: DialogType.normal,
+    title: 'Filters',
+    closeButtonAriaLabel: 'Close',
+};
+
+const modalProps: IModalProps = {
+    isBlocking: false,
+    styles: { main: { maxWidth: 500 } },
+    dragOptions: undefined,
+};
 
 export interface IFiltersProps {
     columns: ColumnModel[];
     applyFilters: (columns: ColumnModel[]) => void;
     close: () => void;
 }
+
 export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFiltersProps) => {
     const { columns, applyFilters, close } = props;
-    const copyOfCoumns = columns.map(c => ({
-        ...c,
+    const copyOfCoumns = columns.map(column => ({
+        ...column,
         filter: {
-            ...c.filter,
+            ...column.filter,
         },
     }));
 
     const [tempColumns] = React.useState(copyOfCoumns);
 
+    const onClick = () => {
+        applyFilters(tempColumns);
+        close();
+    };
+
     return (
         <Dialog
             hidden={false}
             onDismiss={() => close()}
-            dialogContentProps={{
-                type: DialogType.normal,
-                title: 'Filters',
-                closeButtonAriaLabel: 'Close',
-            }}
-            modalProps={{
-                titleAriaId: this._labelId,
-                subtitleAriaId: this._subTextId,
-                isBlocking: false,
-                styles: { main: { maxWidth: 500 } },
-                dragOptions: undefined,
-            }}
+            dialogContentProps={dialogContentProps}
+            modalProps={modalProps}
         >
             {tempColumns
                 .filter(c => c.visible && c.filterable)
@@ -46,13 +55,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFi
                     return <FilterField key={column.name} column={column} />;
                 })}
             <DialogFooter>
-                <PrimaryButton
-                    onClick={() => {
-                        applyFilters(tempColumns);
-                        close();
-                    }}
-                    text="Apply"
-                />
+                <PrimaryButton onClick={onClick} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />
             </DialogFooter>
         </Dialog>
