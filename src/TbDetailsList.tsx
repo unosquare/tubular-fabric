@@ -14,10 +14,13 @@ import {
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
 
 export interface ITbExtendedOptions extends ITbOptions {
     filterable: boolean;
+    searchable: boolean;
     toggleColumns: boolean;
+    commandBarItems?: ICommandBarItemProps[];
 }
 
 export interface ITbDetailsListProps {
@@ -112,10 +115,13 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
             {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={() => console.log('a')} />}
             <TbCommandBar
                 filterable={tbOptions.filterable}
+                searchable={tbOptions.searchable}
                 toggleColumns={tbOptions.toggleColumns}
+                items={tbOptions.commandBarItems}
                 columns={tbFabricInstance.state.columns}
-                applyFilters={tbFabricInstance.api.applyFilters}
-                updateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
+                onSearch={tbFabricInstance.api.search}
+                onApplyFilters={tbFabricInstance.api.applyFilters}
+                onUpdateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
             />
             <div className={classes.tbDetailsList} data-is-scrollable="true">
                 <DetailsList

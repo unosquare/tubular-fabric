@@ -6,6 +6,7 @@ import { FiltersDialog } from './FiltersDialog';
 import { registerTbIcons } from './utils';
 import { ChipFilter } from './ChipFilter';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
+import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
 import { IStackStyles } from 'office-ui-fabric-react';
 
@@ -13,26 +14,47 @@ registerTbIcons();
 
 export interface TbCommandBarProps {
     columns: ColumnModel[];
-    applyFilters: (columns: ColumnModel[]) => void;
-    updateVisibleColumns: (columns: ColumnModel[]) => void;
+    onApplyFilters: (columns: ColumnModel[]) => void;
+    onSearch: (value: string) => void;
+    onUpdateVisibleColumns: (columns: ColumnModel[]) => void;
     filterable?: boolean;
+    searchable?: boolean;
     toggleColumns?: boolean;
+    items?: ICommandBarItemProps[];
 }
 
 const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     columns,
-    updateVisibleColumns,
-    applyFilters,
+    onUpdateVisibleColumns,
+    onApplyFilters,
+    onSearch,
     filterable,
+    searchable,
     toggleColumns,
+    items,
 }: TbCommandBarProps) => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [showToggleColumns, setShowToggleColumns] = React.useState(false);
     const filteredColumns = columns.filter(c => c.hasFilter && c.filterable);
 
     const _farItems: ICommandBarItemProps[] = [];
+
+    if (searchable) {
+        _farItems.push({
+            key: 'search',
+            // eslint-disable-next-line react/display-name
+            onRender: () => (
+                <SearchBox
+                    underlined={true}
+                    placeholder="Search"
+                    onChange={(target, newValue) => onSearch(newValue)}
+                    styles={{ root: { width: '300px', margin: '0px 10px 0px 10px' } }}
+                />
+            ),
+        });
+    }
 
     if (filterable) {
         _farItems.push({
@@ -73,13 +95,13 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                     : { ...column };
             });
 
-            applyFilters(newColumns);
+            onApplyFilters(newColumns);
         };
     };
 
     return (
         <div>
-            <CommandBar items={[]} overflowItems={[]} farItems={_farItems} />
+            <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
             <Stack horizontal horizontalAlign="start" wrap styles={chipFilterContainerStyle}>
                 {filteredColumns.map(column => (
                     <ChipFilter key={column.name} column={column} onRemoveFilter={onRemoveFilter(column.name)} />
@@ -89,7 +111,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                 <ToggleColumnsDialog
                     columns={columns}
                     applyColumnsChanges={columns => {
-                        updateVisibleColumns(columns);
+                        onUpdateVisibleColumns(columns);
                     }}
                     close={() => setShowToggleColumns(false)}
                 />
@@ -97,7 +119,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             {showFilters && (
                 <FiltersDialog
                     columns={columns.filter(c => c.filterable)}
-                    applyFilters={applyFilters}
+                    applyFilters={onApplyFilters}
                     close={() => setShowFilters(false)}
                 />
             )}

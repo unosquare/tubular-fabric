@@ -51,7 +51,12 @@ export const useTbFabric = (
     // Reset list is required
     const resetList = () => {
         setListState({ hasNextPage: false, items: getShimmerSlots(tubular.state.itemsPerPage) });
-        tubular.api.goToPage(-1);
+
+        if (tubular.state.page === 0) {
+            tubular.api.setColumns([...tubular.state.columns]);
+        }
+
+        tubular.api.goToPage(0);
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {

@@ -5,12 +5,14 @@ import { Label } from 'office-ui-fabric-react/lib/components/Label/Label';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
 import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
 import { IStackItemStyles } from 'office-ui-fabric-react/lib/components/Stack/StackItem/StackItem.types';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { mergeStyleSets, getTheme } from 'office-ui-fabric-react/lib/Styling';
 
 export interface ISelectionBarProps {
     selection: Selection;
     onRemoveAction: (selection: Selection) => void;
 }
+
+const theme = getTheme();
 
 const classes = mergeStyleSets({
     selectionBar: {
@@ -22,7 +24,7 @@ const classes = mergeStyleSets({
 });
 
 const countLabelStyle: IStackItemStyles = {
-    root: { paddingLeft: 14 },
+    root: { paddingLeft: 14, backgroundColor: theme.palette.white },
 };
 
 export const SelectionBar: React.FunctionComponent<ISelectionBarProps> = ({
