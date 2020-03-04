@@ -49,11 +49,9 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFi
             dialogContentProps={dialogContentProps}
             modalProps={modalProps}
         >
-            {tempColumns
-                .filter(c => c.visible && c.filterable)
-                .map(column => {
-                    return <FilterField key={column.name} column={column} />;
-                })}
+            {tempColumns.map(column => {
+                return <FilterField key={column.name} column={column} />;
+            })}
             <DialogFooter>
                 <PrimaryButton onClick={onClick} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />

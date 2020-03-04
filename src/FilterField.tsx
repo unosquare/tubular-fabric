@@ -4,7 +4,7 @@ import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconBut
 import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextField';
 import { ColumnModel, CompareOperators } from 'tubular-common';
 import { IContextualMenuProps, IContextualMenuItem } from 'office-ui-fabric-react/lib/components/ContextualMenu';
-import { getOperatorIcon } from './utils';
+import { getOperatorIcon, getOperatorText } from './utils';
 import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
 
 export interface IFilterFieldProps {
@@ -18,6 +18,7 @@ const filterFieldWrapperStyles: IStackStyles = {
 const filterButtonStyles: IStackItemStyles = {
     root: { width: '60px' },
 };
+
 export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: IFilterFieldProps) => {
     const { column } = props;
     const [currentIcon, setCurrentIcon] = React.useState({
@@ -30,7 +31,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
             iconName: getOperatorIcon(row.value),
         },
         data: row.value,
-        text: row.title,
+        text: getOperatorText(row.value, row.title),
     }));
 
     const menuProps: IContextualMenuProps = {

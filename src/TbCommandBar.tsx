@@ -96,7 +96,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             )}
             {showFilters && (
                 <FiltersDialog
-                    columns={columns.filter(c => c.filterable && c.visible)}
+                    columns={columns.filter(c => c.filterable)}
                     applyFilters={applyFilters}
                     close={() => setShowFilters(false)}
                 />
