@@ -48,7 +48,7 @@ export const TbDetailsListSample: React.FunctionComponent<any> = () => {
             <TbDetailsList
                 columns={columns}
                 source="https://tubular.azurewebsites.net/api/orders/paged"
-                tbOptions={{
+                options={{
                     deps: [refresh],
                     filterable: true,
                     toggleColumns: true,

@@ -4,7 +4,7 @@ import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/compone
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
 import { TbCommandBar } from './TbCommandBar';
 import { SelectionBar } from './SelectionBar';
-import { Selection, IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
+import { Selection, IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 import { ITbColumn } from './ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common';
 import {
@@ -17,6 +17,7 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
 
 export interface ITbExtendedOptions extends ITbOptions {
+    onRemoveAction?: (selection: Selection) => void;
     filterable: boolean;
     searchable: boolean;
     toggleColumns: boolean;
@@ -26,7 +27,7 @@ export interface ITbExtendedOptions extends ITbOptions {
 export interface ITbDetailsListProps {
     columns: ITbColumn[];
     source: string | Request | TubularHttpClientAbstract | {}[];
-    tbOptions: Partial<ITbExtendedOptions>;
+    options: Partial<ITbExtendedOptions>;
 }
 
 const holderAnimation = keyframes({
@@ -51,8 +52,8 @@ mergeStyles(shimmer);
 mergeStyles(holderAnimation);
 
 const classes = mergeStyleSets({
-    tbContainer: { margin: 'auto', position: 'relative', height: '100%' },
-    tbDetailsList: { overflow: 'auto', height: '500px' },
+    tbContainer: { margin: 'auto', display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
+    tbDetailsList: { overflow: 'auto' },
     shimmerAnimate: {
         animationName: shimmer,
         animationDuration: '2s',
@@ -74,9 +75,9 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
 const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     columns,
     source,
-    tbOptions,
+    options,
 }: ITbDetailsListProps) => {
-    const tbFabricInstance = useTbFabric(columns, source, tbOptions);
+    const tbFabricInstance = useTbFabric(columns, source, options);
 
     const [selectedRowsCount, setSelectedRowsCount] = React.useState(0);
     const [selection] = React.useState(
@@ -112,12 +113,12 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     return (
         <div className={classes.tbContainer}>
-            {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={() => console.log('a')} />}
+            {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
             <TbCommandBar
-                filterable={tbOptions.filterable}
-                searchable={tbOptions.searchable}
-                toggleColumns={tbOptions.toggleColumns}
-                items={tbOptions.commandBarItems}
+                filterable={options.filterable}
+                searchable={options.searchable}
+                toggleColumns={options.toggleColumns}
+                items={options.commandBarItems}
                 columns={tbFabricInstance.state.columns}
                 onSearch={tbFabricInstance.api.search}
                 onApplyFilters={tbFabricInstance.api.applyFilters}
