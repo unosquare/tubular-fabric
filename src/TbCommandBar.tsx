@@ -100,7 +100,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     };
 
     return (
-        <div>
+        <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
             <Stack horizontal horizontalAlign="start" wrap styles={chipFilterContainerStyle}>
                 {filteredColumns.map(column => (
@@ -123,6 +123,6 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                     close={() => setShowFilters(false)}
                 />
             )}
-        </div>
+        </>
     );
 };

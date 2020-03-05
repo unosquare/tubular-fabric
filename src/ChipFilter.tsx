@@ -31,6 +31,7 @@ const operatorIconStyles: IIconStyles = {
 const columnLabelStyles: ITextStyles = {
     root: {
         marginRight: 5,
+        fontWeight: 500,
     },
 };
 
