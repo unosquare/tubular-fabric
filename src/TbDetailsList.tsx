@@ -73,7 +73,7 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
     },
 };
 
-const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
+export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     columns,
     source,
     options,
@@ -138,5 +138,3 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         </div>
     );
 };
-
-export default TbDetailsList;
