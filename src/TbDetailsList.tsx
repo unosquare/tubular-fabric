@@ -28,6 +28,7 @@ export interface ITbDetailsListProps {
     columns: ITbColumn[];
     source: string | Request | TubularHttpClientAbstract | {}[];
     options: Partial<ITbExtendedOptions>;
+    onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
 }
 
 const holderAnimation = keyframes({
@@ -76,6 +77,7 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     columns,
     source,
     options,
+    onRenderItemColumn,
 }: ITbDetailsListProps) => {
     const tbFabricInstance = useTbFabric(columns, source, options);
 
@@ -97,18 +99,16 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
         const newRowProps: IDetailsRowProps = { ...rowProps };
         tbFabricInstance.api.loadMoreItems(index);
-        return (
-            <>
-                <DetailsRow {...newRowProps} item={DEFAULT_MISSING_ITEM} styles={shimmerWrapper} />
-            </>
-        );
+
+        return <DetailsRow {...newRowProps} item={DEFAULT_MISSING_ITEM} styles={shimmerWrapper} />;
     };
 
-    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
+    const onInternalRenderItemColumn = (item: any, index: number, column: IColumn) => {
         if (item.value === '-1') {
             return <div className={classes.shimmerAnimate}></div>;
         }
-        return <span>{item[column.fieldName]}</span>;
+
+        return onRenderItemColumn ? onRenderItemColumn(item, index, column) : <span>{item[column.fieldName]}</span>;
     };
 
     return (
@@ -127,7 +127,7 @@ const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
             <div className={classes.tbDetailsList} data-is-scrollable="true">
                 <DetailsList
                     selection={selection}
-                    onRenderItemColumn={onRenderItemColumn}
+                    onRenderItemColumn={onInternalRenderItemColumn}
                     items={tbFabricInstance.state.list.items}
                     columns={tbFabricInstance.state.fabricColumns}
                     onRenderMissingItem={handleMissingItems}
