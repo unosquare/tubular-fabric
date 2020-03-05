@@ -6,7 +6,9 @@ export const columns: ITbColumn[] = [
         key: 'OrderID',
         name: 'Order ID',
         fieldName: 'OrderID',
-        minWidth: 100,
+        minWidth: 50,
+        maxWidth: 130,
+        isResizable: true,
         tb: {
             isKey: true,
             dataType: ColumnDataType.Numeric,
@@ -17,7 +19,8 @@ export const columns: ITbColumn[] = [
         key: 'CustomerName',
         name: 'Customer Name',
         fieldName: 'CustomerName',
-        minWidth: 100,
+        minWidth: 120,
+        maxWidth: 200,
         tb: {
             dataType: ColumnDataType.String,
             sortable: true,
@@ -28,7 +31,8 @@ export const columns: ITbColumn[] = [
         key: 'ShipperCity',
         name: 'Shipper City',
         fieldName: 'ShipperCity',
-        minWidth: 100,
+        minWidth: 120,
+        maxWidth: 200,
         tb: {
             dataType: ColumnDataType.String,
             sortable: true,
@@ -39,7 +43,8 @@ export const columns: ITbColumn[] = [
         key: 'Amount',
         name: 'Amount asdf asdsa',
         fieldName: 'Amount',
-        minWidth: 100,
+        minWidth: 120,
+        maxWidth: 200,
         tb: {
             dataType: ColumnDataType.Numeric,
             sortable: true,

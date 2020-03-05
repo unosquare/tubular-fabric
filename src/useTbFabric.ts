@@ -1,10 +1,17 @@
 import { ITbColumn } from './ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common/dist/Http';
 import { ITbOptions } from 'tubular-react-common/dist/types';
-import { ColumnModel, ColumnSortDirection } from 'tubular-common/dist/Models';
+import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+
+const getShimmerSlots = (itemCount): any[] => {
+    const initialShimmerItems = [];
+    [...Array(itemCount)].forEach(() => initialShimmerItems.push(null));
+
+    return initialShimmerItems;
+};
 
 export const useTbFabric = (
     initColumns: ITbColumn[],
@@ -12,32 +19,43 @@ export const useTbFabric = (
     tubularOptions?: Partial<ITbOptions>,
 ) => {
     const tbInitColumns = initColumns.map(column => {
-        return new ColumnModel(column.fieldName, {
+        const tbColumn = new ColumnModel(column.fieldName, {
             dataType: column.tb.dataType,
-            filterable: column.tb.filterable ? column.tb.filterable : false,
+            filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
             isKey: column.tb.isKey ? column.tb.isKey : false,
             label: column.name ? column.name : (column.fieldName || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
             searchable: column.tb.searchable ? column.tb.searchable : false,
             sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,
             sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
             sortable: column.tb.sortable ? column.tb.sortable : false,
-            visible: column.tb.visible ? column.tb.visible : false,
+            visible: column.tb.hasOwnProperty('visible') ? column.tb.visible : true,
         });
+
+        column.tb = { ...tbColumn };
+
+        return tbColumn;
     });
 
+    const { deps, ...rest } = tubularOptions;
+
     const memoTbColumns = React.useMemo(() => tbInitColumns, [initColumns]);
-    const tubular = useTubular(memoTbColumns, source, tubularOptions);
-    const [fabricColumns, setFabricColumns] = React.useState(initColumns.filter(column => column.tb.visible !== false));
+    const tubular = useTubular(memoTbColumns, source, rest);
+    const [fabricColumns, setFabricColumns] = React.useState(initColumns);
     const [list, setListState] = React.useState({
         hasNextPage: false,
         // We need to hold all the items that we have loaded
         // This will be a cumulated of all of the rows from tubular instance
-        items: [],
+        items: getShimmerSlots(tubular.state.itemsPerPage),
     });
 
     // Reset list is required
     const resetList = () => {
-        setListState({ hasNextPage: false, items: [] });
+        setListState({ hasNextPage: false, items: getShimmerSlots(tubular.state.itemsPerPage) });
+
+        if (tubular.state.page === 0) {
+            tubular.api.setColumns([...tubular.state.columns]);
+        }
+
         tubular.api.goToPage(0);
     };
 
@@ -71,11 +89,55 @@ export const useTbFabric = (
         tubular.api.updateSearchText(value);
     };
 
+    const updateVisibleColumns = (columns: ColumnModel[]) => {
+        const newFabricColumns = [...fabricColumns];
+        columns.forEach(tbColumn => {
+            const fabricColumn = newFabricColumns.find(c => c.fieldName === tbColumn.name);
+            fabricColumn.tb.visible = tbColumn.visible;
+        });
+
+        setFabricColumns(newFabricColumns);
+        tubular.api.setColumns([...columns]);
+    };
+
     const loadMoreItems = (index?: number) => {
-        const pageToLoad = index / tubular.state.itemsPerPage;
-        if (!tubular.state.isLoading && pageToLoad >= tubular.state.page) {
+        // Tubular core will load the first page by default
+        // That's why we don't need to do any call for the first
+        // page set
+        if (index < tubular.state.itemsPerPage) {
+            return;
+        }
+
+        const pageToLoad = Math.ceil(index / tubular.state.itemsPerPage) - 1;
+        if (!tubular.state.isLoading && pageToLoad > tubular.state.page) {
             tubular.api.goToPage(pageToLoad);
         }
+    };
+
+    const applyFilters = (filterableColumns: ColumnModel[]) => {
+        const columns = [...tubular.state.columns];
+
+        filterableColumns.forEach(fColumn => {
+            const column = columns.find((c: ColumnModel) => c.name === fColumn.name);
+
+            if (fColumn.hasFilter) {
+                column.hasFilter = true;
+                column.filter = {
+                    ...fColumn.filter,
+                };
+            } else {
+                column.hasFilter = false;
+                column.filter = {
+                    text: '',
+                    operator: CompareOperators.None,
+                    argument: [],
+                    hasFilter: false,
+                };
+            }
+        });
+
+        resetList();
+        tubular.api.setColumns([...columns]);
     };
 
     const fabricColumnsMapper = item => {
@@ -95,13 +157,18 @@ export const useTbFabric = (
 
     React.useEffect(() => {
         setListState(state => {
+            // We don't want to override the state for shimmer
+            if (tubular.state.data.length === 0 && tubular.state.totalRecordCount === 0) {
+                return state;
+            }
+
             const mapped = tubular.state.data.map(fabricColumnsMapper);
 
-            const newItems = [...state.items].slice(0, -1).concat(mapped);
+            let newItems = [...state.items].slice(0, -1 * tubular.state.itemsPerPage).concat(mapped);
             let hasNextPage = false;
 
-            if (state.items.length + tubular.state.data.length < tubular.state.filteredRecordCount) {
-                newItems.push(null);
+            if (newItems.length < tubular.state.filteredRecordCount) {
+                newItems = newItems.concat(getShimmerSlots(tubular.state.itemsPerPage));
                 hasNextPage = true;
             }
 
@@ -112,6 +179,12 @@ export const useTbFabric = (
         });
     }, [tubular.state.data]);
 
+    const listDeps = deps || [];
+
+    React.useEffect(() => {
+        resetList();
+    }, listDeps);
+
     return {
         // API fort a list should be simpler than
         // the one used for a grid
@@ -119,11 +192,13 @@ export const useTbFabric = (
             loadMoreItems,
             search,
             sortByColumn,
+            applyFilters,
+            updateVisibleColumns,
         },
         state: {
             ...tubular.state,
             list,
-            fabricColumns,
+            fabricColumns: fabricColumns.filter(c => c.tb.visible),
         },
     };
 };

@@ -44,15 +44,15 @@
   },
   "homepage": "https://github.com/unosquare/tubular-fabric#readme",
   "dependencies": {
-    "office-ui-fabric-react": "^7.97.1",
-    "tubular-common": "^3.1.9",
-    "tubular-react-common": "1.0.17"
+    "office-ui-fabric-react": "^7.99.0",
+    "tubular-common": "^3.1.10",
+    "tubular-react-common": "1.0.18"
   },
   "devDependencies": {
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
-    "@typescript-eslint/eslint-plugin": "^2.21.0",
-    "@typescript-eslint/parser": "^2.21.0",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
+    "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -62,7 +62,7 @@
     "prettier": "^1.19.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.3"
   },
   "parcelCleanPaths": [
     "docs/*.*",
