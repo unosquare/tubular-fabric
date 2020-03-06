@@ -21,7 +21,7 @@ export interface ITbExtendedOptions extends ITbOptions {
     filterable: boolean;
     searchable: boolean;
     toggleColumns: boolean;
-    showCommandBar: boolean;
+    hiddeCommandBar: boolean;
     commandBarItems?: ICommandBarItemProps[];
 }
 
@@ -120,7 +120,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     return (
         <div className={classes.tbContainer}>
             {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
-            {options.showCommandBar && (
+            {!options.hiddeCommandBar && (
                 <TbCommandBar
                     filterable={options.filterable}
                     searchable={options.searchable}
