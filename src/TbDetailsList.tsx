@@ -85,7 +85,12 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     const [selection] = React.useState(
         new Selection({
             onSelectionChanged: () => {
-                setSelectedRowsCount(selection.getSelectedCount());
+                // TODO: Check why this is being called on initial render
+                // but not being called on fabric sample
+                // see: https://developer.microsoft.com/en-us/fabric#/controls/web/detailslist
+                if (selectedRowsCount !== selection.getSelectedCount()) {
+                    setSelectedRowsCount(selection.getSelectedCount());
+                }
             },
         }),
     );

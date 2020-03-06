@@ -8,7 +8,7 @@ import { ChipFilter } from './ChipFilter';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
-import { IStackStyles } from 'office-ui-fabric-react';
+import { IStackStyles, ISearchBoxStyles } from 'office-ui-fabric-react';
 
 registerTbIcons();
 
@@ -24,6 +24,7 @@ export interface TbCommandBarProps {
 }
 
 const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };
+const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     columns,
@@ -46,12 +47,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'search',
             // eslint-disable-next-line react/display-name
             onRender: () => (
-                <SearchBox
-                    underlined={true}
-                    placeholder="Search"
-                    onSearch={newValue => onSearch(newValue)}
-                    styles={{ root: { width: '300px', margin: '0px 10px 0px 10px' } }}
-                />
+                <SearchBox underlined={true} placeholder="Search" onSearch={onSearch} styles={searchBoxStyles} />
             ),
         });
     }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TbDetailsList from '../../src/TbDetailsList';
+import { TbDetailsList } from '../../src/TbDetailsList';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
