@@ -21,6 +21,7 @@ export interface ITbExtendedOptions extends ITbOptions {
     filterable: boolean;
     searchable: boolean;
     toggleColumns: boolean;
+    showCommandBar: boolean;
     commandBarItems?: ICommandBarItemProps[];
 }
 
@@ -119,16 +120,18 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     return (
         <div className={classes.tbContainer}>
             {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
-            <TbCommandBar
-                filterable={options.filterable}
-                searchable={options.searchable}
-                toggleColumns={options.toggleColumns}
-                items={options.commandBarItems}
-                columns={tbFabricInstance.state.columns}
-                onSearch={tbFabricInstance.api.search}
-                onApplyFilters={tbFabricInstance.api.applyFilters}
-                onUpdateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
-            />
+            {options.showCommandBar && (
+                <TbCommandBar
+                    filterable={options.filterable}
+                    searchable={options.searchable}
+                    toggleColumns={options.toggleColumns}
+                    items={options.commandBarItems}
+                    columns={tbFabricInstance.state.columns}
+                    onSearch={tbFabricInstance.api.search}
+                    onApplyFilters={tbFabricInstance.api.applyFilters}
+                    onUpdateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
+                />
+            )}
             <div className={classes.tbDetailsList} data-is-scrollable="true">
                 <DetailsList
                     selection={selection}
