@@ -49,7 +49,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                 <SearchBox
                     underlined={true}
                     placeholder="Search"
-                    onChange={(target, newValue) => onSearch(newValue)}
+                    onSearch={newValue => onSearch(newValue)}
                     styles={{ root: { width: '300px', margin: '0px 10px 0px 10px' } }}
                 />
             ),
