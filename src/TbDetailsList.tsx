@@ -1,22 +1,20 @@
 import * as React from 'react';
-import { useTbFabric } from './useTbFabric';
+import { ITbFabricInstance } from './useTbFabric';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
 import { TbCommandBar } from './TbCommandBar';
 import { SelectionBar } from './SelectionBar';
-import { Selection, IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
-import { ITbColumn } from './ITbColumn';
-import { TubularHttpClientAbstract } from 'tubular-common';
+import { Selection, IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 import {
     IDetailsRowStyleProps,
     IDetailsRowStyles,
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { ITbExtendedOptions } from './TbGrid';
 
 export interface ITbDetailsListProps {
-    columns: ITbColumn[];
-    source: string | Request | TubularHttpClientAbstract | {}[];
+    tbFabricInstance: ITbFabricInstance;
     options: Partial<ITbExtendedOptions>;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
 }
@@ -64,13 +62,10 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
 };
 
 export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
-    columns,
-    source,
+    tbFabricInstance,
     options,
     onRenderItemColumn,
 }: ITbDetailsListProps) => {
-    const tbFabricInstance = useTbFabric(columns, source, options);
-
     const [selectedRowsCount, setSelectedRowsCount] = React.useState(0);
     const [selection] = React.useState(
         new Selection({
@@ -108,7 +103,9 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     return (
         <div className={classes.tbContainer}>
-            {selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
+            {options.selectionMode && options.selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
+                <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />
+            )}
             {!options.hiddeCommandBar && (
                 <TbCommandBar
                     filterable={options.filterable}
@@ -130,6 +127,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
                     onRenderMissingItem={handleMissingItems}
                     selectionPreservedOnEmptyClick={true}
                     onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
+                    selectionMode={options.selectionMode || SelectionMode.none}
                 />
             </div>
         </div>

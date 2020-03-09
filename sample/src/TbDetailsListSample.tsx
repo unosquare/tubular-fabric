@@ -3,10 +3,16 @@ import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
+import { useTbFabric } from '../../src/useTbFabric';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
     const onForceRefresh = () => forceRefresh();
+    const tbFabricInstance = useTbFabric(columns, "https://tubular.azurewebsites.net/api/orders/paged",{
+        deps: [refresh],
+        pagination: {
+            itemsPerPage: 100,
+        }});
 
     const commandItems: ICommandBarItemProps[] = [
         {
@@ -46,8 +52,7 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
                 </button>
             </div>
             <TbGrid
-                columns={columns}
-                source="https://tubular.azurewebsites.net/api/orders/paged"
+                instance={tbFabricInstance}
                 options={{
                     deps: [refresh],
                     filterable: true,

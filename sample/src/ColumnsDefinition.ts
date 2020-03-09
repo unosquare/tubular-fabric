@@ -1,5 +1,5 @@
 import { ColumnDataType } from 'tubular-common';
-import { ITbColumn } from '../../src/ITbColumn';
+import { ITbColumn } from '../../src/interfaces/ITbColumn';
 
 export const columns: ITbColumn[] = [
     {

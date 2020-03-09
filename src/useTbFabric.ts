@@ -1,10 +1,11 @@
-import { ITbColumn } from './ITbColumn';
+import { ITbColumn } from './interfaces/ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common/dist/Http';
 import { ITbOptions } from 'tubular-react-common/dist/types';
 import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 
 const getShimmerSlots = (itemCount): any[] => {
     const initialShimmerItems = [];
@@ -17,7 +18,7 @@ export const useTbFabric = (
     initColumns: ITbColumn[],
     source: string | Request | TubularHttpClientAbstract | {}[],
     tubularOptions?: Partial<ITbOptions>,
-) => {
+): ITbFabricInstance => {
     const tbInitColumns = initColumns.map(column => {
         const tbColumn = new ColumnModel(column.fieldName, {
             dataType: column.tb.dataType,
@@ -200,5 +201,5 @@ export const useTbFabric = (
             list,
             fabricColumns: fabricColumns.filter(c => c.tb.visible),
         },
-    };
+    } as ITbFabricInstance;
 };
