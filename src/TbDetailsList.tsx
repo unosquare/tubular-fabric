@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ITbFabricInstance } from './useTbFabric';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
 import { TbCommandBar } from './TbCommandBar';
@@ -12,6 +11,7 @@ import {
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ITbExtendedOptions } from './TbGrid';
+import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 
 export interface ITbDetailsListProps {
     tbFabricInstance: ITbFabricInstance;
