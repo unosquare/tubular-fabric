@@ -41,7 +41,6 @@ mergeStyles(shimmer);
 mergeStyles(holderAnimation);
 
 const classes = mergeStyleSets({
-    tbContainer: { margin: 'auto', display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
     tbDetailsList: { overflow: 'auto' },
     shimmerAnimate: {
         animationName: shimmer,
@@ -102,8 +101,8 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     };
 
     return (
-        <div className={classes.tbContainer}>
             <div className={classes.tbDetailsList} data-is-scrollable="true">
+                {(options.selectionMode && options.selectionMode !== SelectionMode.none) && selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
                 <DetailsList
                     selection={selection}
                     onRenderItemColumn={onInternalRenderItemColumn}
@@ -115,6 +114,5 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
                     selectionMode={options.selectionMode || SelectionMode.none}
                 />
             </div>
-        </div>
     );
 };
