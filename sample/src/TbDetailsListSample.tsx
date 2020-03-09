@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { TbDetailsList } from '../../src/TbDetailsList';
+import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
 
-export const TbDetailsListSample: React.FunctionComponent<any> = () => {
+export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
     const onForceRefresh = () => forceRefresh();
 
@@ -45,7 +45,7 @@ export const TbDetailsListSample: React.FunctionComponent<any> = () => {
                     Force refresh
                 </button>
             </div>
-            <TbDetailsList
+            <TbGrid
                 columns={columns}
                 source="https://tubular.azurewebsites.net/api/orders/paged"
                 options={{

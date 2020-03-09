@@ -5,5 +5,6 @@ export * from './ITbColumn';
 export * from './SelectionBar';
 export * from './TbCommandBar';
 export * from './TbDetailsList';
+export * from './TbGrid';
 export * from './useTbFabric';
 export * from './utils';

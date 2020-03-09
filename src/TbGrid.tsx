@@ -12,9 +12,20 @@ import {
     IDetailsRowStyles,
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
 
-export interface ITbDetailsListProps {
+export interface ITbExtendedOptions extends ITbOptions {
+    onRemoveAction?: (selection: Selection) => void;
+    filterable: boolean;
+    searchable: boolean;
+    toggleColumns: boolean;
+    hiddeCommandBar: boolean;
+    commandBarItems?: ICommandBarItemProps[];
+}
+
+export interface ITbGridProps {
     columns: ITbColumn[];
     source: string | Request | TubularHttpClientAbstract | {}[];
     options: Partial<ITbExtendedOptions>;
@@ -63,12 +74,12 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
     },
 };
 
-export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
+export const TbGrid: React.FunctionComponent<ITbDetailsListProps> = ({
     columns,
     source,
     options,
     onRenderItemColumn,
-}: ITbDetailsListProps) => {
+}: ITbGridProps) => {
     const tbFabricInstance = useTbFabric(columns, source, options);
 
     const [selectedRowsCount, setSelectedRowsCount] = React.useState(0);
