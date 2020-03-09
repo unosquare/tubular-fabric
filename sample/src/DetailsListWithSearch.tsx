@@ -4,7 +4,6 @@ import { columns } from './ColumnsDefinition';
 import { IDetailsRowProps } from 'office-ui-fabric-react';
 import { useTbFabric } from '../../src/useTbFabric';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
 const exampleChildClass = mergeStyles({
