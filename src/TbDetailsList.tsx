@@ -103,21 +103,6 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     return (
         <div className={classes.tbContainer}>
-            {options.selectionMode && options.selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
-                <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />
-            )}
-            {!options.hiddeCommandBar && (
-                <TbCommandBar
-                    filterable={options.filterable}
-                    searchable={options.searchable}
-                    toggleColumns={options.toggleColumns}
-                    items={options.commandBarItems}
-                    columns={tbFabricInstance.state.columns}
-                    onSearch={tbFabricInstance.api.search}
-                    onApplyFilters={tbFabricInstance.api.applyFilters}
-                    onUpdateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
-                />
-            )}
             <div className={classes.tbDetailsList} data-is-scrollable="true">
                 <DetailsList
                     selection={selection}
