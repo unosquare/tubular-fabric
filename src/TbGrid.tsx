@@ -11,7 +11,6 @@ export interface ITbExtendedOptions extends ITbOptions {
     filterable: boolean;
     searchable: boolean;
     toggleColumns: boolean;
-    hiddeCommandBar: boolean;
     commandBarItems?: ICommandBarItemProps[];
     selectionMode?: number;
 }
