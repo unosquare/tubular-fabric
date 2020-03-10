@@ -46,18 +46,16 @@ export interface IChipFilterProps {
     onRemoveFilter: (columnName: string) => void;
 }
 
-export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => {
-    return (
-        <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
-            <Text styles={columnLabelStyles}>{column.label}</Text>
-            <Icon styles={operatorIconStyles} iconName={getOperatorIcon(column.filter.operator as CompareOperators)} />
-            <Text styles={filterValueStyles}>{column.filter.text}</Text>
-            <IconButton
-                onClick={() => onRemoveFilter(column.name)}
-                iconProps={closeIcon}
-                title="Remove Filter"
-                ariaLabel="Remove Filter"
-            />
-        </Stack>
-    );
-};
+export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => (
+    <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
+        <Text styles={columnLabelStyles}>{column.label}</Text>
+        <Icon styles={operatorIconStyles} iconName={getOperatorIcon(column.filter.operator as CompareOperators)} />
+        <Text styles={filterValueStyles}>{column.filter.text}</Text>
+        <IconButton
+            onClick={() => onRemoveFilter(column.name)}
+            iconProps={closeIcon}
+            title="Remove Filter"
+            ariaLabel="Remove Filter"
+        />
+    </Stack>
+);

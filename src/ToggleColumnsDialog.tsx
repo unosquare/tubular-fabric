@@ -59,8 +59,7 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
                 dragOptions: undefined,
             }}
         >
-            {tempColumns.map(column => {
-                return (
+            {tempColumns.map(column => (
                     <Toggle
                         key={column.name}
                         label={column.label}
@@ -68,9 +67,7 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
                         onText="On"
                         offText="Off"
                         onChange={handleChange(column)}
-                    />
-                );
-            })}
+                    />)}
             <DialogFooter>
                 <PrimaryButton onClick={onApply} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />

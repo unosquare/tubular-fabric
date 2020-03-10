@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
-import { TbCommandBar } from './TbCommandBar';
 import { SelectionBar } from './SelectionBar';
 import { Selection, IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 import {
@@ -18,6 +17,12 @@ export interface ITbDetailsListProps {
     options: Partial<ITbExtendedOptions>;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
 }
+
+export const DEFAULT_MISSING_ITEM = {
+    key: 'missing',
+    name: 'Missing Item',
+    value: '-1',
+};
 
 const holderAnimation = keyframes({
     '0%': {
@@ -80,12 +85,6 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     );
 
     const handleMissingItems = (index?: number, rowProps?: IDetailsRowProps): React.ReactNode => {
-        const DEFAULT_MISSING_ITEM = {
-            key: 'missing',
-            name: 'Missing Item',
-            value: '-1',
-        };
-
         const newRowProps: IDetailsRowProps = { ...rowProps };
         tbFabricInstance.api.loadMoreItems(index);
 
@@ -101,18 +100,20 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     };
 
     return (
-            <div className={classes.tbDetailsList} data-is-scrollable="true">
-                {(options.selectionMode && options.selectionMode !== SelectionMode.none) && selectedRowsCount > 0 && <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />}
-                <DetailsList
-                    selection={selection}
-                    onRenderItemColumn={onInternalRenderItemColumn}
-                    items={tbFabricInstance.state.list.items}
-                    columns={tbFabricInstance.state.fabricColumns}
-                    onRenderMissingItem={handleMissingItems}
-                    selectionPreservedOnEmptyClick={true}
-                    onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
-                    selectionMode={options.selectionMode || SelectionMode.none}
-                />
-            </div>
+        <div className={classes.tbDetailsList} data-is-scrollable="true">
+            {options.selectionMode && options.selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
+                <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />
+            )}
+            <DetailsList
+                selection={selection}
+                onRenderItemColumn={onInternalRenderItemColumn}
+                items={tbFabricInstance.state.list.items}
+                columns={tbFabricInstance.state.fabricColumns}
+                onRenderMissingItem={handleMissingItems}
+                selectionPreservedOnEmptyClick={true}
+                onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
+                selectionMode={options.selectionMode || SelectionMode.none}
+            />
+        </div>
     );
 };

@@ -95,6 +95,9 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
         };
     };
 
+    const closeToggleColumns = () => setShowToggleColumns(false);
+    const closeFilter = () => setShowFilters(false);
+
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
@@ -109,14 +112,14 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                     applyColumnsChanges={columns => {
                         onUpdateVisibleColumns(columns);
                     }}
-                    close={() => setShowToggleColumns(false)}
+                    close={closeToggleColumns}
                 />
             )}
             {showFilters && (
                 <FiltersDialog
                     columns={columns.filter(c => c.filterable)}
                     applyFilters={onApplyFilters}
-                    close={() => setShowFilters(false)}
+                    close={closeFilter}
                 />
             )}
         </>

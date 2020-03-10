@@ -18,7 +18,7 @@ const wrapSvg = (svgInner: JSX.Element, isStringOperator = true) => {
     );
 };
 
-export const getOperatorText = (value, title) => {
+export const getOperatorText = (value: CompareOperators, title: string) => {
     switch (value) {
         case CompareOperators.NotContains:
         case CompareOperators.Contains:

@@ -7,7 +7,7 @@ import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 
-const getShimmerSlots = (itemCount): any[] => {
+const getShimmerSlots = (itemCount: number): any[] => {
     const initialShimmerItems = [];
     [...Array(itemCount)].forEach(() => initialShimmerItems.push(null));
 
