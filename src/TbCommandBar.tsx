@@ -13,9 +13,10 @@ import { IStackStyles, ISearchBoxStyles } from 'office-ui-fabric-react';
 registerTbIcons();
 
 export interface TbCommandBarProps {
+    isLoading: boolean;
     columns: ColumnModel[];
     onApplyFilters: (columns: ColumnModel[]) => void;
-    onSearch: (value: string) => void;
+    onSearch: (value?: string) => void;
     onUpdateVisibleColumns: (columns: ColumnModel[]) => void;
     filterable?: boolean;
     searchable?: boolean;
@@ -27,6 +28,7 @@ const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };
 const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
+    isLoading,
     columns,
     onUpdateVisibleColumns,
     onApplyFilters,
@@ -41,13 +43,21 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     const filteredColumns = columns.filter(c => c.hasFilter && c.filterable);
 
     const _farItems: ICommandBarItemProps[] = [];
+    const onClear = () => onSearch();
 
     if (searchable) {
         _farItems.push({
             key: 'search',
             // eslint-disable-next-line react/display-name
             onRender: () => (
-                <SearchBox underlined={true} placeholder="Search" onSearch={onSearch} styles={searchBoxStyles} />
+                <SearchBox
+                    disabled={isLoading}
+                    underlined={true}
+                    placeholder="Search"
+                    onSearch={onSearch}
+                    onClear={onClear}
+                    styles={searchBoxStyles}
+                />
             ),
         });
     }
@@ -57,6 +67,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'toggleColumns',
             text: 'Toggle Columns',
             ariaLabel: 'Toggle Columns',
+            disabled: isLoading,
             iconOnly: true,
             iconProps: { iconName: 'TripleColumn' },
             onClick: () => setShowToggleColumns(!showToggleColumns),
@@ -68,6 +79,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'filter',
             text: 'Filter',
             ariaLabel: 'Filter',
+            disabled: isLoading,
             iconOnly: true,
             iconProps: { iconName: 'Filter' },
             onClick: () => setShowFilters(!showFilters),
@@ -76,8 +88,8 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
 
     const onRemoveFilter = (columnName: string) => {
         return () => {
-            const newColumns = columns.map(column => {
-                return column.name === columnName
+            const newColumns = columns.map(column =>
+                column.name === columnName
                     ? {
                           ...column,
                           hasFilter: false,
@@ -88,8 +100,8 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                               hasFilter: false,
                           },
                       }
-                    : { ...column };
-            });
+                    : { ...column },
+            );
 
             onApplyFilters(newColumns);
         };

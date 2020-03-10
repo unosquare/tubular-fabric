@@ -37,12 +37,13 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
     options,
     onRenderItemColumn,
 }: ITbGridProps) => {
-    const tbFabricInstance = useTbFabric(columns, source, options);
+    const tbFabricInstance = useTbFabric(columns, source, options); 
 
     return (
         <div className={classes.tbContainer}>
             {!options.hiddeCommandBar && (
                 <TbCommandBar
+                    isLoading={tbFabricInstance.state.isLoading}
                     filterable={options.filterable}
                     searchable={options.searchable}
                     toggleColumns={options.toggleColumns}
