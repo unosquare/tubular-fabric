@@ -5,20 +5,27 @@ import { Toggle } from 'office-ui-fabric-react/lib/components/Toggle/Toggle';
 import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/DialogFooter';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
 import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button/DefaultButton/DefaultButton';
-import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
+import { DialogType, IDialogContentProps } from 'office-ui-fabric-react/lib/components/Dialog';
 
 export interface IToggleColumnsDialog {
     columns: ColumnModel[];
     applyColumnsChanges: (columns: ColumnModel[]) => void;
     close: () => void;
 }
+
+const dialogContentProps: IDialogContentProps = {
+    type: DialogType.largeHeader,
+    title: 'Toggle Columns',
+    closeButtonAriaLabel: 'Close',
+};
+
 export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> = (props: IToggleColumnsDialog) => {
     const { columns, applyColumnsChanges, close } = props;
     const copyOfCoumns = [...columns];
 
     const [tempColumns, setTempColumns] = React.useState(copyOfCoumns);
 
-    const handleChange = column => (ev: React.MouseEvent<HTMLElement>, checked: boolean) => {
+    const handleChange = (column: ColumnModel) => (ev: React.MouseEvent<HTMLElement>, checked: boolean) => {
         if (!checked && tempColumns.filter(c => !c.visible).length === tempColumns.length - 1) {
             return;
         }
@@ -42,15 +49,13 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
         close();
     };
 
+    const onDismiss = () => close();
+
     return (
         <Dialog
             hidden={false}
-            onDismiss={() => close()}
-            dialogContentProps={{
-                type: DialogType.normal,
-                title: 'Toggle Columns',
-                closeButtonAriaLabel: 'Close',
-            }}
+            onDismiss={onDismiss}
+            dialogContentProps={dialogContentProps}
             modalProps={{
                 titleAriaId: this._labelId,
                 subtitleAriaId: this._subTextId,

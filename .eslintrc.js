@@ -18,6 +18,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/prop-types": "off",
+        "react/prop-types": "off",
     },
     settings: {
         react: {

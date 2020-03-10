@@ -9,7 +9,7 @@ import { DialogType, IDialogContentProps } from 'office-ui-fabric-react/lib/comp
 import { IModalProps } from 'office-ui-fabric-react/lib/components/Modal';
 
 const dialogContentProps: IDialogContentProps = {
-    type: DialogType.normal,
+    type: DialogType.largeHeader,
     title: 'Filters',
     closeButtonAriaLabel: 'Close',
 };
@@ -42,16 +42,13 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFi
         close();
     };
 
+    const onDismiss = () => close();
+
     return (
-        <Dialog
-            hidden={false}
-            onDismiss={() => close()}
-            dialogContentProps={dialogContentProps}
-            modalProps={modalProps}
-        >
-            {tempColumns.map(column => {
-                return <FilterField key={column.name} column={column} />;
-            })}
+        <Dialog hidden={false} onDismiss={onDismiss} dialogContentProps={dialogContentProps} modalProps={modalProps}>
+            {tempColumns.map(column => (
+                <FilterField key={column.name} column={column} />
+            ))}
             <DialogFooter>
                 <PrimaryButton onClick={onClick} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />

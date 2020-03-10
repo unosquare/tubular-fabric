@@ -77,8 +77,8 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     if (toggleColumns) {
         _farItems.push({
             key: 'filter',
-            text: 'Filter',
-            ariaLabel: 'Filter',
+            text: 'Filters',
+            ariaLabel: 'Filters',
             disabled: isLoading,
             iconOnly: true,
             iconProps: { iconName: 'Filter' },
