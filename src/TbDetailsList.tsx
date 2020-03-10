@@ -9,12 +9,12 @@ import {
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { ITbExtendedOptions } from './TbGrid';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 
 export interface ITbDetailsListProps {
     tbFabricInstance: ITbFabricInstance;
-    options: Partial<ITbExtendedOptions>;
+    selectionMode?: number;
+    onRemoveAction?: (selection: Selection) => void;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
 }
 
@@ -67,7 +67,8 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
 
 export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     tbFabricInstance,
-    options,
+    selectionMode,
+    onRemoveAction,
     onRenderItemColumn,
 }: ITbDetailsListProps) => {
     const [selectedRowsCount, setSelectedRowsCount] = React.useState(0);
@@ -101,8 +102,8 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     return (
         <div className={classes.tbDetailsList} data-is-scrollable="true">
-            {options.selectionMode && options.selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
-                <SelectionBar selection={selection} onRemoveAction={options.onRemoveAction} />
+            {selectionMode && selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
+                <SelectionBar selection={selection} onRemoveAction={onRemoveAction} />
             )}
             <DetailsList
                 selection={selection}
@@ -112,7 +113,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
                 onRenderMissingItem={handleMissingItems}
                 selectionPreservedOnEmptyClick={true}
                 onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
-                selectionMode={options.selectionMode || SelectionMode.none}
+                selectionMode={selectionMode || SelectionMode.none}
             />
         </div>
     );

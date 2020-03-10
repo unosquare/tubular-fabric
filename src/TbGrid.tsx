@@ -55,7 +55,8 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
             )}
             <TbDetailsList
                 tbFabricInstance={tbFabricInstance}
-                options={options}
+                selectionMode={options.selectionMode}
+                onRemoveAction={options.onRemoveAction}
                 onRenderItemColumn={onRenderItemColumn}
             />
         </div>
