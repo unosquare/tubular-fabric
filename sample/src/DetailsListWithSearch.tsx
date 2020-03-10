@@ -3,7 +3,7 @@ import { columns } from './ColumnsDefinition';
 import { useTbFabric } from '../../src/useTbFabric';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
-import { TbGrid } from '../../src/TbGrid';
+import { TbDetailsList } from '../../src/TbDetailsList';
 
 const exampleChildClass = mergeStyles({
     display: 'block',
@@ -26,7 +26,7 @@ const DetailsListWithSearch: React.FunctionComponent<any> = () => {
                 onChange={onSearch}
                 styles={{ root: { maxWidth: '300px' } }}
             />
-            <TbGrid
+            <TbDetailsList
                 instance={tbFabricInstance}
                 options={{
                     filterable: true,
