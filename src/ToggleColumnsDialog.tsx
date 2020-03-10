@@ -60,14 +60,15 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
             }}
         >
             {tempColumns.map(column => (
-                    <Toggle
-                        key={column.name}
-                        label={column.label}
-                        checked={column.visible}
-                        onText="On"
-                        offText="Off"
-                        onChange={handleChange(column)}
-                    />)}
+                <Toggle
+                    key={column.name}
+                    label={column.label}
+                    checked={column.visible}
+                    onText="On"
+                    offText="Off"
+                    onChange={handleChange(column)}
+                />
+            ))}
             <DialogFooter>
                 <PrimaryButton onClick={onApply} text="Apply" />
                 <DefaultButton onClick={close} text="Cancel" />
