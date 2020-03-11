@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
-import { ColumnModel, CompareOperators } from 'tubular-common';
+import { ColumnModel } from 'tubular-common';
 import { FiltersDialog } from './FiltersDialog';
+import { ChipBar } from './ChipBar';
 import { registerTbIcons } from './utils';
-import { ChipFilter } from './ChipFilter';
-import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
-import { IStackStyles, ISearchBoxStyles } from 'office-ui-fabric-react';
+import { ISearchBoxStyles } from 'office-ui-fabric-react';
 
 registerTbIcons();
 
@@ -24,7 +23,6 @@ export interface TbCommandBarProps {
     items?: ICommandBarItemProps[];
 }
 
-const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };
 const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
@@ -40,7 +38,6 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
 }: TbCommandBarProps) => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [showToggleColumns, setShowToggleColumns] = React.useState(false);
-    const filteredColumns = columns.filter(c => c.hasFilter && c.filterable);
 
     const _farItems: ICommandBarItemProps[] = [];
     const onClear = () => onSearch();
@@ -86,44 +83,18 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
         });
     }
 
-    const onRemoveFilter = (columnName: string) => {
-        return () => {
-            const newColumns = columns.map(column =>
-                column.name === columnName
-                    ? {
-                          ...column,
-                          hasFilter: false,
-                          filter: {
-                              operator: CompareOperators.None,
-                              text: '',
-                              argument: [],
-                              hasFilter: false,
-                          },
-                      }
-                    : { ...column },
-            );
-
-            onApplyFilters(newColumns);
-        };
-    };
-
     const closeToggleColumns = () => setShowToggleColumns(false);
     const closeFilter = () => setShowFilters(false);
+    const applyColumnsChanges = (columns: ColumnModel[]) => onUpdateVisibleColumns(columns);
 
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
-            <Stack horizontal horizontalAlign="start" wrap styles={chipFilterContainerStyle}>
-                {filteredColumns.map(column => (
-                    <ChipFilter key={column.name} column={column} onRemoveFilter={onRemoveFilter(column.name)} />
-                ))}
-            </Stack>
+            <ChipBar columns={columns} onApplyFilters={onApplyFilters} />
             {showToggleColumns && (
                 <ToggleColumnsDialog
                     columns={columns}
-                    applyColumnsChanges={columns => {
-                        onUpdateVisibleColumns(columns);
-                    }}
+                    applyColumnsChanges={applyColumnsChanges}
                     close={closeToggleColumns}
                 />
             )}

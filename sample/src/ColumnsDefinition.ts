@@ -41,7 +41,7 @@ export const columns: ITbColumn[] = [
     },
     {
         key: 'Amount',
-        name: 'Amount asdf asdsa',
+        name: 'Amount',
         fieldName: 'Amount',
         minWidth: 120,
         maxWidth: 200,

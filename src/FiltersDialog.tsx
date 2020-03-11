@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 import { Dialog } from 'office-ui-fabric-react/lib/components/Dialog/Dialog';
 import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/DialogFooter';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
@@ -20,6 +20,13 @@ const modalProps: IModalProps = {
     dragOptions: undefined,
 };
 
+const resolveOperator = (column: ColumnModel) =>
+    column.filter.operator == CompareOperators.None
+        ? column.dataType == ColumnDataType.String
+            ? CompareOperators.Contains
+            : CompareOperators.Equals
+        : column.filter.operator;
+
 export interface IFiltersProps {
     columns: ColumnModel[];
     applyFilters: (columns: ColumnModel[]) => void;
@@ -32,6 +39,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFi
         ...column,
         filter: {
             ...column.filter,
+            operator: resolveOperator(column),
         },
     }));
 
