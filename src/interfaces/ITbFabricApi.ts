@@ -4,7 +4,7 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export interface ITbFabricApi extends ITbApi {
     loadMoreItems: (index?: number) => void;
-    search: (value: string) => void;
+    search: (value?: string) => void;
     applyFilters: (filterableColumns: ColumnModel[]) => void;
     updateVisibleColumns: (columns: ColumnModel[]) => void;
     sortByColumn: (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => void;
