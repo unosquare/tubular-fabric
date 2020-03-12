@@ -4,59 +4,57 @@ import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/Comm
 import { ColumnModel } from 'tubular-common';
 import { FiltersDialog } from './FiltersDialog';
 import { ChipBar } from './ChipBar';
-import { registerTbIcons } from './utils';
+import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
 import { ISearchBoxStyles } from 'office-ui-fabric-react';
+import { ITbFabricInstance } from './interfaces';
 
 registerTbIcons();
 
 export interface TbCommandBarProps {
-    isLoading: boolean;
-    columns: ColumnModel[];
-    onApplyFilters: (columns: ColumnModel[]) => void;
-    onSearch: (value?: string) => void;
-    onUpdateVisibleColumns: (columns: ColumnModel[]) => void;
+    tbFabricInstance: ITbFabricInstance;
     filterable?: boolean;
     searchable?: boolean;
     toggleColumns?: boolean;
+    recordCounter?: boolean;
     items?: ICommandBarItemProps[];
 }
 
 const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
-    isLoading,
-    columns,
-    onUpdateVisibleColumns,
-    onApplyFilters,
-    onSearch,
+    tbFabricInstance,
     filterable,
     searchable,
     toggleColumns,
+    recordCounter,
     items,
 }: TbCommandBarProps) => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [showToggleColumns, setShowToggleColumns] = React.useState(false);
 
     const _farItems: ICommandBarItemProps[] = [];
-    const onClear = () => onSearch();
+    const onClear = () => tbFabricInstance.api.search();
 
     if (searchable) {
-        _farItems.push({
-            key: 'search',
-            // eslint-disable-next-line react/display-name
-            onRender: () => (
-                <SearchBox
-                    disabled={isLoading}
-                    underlined={true}
-                    placeholder="Search"
-                    onSearch={onSearch}
-                    onClear={onClear}
-                    styles={searchBoxStyles}
-                />
-            ),
-        });
+        items = [
+            {
+                key: 'search',
+                // eslint-disable-next-line react/display-name
+                onRender: () => (
+                    <SearchBox
+                        disabled={tbFabricInstance.state.isLoading}
+                        underlined={true}
+                        placeholder="Search"
+                        onSearch={tbFabricInstance.api.search}
+                        onClear={onClear}
+                        styles={searchBoxStyles}
+                    />
+                ),
+            },
+            ...items,
+        ];
     }
 
     if (filterable) {
@@ -64,7 +62,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'toggleColumns',
             text: 'Toggle Columns',
             ariaLabel: 'Toggle Columns',
-            disabled: isLoading,
+            disabled: tbFabricInstance.state.isLoading,
             iconOnly: true,
             iconProps: { iconName: 'TripleColumn' },
             onClick: () => setShowToggleColumns(!showToggleColumns),
@@ -76,32 +74,45 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'filter',
             text: 'Filters',
             ariaLabel: 'Filters',
-            disabled: isLoading,
+            disabled: tbFabricInstance.state.isLoading,
             iconOnly: true,
             iconProps: { iconName: 'Filter' },
             onClick: () => setShowFilters(!showFilters),
         });
     }
 
+    if (recordCounter) {
+        const label = getPagingMessage(
+            tbFabricInstance.state.totalRecordCount,
+            tbFabricInstance.state.filteredRecordCount,
+        );
+
+        _farItems.push({
+            key: 'recordCounter',
+            disabled: tbFabricInstance.state.isLoading,
+            text: label,
+        });
+    }
+
     const closeToggleColumns = () => setShowToggleColumns(false);
     const closeFilter = () => setShowFilters(false);
-    const applyColumnsChanges = (columns: ColumnModel[]) => onUpdateVisibleColumns(columns);
+    const applyColumnsChanges = (columns: ColumnModel[]) => tbFabricInstance.api.applyFilters(columns);
 
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
-            <ChipBar columns={columns} onApplyFilters={onApplyFilters} />
+            <ChipBar columns={tbFabricInstance.state.columns} onApplyFilters={tbFabricInstance.api.applyFilters} />
             {showToggleColumns && (
                 <ToggleColumnsDialog
-                    columns={columns}
+                    columns={tbFabricInstance.state.columns}
                     applyColumnsChanges={applyColumnsChanges}
                     close={closeToggleColumns}
                 />
             )}
             {showFilters && (
                 <FiltersDialog
-                    columns={columns.filter(c => c.filterable)}
-                    applyFilters={onApplyFilters}
+                    columns={tbFabricInstance.state.columns.filter(c => c.filterable)}
+                    applyFilters={tbFabricInstance.api.applyFilters}
                     close={closeFilter}
                 />
             )}

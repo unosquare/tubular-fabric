@@ -31,34 +31,27 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
             },
         },
         {
-            key: 'upload',
-            text: 'Upload',
-            iconProps: { iconName: 'Upload' },
-            href: 'https://dev.office.com/fabric',
+            key: 'forceRefresh',
+            text: 'Force Refresh',
+            onClick: onForceRefresh,
         },
     ];
 
     return (
-        <>
-            <div>
-                <button type="button" onClick={onForceRefresh}>
-                    Force refresh
-                </button>
-            </div>
-            <TbGrid
-                columns={columns}
-                source="https://tubular.azurewebsites.net/api/orders/paged"
-                options={{
-                    deps: [refresh],
-                    filterable: true,
-                    toggleColumns: true,
-                    commandBarItems: commandItems,
-                    searchable: true,
-                    pagination: {
-                        itemsPerPage: 100,
-                    },
-                }}
-            />
-        </>
+        <TbGrid
+            columns={columns}
+            source="https://tubular.azurewebsites.net/api/orders/paged"
+            options={{
+                deps: [refresh],
+                filterable: true,
+                toggleColumns: true,
+                commandBarItems: commandItems,
+                searchable: true,
+                recordCounter: true,
+                pagination: {
+                    itemsPerPage: 100,
+                },
+            }}
+        />
     );
 };

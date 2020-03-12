@@ -15,6 +15,7 @@ export interface ITbExtendedOptions extends ITbOptions {
     filterable: boolean;
     searchable: boolean;
     toggleColumns: boolean;
+    recordCounter: boolean;
     commandBarItems?: ICommandBarItemProps[];
     hiddeCommandBar?: boolean;
     selectionMode?: number;
@@ -37,21 +38,18 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
     options,
     onRenderItemColumn,
 }: ITbGridProps) => {
-    const tbFabricInstance = useTbFabric(columns, source, options); 
+    const tbFabricInstance = useTbFabric(columns, source, options);
 
     return (
         <div className={classes.tbContainer}>
             {!options.hiddeCommandBar && (
                 <TbCommandBar
-                    isLoading={tbFabricInstance.state.isLoading}
+                    tbFabricInstance={tbFabricInstance}
                     filterable={options.filterable}
+                    recordCounter={options.recordCounter}
                     searchable={options.searchable}
                     toggleColumns={options.toggleColumns}
                     items={options.commandBarItems}
-                    columns={tbFabricInstance.state.columns}
-                    onSearch={tbFabricInstance.api.search}
-                    onApplyFilters={tbFabricInstance.api.applyFilters}
-                    onUpdateVisibleColumns={tbFabricInstance.api.updateVisibleColumns}
                 />
             )}
             <TbDetailsList

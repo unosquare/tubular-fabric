@@ -80,6 +80,15 @@ export const getOperatorIcon = (value: CompareOperators) => {
     }
 };
 
+export const getRecordPlural = (count: number) => (count == 1 ? 'record' : 'records');
+
+export const getPagingMessage = (totalRecordCount: number, filteredRecordCount: number) =>
+    totalRecordCount === filteredRecordCount
+        ? `${totalRecordCount} ${getRecordPlural(totalRecordCount)}`
+        : filteredRecordCount === 0
+        ? 'No records'
+        : `${filteredRecordCount} ${getRecordPlural(totalRecordCount)} of ${totalRecordCount}`;
+
 export const registerTbIcons = () => {
     registerIcons({
         icons: {
