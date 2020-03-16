@@ -43,7 +43,7 @@ export const useTbFabric = (
     const tubular = useTubular(memoTbColumns, source, rest);
     const [fabricColumns, setFabricColumns] = React.useState(initColumns);
     const [list, setListState] = React.useState({
-        hasNextPage: false,
+        initialized: false,
         // We need to hold all the items that we have loaded
         // This will be a cumulated of all of the rows from tubular instance
         items: getShimmerSlots(tubular.state.itemsPerPage),
@@ -51,7 +51,7 @@ export const useTbFabric = (
 
     // Reset list is required
     const resetList = () => {
-        setListState({ hasNextPage: false, items: getShimmerSlots(tubular.state.itemsPerPage) });
+        setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
 
         if (tubular.state.page === 0) {
             tubular.api.setColumns([...tubular.state.columns]);
@@ -159,22 +159,23 @@ export const useTbFabric = (
     React.useEffect(() => {
         setListState(state => {
             // We don't want to override the state for shimmer
-            if (tubular.state.data.length === 0 && tubular.state.totalRecordCount === 0) {
-                return state;
+            if (tubular.state.data.length === 0 && !state.initialized) {
+                return {
+                    ...state,
+                    initialized: true,
+                };
             }
 
             const mapped = tubular.state.data.map(fabricColumnsMapper);
 
             let newItems = [...state.items].slice(0, -1 * tubular.state.itemsPerPage).concat(mapped);
-            let hasNextPage = false;
 
             if (newItems.length < tubular.state.filteredRecordCount) {
                 newItems = newItems.concat(getShimmerSlots(tubular.state.itemsPerPage));
-                hasNextPage = true;
             }
 
             return {
-                hasNextPage: hasNextPage,
+                ...state,
                 items: newItems,
             };
         });
@@ -198,7 +199,7 @@ export const useTbFabric = (
         },
         state: {
             ...tubular.state,
-            list,
+            list: { items: list.items },
             fabricColumns: fabricColumns.filter(c => c.tb.visible),
         },
     } as ITbFabricInstance;
