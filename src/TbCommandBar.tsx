@@ -100,7 +100,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
-            <ChipBar columns={tbFabricInstance.state.columns} onApplyFilters={tbFabricInstance.api.applyFilters} />
+            <ChipBar columns={tbFabricInstance.state.columns} onClearFilter={tbFabricInstance.api.clearFilter} />
             {showToggleColumns && (
                 <ToggleColumnsDialog
                     columns={tbFabricInstance.state.columns}
