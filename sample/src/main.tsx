@@ -13,7 +13,7 @@ const Main: React.FunctionComponent = () => (
             flexDirection: 'column',
         }}
     >
-        HOLA
+        <TbDetailsListSample />
     </div>
 );
 
