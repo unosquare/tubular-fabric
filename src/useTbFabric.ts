@@ -141,6 +141,20 @@ export const useTbFabric = (
         tubular.api.setColumns([...columns]);
     };
 
+    const applyFilter = (columnName: string, value: string) =>
+        applyFilters([
+            {
+                ...tubular.state.columns.find(x => x.name === columnName),
+                hasFilter: true,
+                filter: {
+                    text: value,
+                    operator: CompareOperators.Equals,
+                    argument: [],
+                    hasFilter: true,
+                },
+            },
+        ]);
+
     const fabricColumnsMapper = item => {
         const mapped = {};
         const tbColumns = tubular.state.columns;
@@ -195,6 +209,7 @@ export const useTbFabric = (
             search,
             sortByColumn,
             applyFilters,
+            applyFilter,
             updateVisibleColumns,
         },
         state: {

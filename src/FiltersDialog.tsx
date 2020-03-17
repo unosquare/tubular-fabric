@@ -33,8 +33,7 @@ export interface IFiltersProps {
     close: () => void;
 }
 
-export const FiltersDialog: React.FunctionComponent<IFiltersProps> = (props: IFiltersProps) => {
-    const { columns, applyFilters, close } = props;
+export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns, applyFilters, close }: IFiltersProps) => {
     const copyOfCoumns = columns.map(column => ({
         ...column,
         filter: {

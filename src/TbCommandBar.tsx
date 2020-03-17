@@ -33,6 +33,10 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
 }: TbCommandBarProps) => {
     const [showFilters, setShowFilters] = React.useState(false);
     const [showToggleColumns, setShowToggleColumns] = React.useState(false);
+    const label = React.useMemo(
+        () => getPagingMessage(tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount),
+        [tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount],
+    );
 
     const _farItems: ICommandBarItemProps[] = [];
     const onClear = () => tbFabricInstance.api.search();
@@ -82,11 +86,6 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     }
 
     if (recordCounter) {
-        const label = getPagingMessage(
-            tbFabricInstance.state.totalRecordCount,
-            tbFabricInstance.state.filteredRecordCount,
-        );
-
         _farItems.push({
             key: 'recordCounter',
             disabled: tbFabricInstance.state.isLoading,
