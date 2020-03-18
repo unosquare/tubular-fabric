@@ -8,7 +8,7 @@ import {
     IDetailsRowStyles,
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, ConstrainMode } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -109,6 +109,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
             <DetailsList
                 selection={selection}
                 onRenderItemColumn={onInternalRenderItemColumn}
+                constrainMode={ConstrainMode.unconstrained}
                 items={tbFabricInstance.state.list.items}
                 columns={tbFabricInstance.state.fabricColumns}
                 onRenderMissingItem={handleMissingItems}
