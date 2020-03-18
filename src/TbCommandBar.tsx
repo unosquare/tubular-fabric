@@ -7,7 +7,7 @@ import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
 import { ToggleColumnsDialog } from './ToggleColumnsDialog';
-import { ISearchBoxStyles } from 'office-ui-fabric-react';
+import { ISearchBoxStyles } from 'office-ui-fabric-react/lib/SearchBox';
 import { ITbFabricInstance } from './interfaces';
 
 registerTbIcons();

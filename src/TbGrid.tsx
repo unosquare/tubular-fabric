@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Selection } from 'office-ui-fabric-react/lib/Utilities';
+import { Selection } from 'office-ui-fabric-react/lib/Utilities/selection/Selection';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
