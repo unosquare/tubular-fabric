@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
 import { SelectionBar } from './SelectionBar';
-import { Selection } from 'office-ui-fabric-react/lib/Utilities/selection/Selection';
+import { Selection } from '@uifabric/utilities';
 import {
     IDetailsRowStyleProps,
     IDetailsRowStyles,
