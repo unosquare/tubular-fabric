@@ -2,14 +2,15 @@ import * as React from 'react';
 import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
 import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
 import { SelectionBar } from './SelectionBar';
-import { Selection, IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
+import { Selection } from '@uifabric/utilities';
 import {
     IDetailsRowStyleProps,
     IDetailsRowStyles,
 } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
 import { keyframes, mergeStyles, mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, ConstrainMode } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
+import { IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 
 export interface ITbDetailsListProps {
     tbFabricInstance: ITbFabricInstance;
@@ -108,6 +109,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
             <DetailsList
                 selection={selection}
                 onRenderItemColumn={onInternalRenderItemColumn}
+                constrainMode={ConstrainMode.unconstrained}
                 items={tbFabricInstance.state.list.items}
                 columns={tbFabricInstance.state.fabricColumns}
                 onRenderMissingItem={handleMissingItems}
