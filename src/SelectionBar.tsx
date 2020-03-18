@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
-import { Selection } from 'office-ui-fabric-react/lib/Utilities/selection/Selection';
+import { Selection } from '@uifabric/utilities';
 import { Label } from 'office-ui-fabric-react/lib/components/Label/Label';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
 import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
