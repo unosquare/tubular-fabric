@@ -95,7 +95,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
 
     const closeToggleColumns = () => setShowToggleColumns(false);
     const closeFilter = () => setShowFilters(false);
-    const applyColumnsChanges = (columns: ColumnModel[]) => tbFabricInstance.api.applyFilters(columns);
+    const applyColumnsChanges = (columns: ColumnModel[]) => tbFabricInstance.api.updateVisibleColumns(columns);
 
     return (
         <>
