@@ -19,7 +19,7 @@ export const useTbFabric = (
     source: string | Request | TubularHttpClientAbstract | {}[],
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
-    const tbInitColumns = initColumns.map(column => {
+    const tbInitColumns = initColumns.map((column) => {
         const tbColumn = new ColumnModel(column.fieldName, {
             dataType: column.tb.dataType,
             filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
@@ -63,7 +63,7 @@ export const useTbFabric = (
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
         resetList();
-        const newFabricColumns = fabricColumns.map(col => {
+        const newFabricColumns = fabricColumns.map((col) => {
             if (col.fieldName === column.fieldName) {
                 const isSortedDescending = col.isSorted && !col.isSortedDescending;
                 const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
@@ -93,8 +93,8 @@ export const useTbFabric = (
 
     const updateVisibleColumns = (columns: ColumnModel[]) => {
         const newFabricColumns = [...fabricColumns];
-        columns.forEach(tbColumn => {
-            const fabricColumn = newFabricColumns.find(c => c.fieldName === tbColumn.name);
+        columns.forEach((tbColumn) => {
+            const fabricColumn = newFabricColumns.find((c) => c.fieldName === tbColumn.name);
             fabricColumn.tb.visible = tbColumn.visible;
         });
 
@@ -119,7 +119,7 @@ export const useTbFabric = (
     const applyFilters = (filterableColumns: ColumnModel[]) => {
         const columns = [...tubular.state.columns];
 
-        filterableColumns.forEach(fColumn => {
+        filterableColumns.forEach((fColumn) => {
             const column = columns.find((c: ColumnModel) => c.name === fColumn.name);
 
             if (fColumn.hasFilter) {
@@ -145,7 +145,7 @@ export const useTbFabric = (
     const applyFilter = (columnName: string, value: string) =>
         applyFilters([
             {
-                ...tubular.state.columns.find(x => x.name === columnName),
+                ...tubular.state.columns.find((x) => x.name === columnName),
                 hasFilter: true,
                 filter: {
                     text: value,
@@ -159,20 +159,20 @@ export const useTbFabric = (
     const clearFilter = (columnName: string) =>
         applyFilters([
             {
-                ...tubular.state.columns.find(x => x.name === columnName),
+                ...tubular.state.columns.find((x) => x.name === columnName),
                 hasFilter: false,
             },
         ]);
 
-    const fabricColumnsMapper = item => {
+    const fabricColumnsMapper = (item) => {
         const mapped = {};
         const tbColumns = tubular.state.columns;
 
-        tbColumns.forEach(col => {
+        tbColumns.forEach((col) => {
             mapped[col.name] = item[col.name];
         });
 
-        const keyColumn = tbColumns.find(col => col.isKey);
+        const keyColumn = tbColumns.find((col) => col.isKey);
         mapped['key'] = `${keyColumn.name}_${item[keyColumn.name]}`;
         mapped['name'] = mapped['key'];
 
@@ -180,7 +180,7 @@ export const useTbFabric = (
     };
 
     React.useEffect(() => {
-        setListState(state => {
+        setListState((state) => {
             // We don't want to override the state for shimmer
             if (tubular.state.data.length === 0 && !state.initialized) {
                 return {
@@ -225,7 +225,7 @@ export const useTbFabric = (
         state: {
             ...tubular.state,
             list: { items: list.items },
-            fabricColumns: fabricColumns.filter(c => c.tb.visible),
+            fabricColumns: fabricColumns.filter((c) => c.tb.visible),
         },
     } as ITbFabricInstance;
 };
