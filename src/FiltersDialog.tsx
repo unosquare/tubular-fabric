@@ -54,7 +54,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns,
     return (
         <Dialog hidden={false} onDismiss={onDismiss} dialogContentProps={dialogContentProps} modalProps={modalProps}>
             {tempColumns.map(column => (
-                <FilterField key={column.name} column={column} />
+                <FilterField key={column.name} column={column} onEnter={onClick} />
             ))}
             <DialogFooter>
                 <PrimaryButton onClick={onClick} text="Apply" />

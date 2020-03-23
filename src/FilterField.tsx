@@ -9,6 +9,7 @@ import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
 
 export interface IFilterFieldProps {
     column: ColumnModel;
+    onEnter: () => void;
 }
 
 const filterFieldWrapperStyles: IStackStyles = {
@@ -19,8 +20,7 @@ const filterButtonStyles: IStackItemStyles = {
     root: { width: '60px' },
 };
 
-export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: IFilterFieldProps) => {
-    const { column } = props;
+export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column, onEnter }: IFilterFieldProps) => {
     const [currentIcon, setCurrentIcon] = React.useState({
         iconName: getOperatorIcon(column.filter.operator as CompareOperators),
     });
@@ -53,6 +53,12 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
         column.hasFilter = true;
     };
 
+    const onKeyDown = (ev: React.KeyboardEvent) => {
+        if (ev.keyCode === 13) {
+            onEnter();
+        }
+    };
+
     return (
         <Stack
             horizontal
@@ -70,7 +76,12 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = (props: I
                 />
             </Stack.Item>
             <Stack.Item grow>
-                <TextField label={column.label} onChange={handleFilterChange} defaultValue={column.filter.text} />
+                <TextField
+                    label={column.label}
+                    onChange={handleFilterChange}
+                    defaultValue={column.filter.text}
+                    onKeyDown={onKeyDown}
+                />
             </Stack.Item>
         </Stack>
     );
