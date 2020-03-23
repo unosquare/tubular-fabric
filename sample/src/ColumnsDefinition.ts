@@ -1,4 +1,4 @@
-import { ColumnDataType } from 'tubular-common';
+import { ColumnDataType, CompareOperators } from 'tubular-common';
 import { ITbColumn } from '../../src/interfaces/ITbColumn';
 
 export const columns: ITbColumn[] = [
@@ -13,6 +13,12 @@ export const columns: ITbColumn[] = [
             isKey: true,
             dataType: ColumnDataType.Numeric,
             sortable: true,
+            filter: {
+                hasFilter: true,
+                operator: CompareOperators.Gte,
+                name: 'OrderID',
+                text: '10',
+            },
         },
     },
     {

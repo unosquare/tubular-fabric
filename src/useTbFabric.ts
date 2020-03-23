@@ -30,6 +30,7 @@ export const useTbFabric = (
             sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
             sortable: column.tb.sortable ? column.tb.sortable : false,
             visible: column.tb.hasOwnProperty('visible') ? column.tb.visible : true,
+            filter: column.tb.filter,
         });
 
         column.tb = { ...tbColumn };
