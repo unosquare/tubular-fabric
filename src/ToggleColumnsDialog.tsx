@@ -26,11 +26,11 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
     const [tempColumns, setTempColumns] = React.useState(copyOfCoumns);
 
     const handleChange = (column: ColumnModel) => (ev: React.MouseEvent<HTMLElement>, checked: boolean) => {
-        if (!checked && tempColumns.filter(c => !c.visible).length === tempColumns.length - 1) {
+        if (!checked && tempColumns.filter((c) => !c.visible).length === tempColumns.length - 1) {
             return;
         }
 
-        const newColumns = tempColumns.map(tempColumn => {
+        const newColumns = tempColumns.map((tempColumn) => {
             if (tempColumn.name === column.name) {
                 return {
                     ...tempColumn,
@@ -64,7 +64,7 @@ export const ToggleColumnsDialog: React.FunctionComponent<IToggleColumnsDialog> 
                 dragOptions: undefined,
             }}
         >
-            {tempColumns.map(column => (
+            {tempColumns.map((column) => (
                 <Toggle
                     key={column.name}
                     label={column.label}

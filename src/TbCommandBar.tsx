@@ -110,7 +110,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             )}
             {showFilters && (
                 <FiltersDialog
-                    columns={tbFabricInstance.state.columns.filter(c => c.filterable)}
+                    columns={tbFabricInstance.state.columns.filter((c) => c.filterable)}
                     applyFilters={tbFabricInstance.api.applyFilters}
                     close={closeFilter}
                 />

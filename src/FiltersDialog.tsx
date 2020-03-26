@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
+import { ColumnModel } from 'tubular-common';
 import { Dialog } from 'office-ui-fabric-react/lib/components/Dialog/Dialog';
 import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/DialogFooter';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
@@ -20,12 +20,12 @@ const modalProps: IModalProps = {
     dragOptions: undefined,
 };
 
-const resolveOperator = (column: ColumnModel) =>
-    column.filter.operator == CompareOperators.None
-        ? column.dataType == ColumnDataType.String
-            ? CompareOperators.Contains
-            : CompareOperators.Equals
-        : column.filter.operator;
+// const resolveOperator = (column: ColumnModel) =>
+//     column.filter.operator == CompareOperators.None
+//         ? column.dataType == ColumnDataType.String
+//             ? CompareOperators.Contains
+//             : CompareOperators.Equals
+//         : column.filter.operator;
 
 export interface IFiltersProps {
     columns: ColumnModel[];
@@ -33,13 +33,13 @@ export interface IFiltersProps {
     close: () => void;
 }
 
-export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns, applyFilters, close }: IFiltersProps) => {
-    const copyOfCoumns = columns.map(column => ({
+export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({
+    columns,
+    applyFilters,
+    close,
+}: IFiltersProps) => {
+    const copyOfCoumns = columns.map((column) => ({
         ...column,
-        filter: {
-            ...column.filter,
-            operator: resolveOperator(column),
-        },
     }));
 
     const [tempColumns] = React.useState(copyOfCoumns);
@@ -53,7 +53,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns,
 
     return (
         <Dialog hidden={false} onDismiss={onDismiss} dialogContentProps={dialogContentProps} modalProps={modalProps}>
-            {tempColumns.map(column => (
+            {tempColumns.map((column) => (
                 <FilterField key={column.name} column={column} onEnter={onClick} />
             ))}
             <DialogFooter>

@@ -42,9 +42,9 @@
   },
   "homepage": "https://github.com/unosquare/tubular-fabric#readme",
   "dependencies": {
-    "office-ui-fabric-react": "^7.105.2",
-    "tubular-common": "^3.2.1",
-    "tubular-react-common": "1.0.21"
+    "office-ui-fabric-react": "^7.105.4",
+    "tubular-common": "^4.0.0",
+    "tubular-react-common": "2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.25",
@@ -55,14 +55,14 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
-    "html-webpack-plugin": "^4.0.1",
-    "prettier": "^2.0.1",
+    "html-webpack-plugin": "^4.0.2",
+    "prettier": "^2.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
