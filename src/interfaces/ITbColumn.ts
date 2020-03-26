@@ -1,6 +1,6 @@
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import ColumnModelOptions from 'tubular-common/dist/Models/ColumnModelOptions';
+import { ColumnModel } from 'tubular-common';
 
 export interface ITbColumn extends IColumn {
-    tb?: ColumnModelOptions;
+    tb?: Partial<ColumnModel>;
 }

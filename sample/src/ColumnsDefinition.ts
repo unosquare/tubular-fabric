@@ -13,12 +13,8 @@ export const columns: ITbColumn[] = [
             isKey: true,
             dataType: ColumnDataType.Numeric,
             sortable: true,
-            filter: {
-                hasFilter: true,
-                operator: CompareOperators.Gte,
-                name: 'OrderID',
-                text: '10',
-            },
+            filterText: '10',
+            filterOperator: CompareOperators.Gte,
         },
     },
     {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
 import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextField';
-import { ColumnModel, CompareOperators } from 'tubular-common';
+import { ColumnModel, CompareOperators, getOperators } from 'tubular-common';
 import { IContextualMenuProps, IContextualMenuItem } from 'office-ui-fabric-react/lib/components/ContextualMenu';
 import { getOperatorIcon, getOperatorText } from './utils';
 import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
@@ -22,10 +22,10 @@ const filterButtonStyles: IStackItemStyles = {
 
 export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column, onEnter }: IFilterFieldProps) => {
     const [currentIcon, setCurrentIcon] = React.useState({
-        iconName: getOperatorIcon(column.filter.operator as CompareOperators),
+        iconName: getOperatorIcon(column.filterOperator),
     });
 
-    const options = ColumnModel.getOperators(column).map((row: any) => ({
+    const options = getOperators(column).map((row: any) => ({
         key: row.value,
         iconProps: {
             iconName: getOperatorIcon(row.value),
@@ -43,14 +43,12 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
             item?: IContextualMenuItem,
         ) => {
             setCurrentIcon({ iconName: item.iconProps.iconName });
-            column.filter.operator = item.data;
-            column.hasFilter = true;
+            column.filterOperator = item.data;
         },
     };
 
     const handleFilterChange = (_event: React.FormEvent<HTMLInputElement>, newValue: string) => {
-        column.filter.text = newValue;
-        column.hasFilter = true;
+        column.filterText = newValue;
     };
 
     const onKeyDown = (ev: React.KeyboardEvent) => {
@@ -79,7 +77,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
                 <TextField
                     label={column.label}
                     onChange={handleFilterChange}
-                    defaultValue={column.filter.text}
+                    defaultValue={column.filterText}
                     onKeyDown={onKeyDown}
                 />
             </Stack.Item>

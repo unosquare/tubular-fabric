@@ -1,7 +1,13 @@
 import { ITbColumn } from './interfaces/ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common/dist/Http';
 import { ITbOptions } from 'tubular-react-common/dist/types';
-import { ColumnModel, ColumnSortDirection, CompareOperators } from 'tubular-common/dist/Models';
+import {
+    ColumnModel,
+    ColumnSortDirection,
+    CompareOperators,
+    createColumn,
+    columnHasFilter,
+} from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
@@ -20,7 +26,7 @@ export const useTbFabric = (
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
     const tbInitColumns = initColumns.map((column) => {
-        const tbColumn = new ColumnModel(column.fieldName, {
+        const tbColumn = createColumn(column.fieldName, {
             dataType: column.tb.dataType,
             filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
             isKey: column.tb.isKey ? column.tb.isKey : false,
@@ -30,7 +36,9 @@ export const useTbFabric = (
             sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
             sortable: column.tb.sortable ? column.tb.sortable : false,
             visible: column.tb.hasOwnProperty('visible') ? column.tb.visible : true,
-            filter: column.tb.filter,
+            filterText: column.tb.filterText,
+            filterArgument: column.tb.filterArgument,
+            filterOperator: column.tb.filterOperator,
         });
 
         column.tb = { ...tbColumn };
@@ -122,19 +130,14 @@ export const useTbFabric = (
         filterableColumns.forEach((fColumn) => {
             const column = columns.find((c: ColumnModel) => c.name === fColumn.name);
 
-            if (fColumn.hasFilter) {
-                column.hasFilter = true;
-                column.filter = {
-                    ...fColumn.filter,
-                };
+            if (columnHasFilter(fColumn)) {
+                column.filterText = fColumn.filterText;
+                column.filterOperator = fColumn.filterOperator;
+                column.filterArgument = fColumn.filterArgument;
             } else {
-                column.hasFilter = false;
-                column.filter = {
-                    text: '',
-                    operator: CompareOperators.None,
-                    argument: [],
-                    hasFilter: false,
-                };
+                column.filterText = '';
+                column.filterOperator = CompareOperators.None;
+                column.filterArgument = [];
             }
         });
 
@@ -146,13 +149,9 @@ export const useTbFabric = (
         applyFilters([
             {
                 ...tubular.state.columns.find((x) => x.name === columnName),
-                hasFilter: true,
-                filter: {
-                    text: value,
-                    operator: CompareOperators.Equals,
-                    argument: [],
-                    hasFilter: true,
-                },
+                filterText: value,
+                filterOperator: CompareOperators.Equals,
+                filterArgument: [],
             },
         ]);
 
@@ -160,7 +159,9 @@ export const useTbFabric = (
         applyFilters([
             {
                 ...tubular.state.columns.find((x) => x.name === columnName),
-                hasFilter: false,
+                filterText: '',
+                filterOperator: CompareOperators.None,
+                filterArgument: [],
             },
         ]);
 
