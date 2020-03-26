@@ -20,13 +20,6 @@ const modalProps: IModalProps = {
     dragOptions: undefined,
 };
 
-// const resolveOperator = (column: ColumnModel) =>
-//     column.filter.operator == CompareOperators.None
-//         ? column.dataType == ColumnDataType.String
-//             ? CompareOperators.Contains
-//             : CompareOperators.Equals
-//         : column.filter.operator;
-
 export interface IFiltersProps {
     columns: ColumnModel[];
     applyFilters: (columns: ColumnModel[]) => void;
