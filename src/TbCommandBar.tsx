@@ -6,9 +6,10 @@ import { FiltersDialog } from './FiltersDialog';
 import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
-import { ToggleColumnsDialog } from './ToggleColumnsDialog';
+import { ToggleColumns } from './ToggleColumns';
 import { ISearchBoxStyles } from 'office-ui-fabric-react/lib/SearchBox';
 import { ITbFabricInstance } from './interfaces';
+import { FeaturesPanel } from './FeaturesPanel';
 
 registerTbIcons();
 
@@ -31,8 +32,10 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     recordCounter,
     items,
 }: TbCommandBarProps) => {
-    const [showFilters, setShowFilters] = React.useState(false);
-    const [showToggleColumns, setShowToggleColumns] = React.useState(false);
+    const [showPanel, setShowPanel] = React.useState(false);
+    const closePanel = () => setShowPanel(false);
+    const openPanel = () => setShowPanel(true);
+
     const label = React.useMemo(
         () => getPagingMessage(tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount),
         [tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount],
@@ -63,25 +66,13 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
 
     if (filterable) {
         _farItems.push({
-            key: 'toggleColumns',
-            text: 'Toggle Columns',
-            ariaLabel: 'Toggle Columns',
+            key: 'gridFeatures',
+            text: 'Grid Features',
+            ariaLabel: 'Grid Features',
             disabled: tbFabricInstance.state.isLoading,
             iconOnly: true,
-            iconProps: { iconName: 'TripleColumn' },
-            onClick: () => setShowToggleColumns(!showToggleColumns),
-        });
-    }
-
-    if (toggleColumns) {
-        _farItems.push({
-            key: 'filter',
-            text: 'Filters',
-            ariaLabel: 'Filters',
-            disabled: tbFabricInstance.state.isLoading,
-            iconOnly: true,
-            iconProps: { iconName: 'Filter' },
-            onClick: () => setShowFilters(!showFilters),
+            iconProps: { iconName: 'Equalizer' },
+            onClick: () => openPanel(),
         });
     }
 
@@ -93,28 +84,11 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
         });
     }
 
-    const closeToggleColumns = () => setShowToggleColumns(false);
-    const closeFilter = () => setShowFilters(false);
-    const applyColumnsChanges = (columns: ColumnModel[]) => tbFabricInstance.api.updateVisibleColumns(columns);
-
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
             <ChipBar columns={tbFabricInstance.state.columns} onClearFilter={tbFabricInstance.api.clearFilter} />
-            {showToggleColumns && (
-                <ToggleColumnsDialog
-                    columns={tbFabricInstance.state.columns}
-                    applyColumnsChanges={applyColumnsChanges}
-                    close={closeToggleColumns}
-                />
-            )}
-            {showFilters && (
-                <FiltersDialog
-                    columns={tbFabricInstance.state.columns.filter((c) => c.filterable)}
-                    applyFilters={tbFabricInstance.api.applyFilters}
-                    close={closeFilter}
-                />
-            )}
+            {showPanel && <FeaturesPanel closePanel={closePanel} tbFabricInstance={tbFabricInstance} />}
         </>
     );
 };
