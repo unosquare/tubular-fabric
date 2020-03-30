@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 import { Dialog } from 'office-ui-fabric-react/lib/components/Dialog/Dialog';
 import { DialogFooter } from 'office-ui-fabric-react/lib/components/Dialog/DialogFooter';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
@@ -26,6 +26,13 @@ export interface IFiltersProps {
     close: () => void;
 }
 
+const resolveOperator = (column: ColumnModel) =>
+    column.filterOperator == CompareOperators.None
+        ? column.dataType == ColumnDataType.String
+            ? CompareOperators.Contains
+            : CompareOperators.Equals
+        : column.filterOperator;
+
 export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({
     columns,
     applyFilters,
@@ -33,6 +40,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({
 }: IFiltersProps) => {
     const copyOfCoumns = columns.map((column) => ({
         ...column,
+        filterOperator: resolveOperator(column),
     }));
 
     const [tempColumns] = React.useState(copyOfCoumns);

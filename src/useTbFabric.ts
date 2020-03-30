@@ -38,7 +38,7 @@ export const useTbFabric = (
             visible: column.tb.hasOwnProperty('visible') ? column.tb.visible : true,
             filterText: column.tb.filterText,
             filterArgument: column.tb.filterArgument,
-            filterOperator: column.tb.filterOperator,
+            filterOperator: column.tb.filterOperator || CompareOperators.None,
         });
 
         column.tb = { ...tbColumn };
