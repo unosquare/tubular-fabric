@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button/PrimaryButton/PrimaryButton';
-import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button/DefaultButton/DefaultButton';
 import { FilterField } from './FilterField';
 
 export interface IFiltersProps {
