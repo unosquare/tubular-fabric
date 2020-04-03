@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
-import { ColumnModel } from 'tubular-common';
-import { FiltersDialog } from './FiltersDialog';
 import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
-import { ToggleColumns } from './ToggleColumns';
 import { ISearchBoxStyles } from 'office-ui-fabric-react/lib/SearchBox';
 import { ITbFabricInstance } from './interfaces';
 import { FeaturesPanel } from './FeaturesPanel';
@@ -88,7 +85,13 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
             <ChipBar columns={tbFabricInstance.state.columns} onClearFilter={tbFabricInstance.api.clearFilter} />
-            {showPanel && <FeaturesPanel closePanel={closePanel} tbFabricInstance={tbFabricInstance} />}
+            {showPanel && (
+                <FeaturesPanel
+                    closePanel={closePanel}
+                    columns={tbFabricInstance.state.columns}
+                    onApplyFeatures={tbFabricInstance.api.applyFeatures}
+                />
+            )}
         </>
     );
 };

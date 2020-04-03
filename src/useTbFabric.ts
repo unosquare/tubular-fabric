@@ -12,6 +12,8 @@ import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
+// eslint-disable-next-line @typescript-eslint/camelcase
+import { unstable_batchedUpdates } from 'react-dom';
 
 const getShimmerSlots = (itemCount: number): any[] => {
     const initialShimmerItems = [];
@@ -99,15 +101,14 @@ export const useTbFabric = (
         tubular.api.updateSearchText(value);
     };
 
-    const updateVisibleColumns = (columns: ColumnModel[]) => {
+    const updateVisibleColumns = (columns: ColumnModel[]): [ITbColumn[], ColumnModel[]] => {
         const newFabricColumns = [...fabricColumns];
         columns.forEach((tbColumn) => {
             const fabricColumn = newFabricColumns.find((c) => c.fieldName === tbColumn.name);
             fabricColumn.tb.visible = tbColumn.visible;
         });
 
-        setFabricColumns(newFabricColumns);
-        tubular.api.setColumns([...columns]);
+        return [newFabricColumns, columns];
     };
 
     const loadMoreItems = (index?: number) => {
@@ -124,10 +125,8 @@ export const useTbFabric = (
         }
     };
 
-    const applyFilters = (filterableColumns: ColumnModel[]) => {
-        const columns = [...tubular.state.columns];
-
-        filterableColumns.forEach((fColumn) => {
+    const applyFilters = (columns: ColumnModel[]): ColumnModel[] => {
+        columns.forEach((fColumn) => {
             const column = columns.find((c: ColumnModel) => c.name === fColumn.name);
 
             if (columnHasFilter(fColumn)) {
@@ -135,14 +134,13 @@ export const useTbFabric = (
                 column.filterOperator = fColumn.filterOperator;
                 column.filterArgument = fColumn.filterArgument;
             } else {
-                column.filterText = '';
+                column.filterText = null;
                 column.filterOperator = CompareOperators.None;
-                column.filterArgument = [];
+                column.filterArgument = null;
             }
         });
 
-        resetList();
-        tubular.api.setColumns([...columns]);
+        return columns;
     };
 
     const applyFilter = (columnName: string, value: string) =>
@@ -155,15 +153,36 @@ export const useTbFabric = (
             },
         ]);
 
-    const clearFilter = (columnName: string) =>
-        applyFilters([
-            {
-                ...tubular.state.columns.find((x) => x.name === columnName),
-                filterText: '',
-                filterOperator: CompareOperators.None,
-                filterArgument: [],
-            },
-        ]);
+    const applyFeatures = (columns: ColumnModel[]) => {
+        const result = updateVisibleColumns(columns);
+        const tbColumns = applyFilters(result[1]);
+
+        unstable_batchedUpdates(() => {
+            if (tbColumns.find((c) => columnHasFilter(c))) {
+                setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
+            }
+
+            setFabricColumns(result[0]);
+            tubular.api.setColumns(tbColumns);
+        });
+    };
+
+    const clearFilter = (columnName: string) => {
+        const newColumns = tubular.state.columns.map((column) => {
+            if (column.name === columnName) {
+                return {
+                    ...column,
+                    filterText: null,
+                    filterOperator: CompareOperators.None,
+                    filterArgument: null,
+                };
+            }
+
+            return column;
+        });
+
+        tubular.api.setColumns(newColumns);
+    };
 
     const fabricColumnsMapper = (item) => {
         const mapped = {};
@@ -222,6 +241,8 @@ export const useTbFabric = (
             applyFilter,
             clearFilter,
             updateVisibleColumns,
+            applyFeatures,
+            ...tubular.api,
         },
         state: {
             ...tubular.state,
