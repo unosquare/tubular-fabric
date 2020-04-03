@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import { Toggle } from 'office-ui-fabric-react/lib/components/Toggle/Toggle';
+import { Stack, IStackTokens } from 'office-ui-fabric-react/lib/components/Stack';
+import { Checkbox } from 'office-ui-fabric-react/lib/components/Checkbox';
 
 export interface IToggleColumnsProps {
     columns: ColumnModel[];
     setColumns: (colums: ColumnModel[]) => void;
 }
+
+const stackTokens: IStackTokens = { childrenGap: 10, padding: 10 };
 
 export const ToggleColumns: React.FunctionComponent<IToggleColumnsProps> = (props: IToggleColumnsProps) => {
     const { columns, setColumns } = props;
@@ -31,17 +34,15 @@ export const ToggleColumns: React.FunctionComponent<IToggleColumnsProps> = (prop
     };
 
     return (
-        <div>
+        <Stack tokens={stackTokens}>
             {columns.map((column) => (
-                <Toggle
+                <Checkbox
                     key={column.name}
                     label={column.label}
                     checked={column.visible}
-                    onText="On"
-                    offText="Off"
                     onChange={handleChange(column)}
                 />
             ))}
-        </div>
+        </Stack>
     );
 };
