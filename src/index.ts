@@ -10,3 +10,4 @@ export * from './useTbFabric';
 export * from './utils';
 export * from './interfaces';
 export * from './ChipBar';
+export * from './FeaturesPanel';

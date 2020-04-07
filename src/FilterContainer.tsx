@@ -36,6 +36,7 @@ export const FilterContainer = ({ groups, items }) => {
         };
 
         const collapseIcon = props.group.isCollapsed ? 'ChevronRight' : 'ChevronDown';
+
         return (
             <div onClick={toggleCollapse} className={classNames.header}>
                 <Stack horizontal horizontalAlign="start" verticalAlign="center">
@@ -53,9 +54,7 @@ export const FilterContainer = ({ groups, items }) => {
         );
     };
 
-    const _onRenderCell = (nestingDepth: number, item: any, itemIndex: number): JSX.Element => {
-        return <>{item}</>;
-    };
+    const _onRenderCell = (nestingDepth: number, item: any, itemIndex: number): JSX.Element => <>{item}</>;
 
     return (
         <GroupedList
