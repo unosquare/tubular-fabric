@@ -17,7 +17,7 @@ export interface ITbExtendedOptions extends ITbOptions {
     toggleColumns: boolean;
     recordCounter: boolean;
     commandBarItems?: ICommandBarItemProps[];
-    hiddeCommandBar?: boolean;
+    hideCommandBar?: boolean;
     selectionMode?: number;
 }
 
@@ -42,7 +42,7 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
 
     return (
         <div className={classes.tbContainer}>
-            {!options.hiddeCommandBar && (
+            {!options.hideCommandBar && (
                 <TbCommandBar
                     tbFabricInstance={tbFabricInstance}
                     filterable={options.filterable}

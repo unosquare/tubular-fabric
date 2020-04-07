@@ -6,15 +6,10 @@ import { FilterContainer } from './FilterContainer';
 
 export interface IFiltersProps {
     columns: ColumnModel[];
-    setColumns: (colums: ColumnModel[]) => void;
+    onApply: () => void;
 }
 
-export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns, setColumns }: IFiltersProps) => {
-    const onClick = () => {
-        setColumns(columns);
-        close();
-    };
-
+export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns, onApply }: IFiltersProps) => {
     const groups: IGroup[] = columns.map((column, index) => {
         return {
             count: 1,
@@ -29,7 +24,7 @@ export const FiltersDialog: React.FunctionComponent<IFiltersProps> = ({ columns,
         };
     });
 
-    const items = columns.map((column) => <FilterField key={column.name} column={column} onEnter={onClick} />);
+    const items = columns.map((column) => <FilterField key={column.name} column={column} onEnter={onApply} />);
 
     return <FilterContainer items={items} groups={groups} />;
 };

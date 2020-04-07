@@ -61,7 +61,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
         ];
     }
 
-    if (filterable) {
+    if (filterable || toggleColumns) {
         _farItems.push({
             key: 'gridFeatures',
             text: 'Grid Features',
@@ -89,6 +89,8 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                 <FeaturesPanel
                     closePanel={closePanel}
                     columns={tbFabricInstance.state.columns}
+                    toggleColumns={toggleColumns}
+                    filterable={filterable}
                     onApplyFeatures={tbFabricInstance.api.applyFeatures}
                 />
             )}

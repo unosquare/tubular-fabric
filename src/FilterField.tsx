@@ -55,6 +55,8 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
 
     const onKeyDown = (ev: React.KeyboardEvent) => {
         if (ev.keyCode === 13) {
+            ev.preventDefault();
+            ev.stopPropagation();
             onEnter();
         }
     };
