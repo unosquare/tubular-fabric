@@ -5,6 +5,7 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 export interface ITbFabricApi extends ITbApi {
     loadMoreItems: (index?: number) => void;
     search: (value?: string) => void;
+    applyFeatures: (columns: ColumnModel[]) => void;
     applyFilters: (filterableColumns: ColumnModel[]) => void;
     applyFilter: (columnName: string, value: string) => void;
     clearFilter: (columnName: string) => void;

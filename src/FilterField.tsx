@@ -2,7 +2,7 @@ import * as React from 'react';
 import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
 import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextField';
-import { ColumnModel, CompareOperators, getOperators } from 'tubular-common';
+import { ColumnModel, getOperators } from 'tubular-common';
 import { IContextualMenuProps, IContextualMenuItem } from 'office-ui-fabric-react/lib/components/ContextualMenu';
 import { getOperatorIcon, getOperatorText } from './utils';
 import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
@@ -13,7 +13,9 @@ export interface IFilterFieldProps {
 }
 
 const filterFieldWrapperStyles: IStackStyles = {
-    root: { marginTop: '10px' },
+    root: {
+        paddingLeft: 16,
+    },
 };
 
 const filterButtonStyles: IStackItemStyles = {
@@ -53,6 +55,8 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
 
     const onKeyDown = (ev: React.KeyboardEvent) => {
         if (ev.keyCode === 13) {
+            ev.preventDefault();
+            ev.stopPropagation();
             onEnter();
         }
     };
@@ -75,7 +79,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
             </Stack.Item>
             <Stack.Item grow>
                 <TextField
-                    label={column.label}
+                    label={''}
                     onChange={handleFilterChange}
                     defaultValue={column.filterText}
                     onKeyDown={onKeyDown}
