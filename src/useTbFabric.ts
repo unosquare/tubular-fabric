@@ -143,22 +143,28 @@ export const useTbFabric = (
         return columns;
     };
 
-    const applyFilter = (columnName: string, value: string) => {
+    const applyOrResetFilter = (columnName: string, value?: string) => {
         const newColumns = tubular.state.columns.map((column) => {
             if (column.name === columnName) {
                 return {
                     ...column,
                     filterText: value,
-                    filterOperator: CompareOperators.Equals,
-                    filterArgument: [],
+                    filterOperator: !!value ? CompareOperators.Equals : CompareOperators.None,
+                    filterArgument: !!value ? [] : null,
                 };
             }
 
             return column;
         });
 
-        tubular.api.setColumns(newColumns);
+        unstable_batchedUpdates(() => {
+            setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
+
+            tubular.api.setColumns(newColumns);
+        });
     };
+
+    const applyFilter = (columnName: string, value: string) => applyOrResetFilter(columnName, value);
 
     const applyFeatures = (columns: ColumnModel[]) => {
         const result = updateVisibleColumns(columns);
@@ -174,22 +180,7 @@ export const useTbFabric = (
         });
     };
 
-    const clearFilter = (columnName: string) => {
-        const newColumns = tubular.state.columns.map((column) => {
-            if (column.name === columnName) {
-                return {
-                    ...column,
-                    filterText: null,
-                    filterOperator: CompareOperators.None,
-                    filterArgument: null,
-                };
-            }
-
-            return column;
-        });
-
-        tubular.api.setColumns(newColumns);
-    };
+    const clearFilter = (columnName: string)=> applyOrResetFilter(columnName, null);
 
     const fabricColumnsMapper = (item) => {
         const mapped = {};
