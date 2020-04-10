@@ -11,3 +11,4 @@ export * from './utils';
 export * from './interfaces';
 export * from './ChipBar';
 export * from './FeaturesPanel';
+export * from './cells';
