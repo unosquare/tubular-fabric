@@ -143,15 +143,22 @@ export const useTbFabric = (
         return columns;
     };
 
-    const applyFilter = (columnName: string, value: string) =>
-        applyFilters([
-            {
-                ...tubular.state.columns.find((x) => x.name === columnName),
-                filterText: value,
-                filterOperator: CompareOperators.Equals,
-                filterArgument: [],
-            },
-        ]);
+    const applyFilter = (columnName: string, value: string) => {
+        const newColumns = tubular.state.columns.map((column) => {
+            if (column.name === columnName) {
+                return {
+                    ...column,
+                    filterText: value,
+                    filterOperator: CompareOperators.Equals,
+                    filterArgument: [],
+                };
+            }
+
+            return column;
+        });
+
+        tubular.api.setColumns(newColumns);
+    };
 
     const applyFeatures = (columns: ColumnModel[]) => {
         const result = updateVisibleColumns(columns);
