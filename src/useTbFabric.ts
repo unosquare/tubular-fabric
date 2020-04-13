@@ -44,6 +44,8 @@ export const useTbFabric = (
         });
 
         column.tb = { ...tbColumn };
+        column.isSorted = tbColumn.sortDirection !== ColumnSortDirection.None;
+        column.isSortedDescending = column.isSorted ? tbColumn.sortDirection === ColumnSortDirection.Descending : false;
 
         return tbColumn;
     });
