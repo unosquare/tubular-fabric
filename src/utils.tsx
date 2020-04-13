@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { CompareOperators } from 'tubular-common';
+import { ColumnDataType, CompareOperators } from 'tubular-common';
 import { registerIcons, getTheme } from 'office-ui-fabric-react/lib/Styling';
+import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { TextCell, CheckboxCell } from './cells';
 
 const theme = getTheme();
 const wrapSvg = (svgInner: JSX.Element, isStringOperator = true) => {
@@ -16,6 +18,17 @@ const wrapSvg = (svgInner: JSX.Element, isStringOperator = true) => {
             {svgInner}
         </svg>
     );
+};
+
+export const getRenderByDataType = (item: any, column: any): React.ReactNode => {
+    switch (column.tb.dataType) {
+        case ColumnDataType.Boolean:
+            return <CheckboxCell checked={!!item[column.fieldName]} />;
+        case ColumnDataType.Numeric:
+            return <TextCell textAlign="Right" value={item[column.fieldName]} />;
+        default:
+            return <TextCell value={item[column.fieldName]} />;
+    }
 };
 
 export const getOperatorText = (value: CompareOperators, title: string) => {

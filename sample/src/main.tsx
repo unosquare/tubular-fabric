@@ -8,7 +8,7 @@ const Main: React.FunctionComponent = () => (
             height: '100%',
             display: 'flex',
             position: 'relative',
-            width: 700,
+            width: 800,
             margin: 'auto',
             flexDirection: 'column',
         }}

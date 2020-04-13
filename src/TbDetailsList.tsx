@@ -12,6 +12,7 @@ import { IColumn, ConstrainMode } from 'office-ui-fabric-react/lib/components/De
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
 import { TextCell, ShimmerCell } from './cells';
+import { getRenderByDataType } from './utils';
 
 export interface ITbDetailsListProps {
     tbFabricInstance: ITbFabricInstance;
@@ -68,11 +69,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
             return <ShimmerCell />;
         }
 
-        return onRenderItemColumn ? (
-            onRenderItemColumn(item, index, column)
-        ) : (
-            <TextCell value={item[column.fieldName]} />
-        );
+        return onRenderItemColumn ? onRenderItemColumn(item, index, column) : getRenderByDataType(item, column);
     };
 
     return (
