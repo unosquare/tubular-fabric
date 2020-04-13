@@ -182,7 +182,7 @@ export const useTbFabric = (
         });
     };
 
-    const clearFilter = (columnName: string)=> applyOrResetFilter(columnName, null);
+    const clearFilter = (columnName: string) => applyOrResetFilter(columnName, null);
 
     const fabricColumnsMapper = (item) => {
         const mapped: any = {};
