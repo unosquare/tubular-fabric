@@ -3,7 +3,7 @@ import { Panel } from 'office-ui-fabric-react/lib/Panel';
 import { useConstCallback } from '@uifabric/react-hooks';
 import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/components/Pivot';
 import { ToggleColumns } from './ToggleColumns';
-import { FiltersDialog } from './FiltersDialog';
+import { FiltersContainer } from './FiltersContainer';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 
@@ -72,10 +72,10 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
             onRenderFooterContent={onRenderFooterContent}
             isFooterAtBottom={true}
         >
-            <Pivot aria-label="Count and Icon Pivot Example">
+            <Pivot>
                 {filterable && (
                     <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
-                        <FiltersDialog columns={tempColumns} onApply={onApplyClick} />
+                        <FiltersContainer columns={tempColumns} onApply={onApplyClick} />
                     </PivotItem>
                 )}
                 {toggleColumns && (
