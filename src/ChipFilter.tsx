@@ -3,7 +3,7 @@ import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { Text } from 'office-ui-fabric-react/lib/components/Text/Text';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon/Icon';
 import { getOperatorIcon } from './utils';
-import { ColumnModel } from 'tubular-common';
+import { ColumnModel, CompareOperators } from 'tubular-common';
 import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
 import { IIconProps, IIconStyles } from 'office-ui-fabric-react/lib/components/Icon/Icon.types';
 import { IStackStyles } from 'office-ui-fabric-react/lib/components/Stack/Stack.types';
@@ -46,11 +46,21 @@ export interface IChipFilterProps {
     onRemoveFilter: (columnName: string) => void;
 }
 
+const getFilterText = (column: ColumnModel) => {
+    let result = column.filterText;
+
+    if (column.filterOperator === CompareOperators.Between) {
+        result += ' - ' + column.filterArgument[0];
+    }
+
+    return result;
+};
+
 export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => (
     <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
         <Text styles={columnLabelStyles}>{column.label}</Text>
         <Icon styles={operatorIconStyles} iconName={getOperatorIcon(column.filterOperator)} />
-        <Text styles={filterValueStyles}>{column.filterText}</Text>
+        <Text styles={filterValueStyles}>{getFilterText(column)}</Text>
         <IconButton
             onClick={() => onRemoveFilter(column.name)}
             iconProps={closeIcon}

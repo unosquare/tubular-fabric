@@ -12,7 +12,8 @@ import { IFilterEditorProps } from './utils';
 
 const filterFieldWrapperStyles: IStackStyles = {
     root: {
-        paddingLeft: 16,
+        padding: 9,
+        backgroundColor: '#f1f1f1',
     },
 };
 
@@ -23,7 +24,7 @@ const filterButtonStyles: IStackItemStyles = {
 const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
     switch (column.dataType) {
         case ColumnDataType.Numeric:
-            return <NumericFilter column={column} onEnter={onEnter} />;
+            return <NumericFilter column={column} onApply={onEnter} />;
 
         case ColumnDataType.String:
         case ColumnDataType.Date:
@@ -71,7 +72,7 @@ export const StandardFilterEditor: React.FunctionComponent<IFilterEditorProps> =
             horizontal
             horizontalAlign="space-between"
             key={column.name}
-            verticalAlign="end"
+            verticalAlign="center"
             styles={filterFieldWrapperStyles}
         >
             <Stack.Item styles={filterButtonStyles}>

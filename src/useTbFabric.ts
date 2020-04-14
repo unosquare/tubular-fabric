@@ -135,6 +135,14 @@ export const useTbFabric = (
                 column.filterText = fColumn.filterText;
                 column.filterOperator = fColumn.filterOperator;
                 column.filterArgument = fColumn.filterArgument;
+
+                if (
+                    column.filterOperator === CompareOperators.Between &&
+                    (!column.filterArgument || !column.filterArgument[0])
+                ) {
+                    column.filterOperator = CompareOperators.Gte;
+                    column.filterArgument = null;
+                }
             } else {
                 column.filterText = null;
                 column.filterOperator = CompareOperators.None;
