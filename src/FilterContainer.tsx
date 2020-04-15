@@ -7,7 +7,7 @@ import {
     IRawStyle,
     mergeStyleSets,
     Stack,
-} from 'office-ui-fabric-react';
+} from '@fluentui/react';
 
 const theme = getTheme();
 const headerAndFooterStyles: IRawStyle = {

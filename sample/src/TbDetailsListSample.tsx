@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
-import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
+import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();

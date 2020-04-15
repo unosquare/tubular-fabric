@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ColumnModel, columnHasFilter } from 'tubular-common';
 import { FilterField } from './FilterField';
-import { IGroup } from 'office-ui-fabric-react';
+import { IGroup } from '@fluentui/react';
 import { FilterContainer } from './FilterContainer';
 
 export interface IFiltersProps {

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Selection } from '@uifabric/utilities';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
+import { IColumn } from '@fluentui/react/lib/DetailsList';
+import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { TbDetailsList } from './TbDetailsList';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { TbCommandBar } from './TbCommandBar';
 import { ITbColumn } from './interfaces/ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common';

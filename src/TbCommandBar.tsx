@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
-import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
-import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox/SearchBox';
-import { ISearchBoxStyles } from 'office-ui-fabric-react/lib/SearchBox';
+import { SearchBox, ISearchBoxStyles } from '@fluentui/react/lib/SearchBox';
 import { ITbFabricInstance } from './interfaces';
 import { FeaturesPanel } from './FeaturesPanel';
 

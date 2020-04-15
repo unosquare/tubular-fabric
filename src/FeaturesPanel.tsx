@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Panel } from 'office-ui-fabric-react/lib/Panel';
+import { Panel } from '@fluentui/react/lib/Panel';
 import { useConstCallback } from '@uifabric/react-hooks';
-import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/components/Pivot';
+import { PivotItem, Pivot } from '@fluentui/react/lib/Pivot';
 import { ToggleColumns } from './ToggleColumns';
 import { FiltersDialog } from './FiltersDialog';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 
 export interface FeaturesPanelProps {

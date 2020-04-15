@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
+import { Stack,IStackItemStyles } from '@fluentui/react/lib/Stack';
 import { Selection } from '@uifabric/utilities';
-import { Label } from 'office-ui-fabric-react/lib/components/Label/Label';
-import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar.types';
-import { CommandBar } from 'office-ui-fabric-react/lib/components/CommandBar/CommandBar';
-import { IStackItemStyles } from 'office-ui-fabric-react/lib/components/Stack/StackItem/StackItem.types';
-import { mergeStyleSets, getTheme } from 'office-ui-fabric-react/lib/Styling';
+import { Label } from '@fluentui/react/lib/Label';
+import { ICommandBarItemProps, CommandBar } from '@fluentui/react/lib/CommandBar';
+import { mergeStyleSets, getTheme } from '@fluentui/react/lib/Styling';
 
 export interface ISelectionBarProps {
     selection: Selection;
