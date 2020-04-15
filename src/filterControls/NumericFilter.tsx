@@ -23,17 +23,19 @@ export const NumericFilter = ({ column, onApply }: IFilterEditorProps) => {
         }
     };
 
+    const isBetween = column.filterOperator === CompareOperators.Between;
+
     return (
         <>
             <TextField
                 label={''}
                 type="number"
-                placeholder="From"
+                placeholder={isBetween ? 'From' : 'Type a number'}
                 onChange={handleFilterChange()}
                 defaultValue={column.filterText}
                 onKeyDown={onKeyDown(onApply)}
             />
-            {column.filterOperator === CompareOperators.Between && (
+            {isBetween && (
                 <TextField
                     styles={secondInputStyle}
                     label={''}

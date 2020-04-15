@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { DatePicker, DayOfWeek, IDatePickerStrings, mergeStyleSets } from 'office-ui-fabric-react';
+import { DatePicker, DayOfWeek, IDatePickerStrings, ITextStyles } from 'office-ui-fabric-react';
+import { IFilterEditorProps } from './utils';
+import { CompareOperators } from 'tubular-common';
 
 const DayPickerStrings: IDatePickerStrings = {
     months: [
@@ -31,13 +33,43 @@ const DayPickerStrings: IDatePickerStrings = {
     closeButtonAriaLabel: 'Close date picker',
 };
 
-export const DateFilter = () => {
+const secondInputStyle: ITextStyles = {
+    root: {
+        marginTop: 5,
+    },
+};
+
+export const DateFilter = ({ column }: IFilterEditorProps) => {
+    const handleDateChange = (isSecondInput?: boolean) => (date: Date | null | undefined) => {
+        if (isSecondInput) {
+            column.filterArgument = [];
+            column.filterArgument[0] = date.toISOString();
+        } else {
+            column.filterText = date.toISOString();
+        }
+    };
+
+    const isBetween = column.filterOperator === CompareOperators.Between;
+
     return (
-        <DatePicker
-            firstDayOfWeek={DayOfWeek.Monday}
-            strings={DayPickerStrings}
-            placeholder="Selec a date..."
-            ariaLabel="Select a date"
-        />
+        <>
+            <DatePicker
+                firstDayOfWeek={DayOfWeek.Monday}
+                strings={DayPickerStrings}
+                placeholder={isBetween ? 'From' : 'Selec a date'}
+                ariaLabel="Select a date"
+                onSelectDate={handleDateChange()}
+            />
+            {column.filterOperator === CompareOperators.Between && (
+                <DatePicker
+                    styles={secondInputStyle}
+                    firstDayOfWeek={DayOfWeek.Monday}
+                    strings={DayPickerStrings}
+                    placeholder="To"
+                    ariaLabel="Select end date"
+                    onSelectDate={handleDateChange(true)}
+                />
+            )}
+        </>
     );
 };

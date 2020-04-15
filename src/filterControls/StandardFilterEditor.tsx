@@ -8,6 +8,8 @@ import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
 
 import { NumericFilter } from './NumericFilter';
 import { StringFilter } from './StringFilter';
+import { DateFilter } from './DateFilter';
+
 import { IFilterEditorProps } from './utils';
 
 const filterFieldWrapperStyles: IStackStyles = {
@@ -27,10 +29,11 @@ const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
             return <NumericFilter column={column} onApply={onEnter} />;
 
         case ColumnDataType.String:
+            return <StringFilter column={column} onEnter={onEnter} />;
         case ColumnDataType.Date:
         case ColumnDataType.DateTime:
         case ColumnDataType.DateTimeUtc:
-            return <StringFilter column={column} onEnter={onEnter} />;
+            return <DateFilter column={column} onApply={onEnter} />;
 
         default:
             throw 'Error';

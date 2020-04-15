@@ -53,9 +53,10 @@ const getFilterText = (column: ColumnModel) => {
     }
 
     if (column.dataType === ColumnDataType.Boolean) {
+        const icon = column.filterText === 'true' ? 'CheckboxCompositeReversed' : 'Checkbox';
         return (
             <span style={{ paddingLeft: 2, fontSize: 18, height: 20 }}>
-                <FontIcon iconName="CheckboxCompositeReversed" />
+                <FontIcon iconName={icon} />
             </span>
         );
     }
