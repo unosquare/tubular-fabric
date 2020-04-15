@@ -3,11 +3,11 @@ import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { Text } from 'office-ui-fabric-react/lib/components/Text/Text';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon/Icon';
 import { getOperatorIcon } from './utils';
-import { ColumnModel, CompareOperators } from 'tubular-common';
+import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
 import { IIconProps, IIconStyles } from 'office-ui-fabric-react/lib/components/Icon/Icon.types';
 import { IStackStyles } from 'office-ui-fabric-react/lib/components/Stack/Stack.types';
-import { ITextStyles } from 'office-ui-fabric-react';
+import { ITextStyles, FontIcon } from 'office-ui-fabric-react';
 
 const closeIcon: IIconProps = { iconName: 'ChromeClose' };
 
@@ -38,6 +38,7 @@ const columnLabelStyles: ITextStyles = {
 const filterValueStyles: ITextStyles = {
     root: {
         marginRight: 5,
+        height: 20,
     },
 };
 
@@ -47,13 +48,19 @@ export interface IChipFilterProps {
 }
 
 const getFilterText = (column: ColumnModel) => {
-    let result = column.filterText;
-
     if (column.filterOperator === CompareOperators.Between) {
-        result += ' - ' + column.filterArgument[0];
+        return `${column.filterText} - ${column.filterArgument[0]}`;
     }
 
-    return result;
+    if (column.dataType === ColumnDataType.Boolean) {
+        return (
+            <span style={{ paddingLeft: 2, fontSize: 18, height: 20 }}>
+                <FontIcon iconName="CheckboxCompositeReversed" />
+            </span>
+        );
+    }
+
+    return column.filterText;
 };
 
 export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => (
