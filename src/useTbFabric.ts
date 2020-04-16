@@ -185,7 +185,7 @@ export const useTbFabric = (
     const clearFilter = (columnName: string) => applyOrResetFilter(columnName, null);
 
     const fabricColumnsMapper = (item) => {
-        const mapped = {};
+        const mapped: any = {};
         const tbColumns = tubular.state.columns;
 
         tbColumns.forEach((col) => {
@@ -193,9 +193,12 @@ export const useTbFabric = (
         });
 
         const keyColumn = tbColumns.find((col) => col.isKey);
-        // Random black magic, don't touch
-        mapped['key'] = `${keyColumn.name}_${item[keyColumn.name]}`;
-        mapped['name'] = mapped['key'];
+
+        if (keyColumn) {
+            // Random black magic, don't touch
+            mapped.key = `${keyColumn.name}_${item[keyColumn.name]}`;
+            mapped.name = mapped.key;
+        }
 
         return mapped;
     };

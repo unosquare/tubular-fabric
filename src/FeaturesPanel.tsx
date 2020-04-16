@@ -42,6 +42,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     const [tempColumns, setTempColumns] = React.useState(copyColumns(columns));
 
     const dismissPanel = useConstCallback(() => closePanel());
+
     const onApplyClick = () => {
         onApplyFeatures(tempColumns);
         dismissPanel();
@@ -59,6 +60,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     React.useEffect(() => {
         setTempColumns(copyColumns(columns));
     }, [columns]);
+
     return (
         <Panel
             headerText="Grid features"
@@ -72,7 +74,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
             onRenderFooterContent={onRenderFooterContent}
             isFooterAtBottom={true}
         >
-            <Pivot aria-label="Count and Icon Pivot Example">
+            <Pivot>
                 {filterable && (
                     <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
                         <FiltersDialog columns={tempColumns} onApply={onApplyClick} />
