@@ -3,6 +3,9 @@ import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
+import { createFakeRows } from './utils';
+
+const dataSource = createFakeRows(columns, 500);
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -40,7 +43,7 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
     return (
         <TbGrid
             columns={columns}
-            source="https://tubular.azurewebsites.net/api/orders/paged"
+            source={dataSource}
             options={{
                 deps: [refresh],
                 filterable: true,
