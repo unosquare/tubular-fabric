@@ -25,12 +25,11 @@ const resolveFilterOperator = (column: ColumnModel): CompareOperators =>
                 : CompareOperators.Equals
             : column.filterOperator);
 
-const copyColumns = (columns: ColumnModel[]): ColumnModel[] => {
-    return columns.map((column) => ({
+const copyColumns = (columns: ColumnModel[]): ColumnModel[] =>
+    columns.map((column) => ({
         ...column,
         filterOperator: resolveFilterOperator(column),
     }));
-};
 
 export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     closePanel,
@@ -49,12 +48,12 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     };
 
     const onRenderFooterContent = () => (
-        <div>
+        <>
             <PrimaryButton onClick={onApplyClick} styles={buttonStyles}>
                 Apply
             </PrimaryButton>
             <DefaultButton onClick={dismissPanel}>Cancel</DefaultButton>
-        </div>
+        </>
     );
 
     React.useEffect(() => {
@@ -77,7 +76,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
             <Pivot>
                 {filterable && (
                     <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
-                        <FiltersDialog columns={tempColumns} onApply={onApplyClick} />
+                        <FiltersDialog columns={tempColumns.filter((x) => x.filterable)} onApply={onApplyClick} />
                     </PivotItem>
                 )}
                 {toggleColumns && (

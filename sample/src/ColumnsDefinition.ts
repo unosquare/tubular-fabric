@@ -63,6 +63,7 @@ export const columns: ITbColumn[] = [
         tb: {
             dataType: ColumnDataType.Boolean,
             sortable: true,
+            filterable: false,
         },
     },
 ];

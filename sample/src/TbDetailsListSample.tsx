@@ -3,6 +3,8 @@ import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { IColumn } from '@fluentui/react';
+import { getRenderByDataType } from '../../src/utils';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -37,10 +39,17 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
         },
     ];
 
+    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
+        if (column.key == 'IsShipped') return <span>NOO</span>;
+        
+        return getRenderByDataType(item, column);
+    };
+
     return (
         <TbGrid
             columns={columns}
             source="https://tubular.azurewebsites.net/api/orders/paged"
+            onRenderItemColumn={onRenderItemColumn}
             options={{
                 deps: [refresh],
                 filterable: true,
