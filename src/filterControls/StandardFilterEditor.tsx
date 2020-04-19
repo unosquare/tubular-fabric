@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { Stack } from '@fluentui/react/lib/Stack';
 import { IconButton } from '@fluentui/react/lib/Button';
-import { TextField } from '@fluentui/react/lib/TextField';
-import { ColumnModel, getOperators } from 'tubular-common';
+import { ColumnModel, getOperators, ColumnDataType } from 'tubular-common';
 import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react/lib/ContextualMenu';
-import { getOperatorIcon, getOperatorText } from './utils';
+import { getOperatorIcon, getOperatorText } from '../utils';
 import { IStackStyles, IStackItemStyles } from '@fluentui/react';
 
-export interface IFilterFieldProps {
-    column: ColumnModel;
-    onEnter: () => void;
-}
+import { NumericFilter } from './NumericFilter';
+import { StringFilter } from './StringFilter';
+import { DateFilter } from './DateFilter';
+
+import { IFilterEditorProps } from './utils';
 
 const filterFieldWrapperStyles: IStackStyles = {
     root: {
-        paddingLeft: 16,
+        padding: 9,
+        backgroundColor: '#f1f1f1',
     },
 };
 
@@ -22,7 +23,27 @@ const filterButtonStyles: IStackItemStyles = {
     root: { width: '60px' },
 };
 
-export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column, onEnter }: IFilterFieldProps) => {
+const getFilterControl = (column: ColumnModel, onEnter: () => void) => {
+    switch (column.dataType) {
+        case ColumnDataType.Numeric:
+            return <NumericFilter column={column} onApply={onEnter} />;
+
+        case ColumnDataType.String:
+            return <StringFilter column={column} onEnter={onEnter} />;
+        case ColumnDataType.Date:
+        case ColumnDataType.DateTime:
+        case ColumnDataType.DateTimeUtc:
+            return <DateFilter column={column} onApply={onEnter} />;
+
+        default:
+            throw 'Error';
+    }
+};
+
+export const StandardFilterEditor: React.FunctionComponent<IFilterEditorProps> = ({
+    column,
+    onApply,
+}: IFilterEditorProps) => {
     const [currentIcon, setCurrentIcon] = React.useState({
         iconName: getOperatorIcon(column.filterOperator),
     });
@@ -49,24 +70,12 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
         },
     };
 
-    const handleFilterChange = (_event: React.FormEvent<HTMLInputElement>, newValue: string) => {
-        column.filterText = newValue;
-    };
-
-    const onKeyDown = (ev: React.KeyboardEvent) => {
-        if (ev.keyCode === 13) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            onEnter();
-        }
-    };
-
     return (
         <Stack
             horizontal
             horizontalAlign="space-between"
             key={column.name}
-            verticalAlign="end"
+            verticalAlign="center"
             styles={filterFieldWrapperStyles}
         >
             <Stack.Item styles={filterButtonStyles}>
@@ -77,14 +86,7 @@ export const FilterField: React.FunctionComponent<IFilterFieldProps> = ({ column
                     ariaLabel={column.label}
                 />
             </Stack.Item>
-            <Stack.Item grow>
-                <TextField
-                    label={''}
-                    onChange={handleFilterChange}
-                    defaultValue={column.filterText}
-                    onKeyDown={onKeyDown}
-                />
-            </Stack.Item>
+            <Stack.Item grow>{getFilterControl(column, onApply)}</Stack.Item>
         </Stack>
     );
 };

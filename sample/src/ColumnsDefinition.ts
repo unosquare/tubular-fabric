@@ -66,4 +66,15 @@ export const columns: ITbColumn[] = [
             filterable: false,
         },
     },
+    {
+        key: 'ShippedDate',
+        name: 'Shipped Date',
+        fieldName: 'ShippedDate',
+        minWidth: 60,
+        maxWidth: 80,
+        tb: {
+            dataType: ColumnDataType.Date,
+            sortable: true,
+        },
+    },
 ];

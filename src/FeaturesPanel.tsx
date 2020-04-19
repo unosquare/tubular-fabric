@@ -3,9 +3,9 @@ import { Panel } from '@fluentui/react/lib/Panel';
 import { useConstCallback } from '@uifabric/react-hooks';
 import { PivotItem, Pivot } from '@fluentui/react/lib/Pivot';
 import { ToggleColumns } from './ToggleColumns';
-import { FiltersDialog } from './FiltersDialog';
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
+import { FiltersContainer } from './FiltersContainer';
 
 export interface FeaturesPanelProps {
     closePanel: () => void;
@@ -76,12 +76,12 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
             <Pivot>
                 {filterable && (
                     <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
-                        <FiltersDialog columns={tempColumns.filter((x) => x.filterable)} onApply={onApplyClick} />
+                        <FiltersContainer columns={tempColumns} onApply={onApplyClick} />
                     </PivotItem>
                 )}
                 {toggleColumns && (
                     <PivotItem itemID="columns" headerText="Columns" itemIcon="TripleColumn">
-                        <ToggleColumns columns={tempColumns} setColumns={setTempColumns} />
+                        <ToggleColumns columns={tempColumns.filter((x) => x.filterable)} setColumns={setTempColumns} />
                     </PivotItem>
                 )}
             </Pivot>

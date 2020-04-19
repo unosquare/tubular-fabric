@@ -1,6 +1,5 @@
 export * from './ChipFilter';
-export * from './FilterField';
-export * from './FiltersDialog';
+export * from './FiltersContainer';
 export * from './interfaces/ITbColumn';
 export * from './SelectionBar';
 export * from './TbCommandBar';

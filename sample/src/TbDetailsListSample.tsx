@@ -2,6 +2,9 @@ import * as React from 'react';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
+import { createFakeRows } from './utils';
+
+const dataSource = createFakeRows(columns, 500);
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
@@ -48,7 +51,7 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
     return (
         <TbGrid
             columns={columns}
-            source="https://tubular.azurewebsites.net/api/orders/paged"
+            source={dataSource}
             onRenderItemColumn={onRenderItemColumn}
             options={{
                 deps: [refresh],
