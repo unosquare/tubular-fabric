@@ -47,13 +47,28 @@ export interface IChipFilterProps {
     onRemoveFilter: (columnName: string) => void;
 }
 
+const convertToFriendlyDateString = (date: string) =>{
+    return new Date(date).toDateString();
+};
+
 const getFilterText = (column: ColumnModel) => {
+    const isDate =
+        column.dataType === ColumnDataType.Date ||
+        column.dataType === ColumnDataType.DateTime ||
+        column.dataType === ColumnDataType.DateTimeUtc;
+
+    const filterText = isDate ? convertToFriendlyDateString(column.filterText) : column.filterText;
+
     if (column.filterOperator === CompareOperators.Between) {
-        return `${column.filterText} - ${column.filterArgument[0]}`;
+        let argument = column.filterArgument[0];
+        if (isDate) {
+            argument = convertToFriendlyDateString(argument);
+        }
+        return `${filterText} - ${argument}`;
     }
 
     if (column.dataType === ColumnDataType.Boolean) {
-        const icon = column.filterText === 'true' ? 'CheckboxCompositeReversed' : 'Checkbox';
+        const icon = filterText === 'true' ? 'CheckboxCompositeReversed' : 'Checkbox';
         return (
             <span style={{ paddingLeft: 2, fontSize: 18, height: 20 }}>
                 <FontIcon iconName={icon} />
@@ -61,7 +76,7 @@ const getFilterText = (column: ColumnModel) => {
         );
     }
 
-    return column.filterText;
+    return filterText;
 };
 
 export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => (
