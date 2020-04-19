@@ -1,13 +1,11 @@
 import * as React from 'react';
-import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
-import { Text } from 'office-ui-fabric-react/lib/components/Text/Text';
-import { Icon } from 'office-ui-fabric-react/lib/components/Icon/Icon';
+import { Stack, IStackStyles } from '@fluentui/react/lib/Stack';
+import { Text } from '@fluentui/react/lib/Text';
+import { Icon, IIconProps, IIconStyles, FontIcon } from '@fluentui/react/lib/Icon';
 import { getOperatorIcon } from './utils';
-import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
-import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
-import { IIconProps, IIconStyles } from 'office-ui-fabric-react/lib/components/Icon/Icon.types';
-import { IStackStyles } from 'office-ui-fabric-react/lib/components/Stack/Stack.types';
-import { ITextStyles, FontIcon } from 'office-ui-fabric-react';
+import { ColumnModel, ColumnDataType, CompareOperators } from 'tubular-common';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { ITextStyles } from '@fluentui/react';
 
 const closeIcon: IIconProps = { iconName: 'ChromeClose' };
 
@@ -47,7 +45,7 @@ export interface IChipFilterProps {
     onRemoveFilter: (columnName: string) => void;
 }
 
-const convertToFriendlyDateString = (date: string) =>{
+const convertToFriendlyDateString = (date: string) => {
     return new Date(date).toDateString();
 };
 

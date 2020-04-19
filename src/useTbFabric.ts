@@ -10,7 +10,7 @@ import {
 } from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { unstable_batchedUpdates } from 'react-dom';
@@ -193,7 +193,7 @@ export const useTbFabric = (
     const clearFilter = (columnName: string) => applyOrResetFilter(columnName, null);
 
     const fabricColumnsMapper = (item) => {
-        const mapped = {};
+        const mapped: any = {};
         const tbColumns = tubular.state.columns;
 
         tbColumns.forEach((col) => {
@@ -201,9 +201,12 @@ export const useTbFabric = (
         });
 
         const keyColumn = tbColumns.find((col) => col.isKey);
-        // Random black magic, don't touch
-        mapped['key'] = `${keyColumn.name}_${item[keyColumn.name]}`;
-        mapped['name'] = mapped['key'];
+
+        if (keyColumn) {
+            // Random black magic, don't touch
+            mapped.key = `${keyColumn.name}_${item[keyColumn.name]}`;
+            mapped.name = mapped.key;
+        }
 
         return mapped;
     };

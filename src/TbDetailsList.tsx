@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
-import { DetailsList } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsList';
-import { SelectionBar } from './SelectionBar';
-import { Selection } from '@uifabric/utilities';
 import {
+    DetailsList,
+    IDetailsRowProps,
+    DetailsRow,
     IDetailsRowStyleProps,
     IDetailsRowStyles,
-} from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow.types';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { IColumn, ConstrainMode } from 'office-ui-fabric-react/lib/components/DetailsList';
+} from '@fluentui/react/lib/DetailsList';
+import { SelectionBar } from './SelectionBar';
+import { Selection } from '@uifabric/utilities';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
+import { IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
-import { IStyleFunctionOrObject, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
-import { TextCell, ShimmerCell } from './cells';
+import { IStyleFunctionOrObject, SelectionMode } from '@fluentui/react/lib/Utilities';
+import { ShimmerCell } from './cells';
 import { getRenderByDataType } from './utils';
 
 export interface ITbDetailsListProps {

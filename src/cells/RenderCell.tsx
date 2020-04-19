@@ -7,8 +7,7 @@ const itemStyles: any = {
 };
 
 const centeredItemStyles = {
-    alignItems: 'center',
-    display: 'flex',
+    ...itemStyles,
     justifyContent: 'center',
 };
 

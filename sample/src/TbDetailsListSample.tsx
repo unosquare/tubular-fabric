@@ -2,10 +2,12 @@ import * as React from 'react';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
-import { ICommandBarItemProps } from 'office-ui-fabric-react/lib/components/CommandBar';
 import { createFakeRows } from './utils';
 
 const dataSource = createFakeRows(columns, 500);
+import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { IColumn } from '@fluentui/react';
+import { getRenderByDataType } from '../../src/utils';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -40,10 +42,17 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
         },
     ];
 
+    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
+        if (column.key == 'IsShipped') return <span>NOO</span>;
+        
+        return getRenderByDataType(item, column);
+    };
+
     return (
         <TbGrid
             columns={columns}
             source={dataSource}
+            onRenderItemColumn={onRenderItemColumn}
             options={{
                 deps: [refresh],
                 filterable: true,

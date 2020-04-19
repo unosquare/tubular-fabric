@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import { Stack, IStackTokens } from 'office-ui-fabric-react/lib/components/Stack';
-import { Checkbox } from 'office-ui-fabric-react/lib/components/Checkbox';
+import { Stack, IStackTokens } from '@fluentui/react/lib/Stack';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 
 export interface IToggleColumnsProps {
     columns: ColumnModel[];

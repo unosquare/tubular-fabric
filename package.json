@@ -42,7 +42,7 @@
   },
   "homepage": "https://github.com/unosquare/tubular-fabric#readme",
   "dependencies": {
-    "office-ui-fabric-react": "^7.106.0",
+    "@fluentui/react": "^7.107.0",
     "tubular-common": "^4.0.4",
     "tubular-react-common": "2.0.3"
   },
@@ -60,7 +60,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "source-map-loader": "^0.2.4",
-    "ts-loader": "^6.2.2",
+    "ts-loader": "^7.0.0",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",

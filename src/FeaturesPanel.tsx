@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Panel } from 'office-ui-fabric-react/lib/Panel';
+import { Panel } from '@fluentui/react/lib/Panel';
 import { useConstCallback } from '@uifabric/react-hooks';
-import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/components/Pivot';
+import { PivotItem, Pivot } from '@fluentui/react/lib/Pivot';
 import { ToggleColumns } from './ToggleColumns';
-import { FiltersContainer } from './FiltersContainer';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
+import { FiltersContainer } from './FiltersContainer';
 
 export interface FeaturesPanelProps {
     closePanel: () => void;
@@ -25,12 +25,11 @@ const resolveFilterOperator = (column: ColumnModel): CompareOperators =>
                 : CompareOperators.Equals
             : column.filterOperator);
 
-const copyColumns = (columns: ColumnModel[]): ColumnModel[] => {
-    return columns.map((column) => ({
+const copyColumns = (columns: ColumnModel[]): ColumnModel[] =>
+    columns.map((column) => ({
         ...column,
         filterOperator: resolveFilterOperator(column),
     }));
-};
 
 export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     closePanel,
@@ -42,23 +41,25 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
     const [tempColumns, setTempColumns] = React.useState(copyColumns(columns));
 
     const dismissPanel = useConstCallback(() => closePanel());
+
     const onApplyClick = () => {
         onApplyFeatures(tempColumns);
         dismissPanel();
     };
 
     const onRenderFooterContent = () => (
-        <div>
+        <>
             <PrimaryButton onClick={onApplyClick} styles={buttonStyles}>
                 Apply
             </PrimaryButton>
             <DefaultButton onClick={dismissPanel}>Cancel</DefaultButton>
-        </div>
+        </>
     );
 
     React.useEffect(() => {
         setTempColumns(copyColumns(columns));
     }, [columns]);
+
     return (
         <Panel
             headerText="Grid features"
@@ -80,7 +81,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
                 )}
                 {toggleColumns && (
                     <PivotItem itemID="columns" headerText="Columns" itemIcon="TripleColumn">
-                        <ToggleColumns columns={tempColumns} setColumns={setTempColumns} />
+                        <ToggleColumns columns={tempColumns.filter((x) => x.filterable)} setColumns={setTempColumns} />
                     </PivotItem>
                 )}
             </Pivot>

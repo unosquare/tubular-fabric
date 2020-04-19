@@ -1,4 +1,4 @@
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ColumnModel } from 'tubular-common';
 
 export interface ITbColumn extends IColumn {
