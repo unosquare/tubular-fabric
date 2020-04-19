@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
-import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { IconButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, getOperators, ColumnDataType } from 'tubular-common';
-import { IContextualMenuProps, IContextualMenuItem } from 'office-ui-fabric-react/lib/components/ContextualMenu';
+import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react/lib/ContextualMenu';
 import { getOperatorIcon, getOperatorText } from '../utils';
-import { IStackStyles, IStackItemStyles } from 'office-ui-fabric-react';
+import { IStackStyles, IStackItemStyles } from '@fluentui/react';
 
 import { NumericFilter } from './NumericFilter';
 import { StringFilter } from './StringFilter';
