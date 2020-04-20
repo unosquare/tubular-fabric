@@ -5,7 +5,7 @@ import { Icon, IIconProps, IIconStyles, FontIcon } from '@fluentui/react/lib/Ico
 import { getOperatorIcon } from './utils';
 import { ColumnModel, ColumnDataType, CompareOperators } from 'tubular-common';
 import { IconButton } from '@fluentui/react/lib/Button';
-import { ITextStyles } from '@fluentui/react';
+import { ITextStyles, mergeStyles } from '@fluentui/react';
 
 const closeIcon: IIconProps = { iconName: 'ChromeClose' };
 
@@ -14,7 +14,6 @@ const chipFilterWrapperStyles: IStackStyles = {
         marginTop: '2px',
         marginRight: '2px',
         paddingLeft: '6px',
-        backgroundColor: '#DFDFDF',
         borderRadius: '2px',
     },
     inner: { margin: '0px 10px' },
@@ -32,6 +31,12 @@ const columnLabelStyles: ITextStyles = {
         fontWeight: 500,
     },
 };
+
+const booleanIcon = mergeStyles({
+    paddingLeft: 2,
+    fontSize: 18,
+    height: 20,
+});
 
 const filterValueStyles: ITextStyles = {
     root: {
@@ -68,7 +73,7 @@ const getFilterText = (column: ColumnModel) => {
     if (column.dataType === ColumnDataType.Boolean) {
         const icon = filterText === 'true' ? 'CheckboxCompositeReversed' : 'Checkbox';
         return (
-            <span style={{ paddingLeft: 2, fontSize: 18, height: 20 }}>
+            <span className={booleanIcon}>
                 <FontIcon iconName={icon} />
             </span>
         );
