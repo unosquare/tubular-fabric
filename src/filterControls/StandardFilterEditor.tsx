@@ -15,7 +15,6 @@ import { IFilterEditorProps } from './utils';
 const filterFieldWrapperStyles: IStackStyles = {
     root: {
         padding: 9,
-        backgroundColor: '#f1f1f1',
     },
 };
 

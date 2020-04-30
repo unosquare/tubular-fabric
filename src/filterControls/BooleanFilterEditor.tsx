@@ -9,7 +9,6 @@ import { FontIcon } from 'office-ui-fabric-react/lib/components/Icon';
 const filterFieldWrapperStyles: IStackStyles = {
     root: {
         padding: 9,
-        backgroundColor: '#f1f1f1',
     },
 };
 
