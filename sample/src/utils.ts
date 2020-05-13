@@ -89,6 +89,11 @@ export const createFakeRows = (columnDefinition: ITbColumn[], numberOfRows = 100
                     ).toISOString();
                     break;
                 case ColumnDataType.Numeric:
+                    if (current.tb.isKey) {
+                        newItem[current.fieldName] = i;
+                        break;
+                    }
+
                     const randNumber = Math.random() * 10000;
                     newItem[current.fieldName] = intNumbers ? Math.round(randNumber) : randNumber;
                     break;
