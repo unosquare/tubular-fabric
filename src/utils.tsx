@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from 'tubular-common';
 import { registerIcons, getTheme } from '@fluentui/react/lib/Styling';
-import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { TextCell, CheckboxCell } from './cells';
-//started
+
 const theme = getTheme();
 const wrapSvg = (svgInner: JSX.Element, isStringOperator = true) => {
     const viewBox = isStringOperator ? '0,-2,16,16' : '0,0,20,20';
