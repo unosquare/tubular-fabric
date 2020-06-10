@@ -27,6 +27,7 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "./src/**/*.{ts,tsx}",
       "!**/node_modules/**",
