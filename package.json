@@ -13,6 +13,12 @@
   },
   "jest": {
     "automock": false,
+    "moduleNameMapper": {
+      "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
+      "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1",
+      "@uifabric/react-hooks/(.*)$": "@uifabric/react-hooks/lib-commonjs/$1",
+      "@uifabric/utilities/lib/(.*)$": "@uifabric/utilities/lib-commonjs/$1"
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -21,6 +27,11 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
+    "collectCoverageFrom": [
+      "./src/**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!./test/**"
+    ],
     "testMatch": [
       "<rootDir>/test/**/*.spec.(ts|tsx)"
     ],
