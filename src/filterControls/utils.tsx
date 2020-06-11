@@ -1,4 +1,4 @@
-import { ColumnModel, ColumnDataType } from 'tubular-common';
+import { ColumnModel } from 'tubular-common';
 
 export const handleFilterChange = (column: ColumnModel) => (
     _event: React.FormEvent<HTMLInputElement>,
