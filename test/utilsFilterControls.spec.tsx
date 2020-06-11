@@ -15,4 +15,10 @@ describe('onKeyDown', () => {
         onKeyDown(onEnter)(mockKeyboardEvent);
         expect(onEnter.mock.calls.length).toBe(1);
     });
+
+    it('Should not call onEnter function', () => {
+        const onEnter = jest.fn();
+        onKeyDown(onEnter)({...mockKeyboardEvent, keyCode:0});
+        expect(onEnter.mock.calls.length).toBe(0);
+    });
 });
