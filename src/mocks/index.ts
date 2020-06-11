@@ -17,20 +17,20 @@ export const mockColumn: ColumnModel = {
     visible: true
 };
 
-export const mockKeyboardEvent: KeyboardEvent = {
+export const mockKeyboardEvent: React.KeyboardEvent = {
     altKey: false,
     charCode: 0,
     ctrlKey: false,
     getModifierState: (key: string) => false,
     key: 'Enter',
     keyCode: 13,
+    locale: '',
     location: 0,
     metaKey: false,
     repeat: false,
     shiftKey: false,
     which: 0,
-    detail: 0,
-    view: null,
+    nativeEvent: null,
     currentTarget: null,
     target: null,
     bubbles: false,
@@ -39,7 +39,10 @@ export const mockKeyboardEvent: KeyboardEvent = {
     eventPhase: 0,
     isTrusted: false,
     preventDefault: () => {},
+    isDefaultPrevented: () => false,
     stopPropagation: () => {},
+    isPropagationStopped: () => false,
+    persist: () => {},
     timeStamp: 0,
     type: '',
 };
