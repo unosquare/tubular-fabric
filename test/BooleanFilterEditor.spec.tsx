@@ -9,9 +9,7 @@ initializeIcons();
 describe('BooleanFilterEditor', () => {
     it('should render BooleanFilterEditor initial state w/o problem', async () => {
         const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: 'all'}} onApply={() => {}} />);
-
+        
         expect(getByRole(container, 'radiogroup')).toBeDefined();
-
-
     });
 });
