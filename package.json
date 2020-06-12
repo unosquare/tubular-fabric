@@ -42,12 +42,12 @@
   },
   "homepage": "https://github.com/unosquare/tubular-fabric#readme",
   "dependencies": {
-    "@fluentui/react": "^7.118.0",
+    "@fluentui/react": "^7.119.0",
     "tubular-common": "^4.0.10",
-    "tubular-react-common": "2.0.13"
+    "tubular-react-common": "2.0.16"
   },
   "devDependencies": {
-    "@types/react": "^16.9.35",
+    "@types/react": "^16.9.36",
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^3.2.0",
     "@typescript-eslint/parser": "^3.2.0",
