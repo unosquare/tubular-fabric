@@ -44,7 +44,7 @@
   "dependencies": {
     "@fluentui/react": "^7.119.0",
     "tubular-common": "^4.0.10",
-    "tubular-react-common": "2.0.16"
+    "tubular-react-common": "2.0.17"
   },
   "devDependencies": {
     "@types/react": "^16.9.36",
