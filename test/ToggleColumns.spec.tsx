@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { ToggleColumns } from '../src/ToggleColumns';
-import { render, getAllByRole, getByRole, fireEvent } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { render, getAllByRole } from '@testing-library/react';
+import { mockColumn } from './mock';
 import { ColumnModel } from 'tubular-common';
 
 initializeIcons();

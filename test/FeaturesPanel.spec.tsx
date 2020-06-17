@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { FeaturesPanel } from '../src';
-import { render, getByRole, getByText } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { render } from '@testing-library/react';
+import { mockColumn } from './mock';
 
 initializeIcons();
 

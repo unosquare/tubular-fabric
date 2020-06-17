@@ -2,7 +2,7 @@ import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { StandardFilterEditor } from '../src/filterControls/StandardFilterEditor';
 import { render, getByRole, getByPlaceholderText } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { mockColumn } from './mock';
 import { ColumnDataType } from 'tubular-common';
 
 initializeIcons();

@@ -1,4 +1,5 @@
 import { ColumnModel, AggregateFunctions, ColumnDataType, CompareOperators, ColumnSortDirection } from "tubular-common";
+import { SelectionMode } from "@fluentui/react";
 
 export const mockColumn: ColumnModel = {
     aggregate: AggregateFunctions.Average,

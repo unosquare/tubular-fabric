@@ -1,15 +1,20 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { BooleanFilterEditor } from '../src/filterControls/BooleanFilterEditor';
-import { render, getByRole, fireEvent } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { render, getByRole, fireEvent, getAllByRole } from '@testing-library/react';
+import { mockColumn } from './mock';
 
 initializeIcons();
 
 describe('BooleanFilterEditor', () => {
     it('should render BooleanFilterEditor initial state w/o problem', async () => {
-        const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: 'all'}} onApply={() => {}} />);
+        const { container,  debug } = render(<BooleanFilterEditor column={{...mockColumn, filterText: 'all'}} onApply={() => {}} />);
         
-        expect(getByRole(container, 'radiogroup')).toBeDefined();
+        debug();
+        const firstRadioBuutton = getAllByRole(container, 'radio')[0];
+
+        fireEvent.change(firstRadioBuutton);
+
+        expect(firstRadioBuutton).toBeDefined();
     });
 });

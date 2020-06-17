@@ -2,7 +2,7 @@ import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { ChipFilter } from '../src/index';
 import { render, getByRole } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { mockColumn } from './mock';
 import { CompareOperators, ColumnDataType } from 'tubular-common';
 
 initializeIcons();

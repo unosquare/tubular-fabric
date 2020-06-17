@@ -2,7 +2,7 @@ import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { DateFilter } from '../src/filterControls/DateFilter';
 import { render, getAllByRole, getByRole, fireEvent } from '@testing-library/react';
-import { mockColumn } from '../src/mocks';
+import { mockColumn } from './mock';
 import { CompareOperators } from 'tubular-common';
 
 initializeIcons();

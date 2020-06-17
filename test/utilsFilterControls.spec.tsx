@@ -1,5 +1,5 @@
 import { handleFilterChange, onKeyDown} from '../src/filterControls/utils';
-import { mockColumn, mockKeyboardEvent } from '../src/mocks';
+import { mockColumn, mockKeyboardEvent } from './mock';
 
 describe('handleFilterChange', () => {
     it('Should assign a new value to column.filterText', () => {
