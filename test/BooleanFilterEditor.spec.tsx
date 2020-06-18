@@ -8,13 +8,19 @@ initializeIcons();
 
 describe('BooleanFilterEditor', () => {
     it('should render BooleanFilterEditor initial state w/o problem', async () => {
-        const { container,  debug } = render(<BooleanFilterEditor column={{...mockColumn, filterText: 'all'}} onApply={() => {}} />);
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: 'all'}} onApply={() => {}} />);
         
-        debug();
         const firstRadioBuutton = getAllByRole(container, 'radio')[0];
 
-        fireEvent.change(firstRadioBuutton);
 
         expect(firstRadioBuutton).toBeDefined();
+    });
+
+    it('should render BooleanFilterEditor initial state w/o problem and click the firstRadioButton', async () => {
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: null}} onApply={() => {}} />);
+        
+        const firstRadioBuutton = getAllByRole(container, 'radio')[0];
+
+        expect(fireEvent.click(firstRadioBuutton)).toBeTruthy();
     });
 });
