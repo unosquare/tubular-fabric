@@ -22,10 +22,10 @@ describe('ToggleColumns', () => {
         expect(fireEvent.click(checkbox)).toBeTruthy();
     });
 
-    it('Should click to the first checkbox and call handleChange with visible=false', async () => {
-        const { container } = render(<ToggleColumns columns={[{...mockColumn, visible: false}]} setColumns={(colums: ColumnModel[]) => {}} />);
+    it('Should click to the first checkbox and call handleChange with more than 1 column', async () => {
+        const { container } = render(<ToggleColumns columns={[{...mockColumn, visible: false}, {...mockColumn, name:'Test1', visible: false}]} setColumns={(colums: ColumnModel[]) => {}} />);
 
-        const checkbox = getAllByRole(container, 'checkbox')[0];
+        const checkbox = getAllByRole(container, 'checkbox')[1];
 
         expect(fireEvent.click(checkbox)).toBeTruthy();
     });
