@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { ToggleColumns } from '../src/ToggleColumns';
-import { render, getAllByRole } from '@testing-library/react';
+import { render, getAllByRole, fireEvent } from '@testing-library/react';
 import { mockColumn } from './mock';
 import { ColumnModel } from 'tubular-common';
 
@@ -12,5 +12,21 @@ describe('ToggleColumns', () => {
         const { container } = render(<ToggleColumns columns={[mockColumn]} setColumns={(colums: ColumnModel[]) => {}} />);
 
         expect(getAllByRole(container, 'checkbox').length > 0).toBeTruthy();
+    });
+
+    it('Should click to the first checkbox and call handleChange with visible=true', async () => {
+        const { container } = render(<ToggleColumns columns={[mockColumn]} setColumns={(colums: ColumnModel[]) => {}} />);
+
+        const checkbox = getAllByRole(container, 'checkbox')[0];
+
+        expect(fireEvent.click(checkbox)).toBeTruthy();
+    });
+
+    it('Should click to the first checkbox and call handleChange with visible=false', async () => {
+        const { container } = render(<ToggleColumns columns={[{...mockColumn, visible: false}]} setColumns={(colums: ColumnModel[]) => {}} />);
+
+        const checkbox = getAllByRole(container, 'checkbox')[0];
+
+        expect(fireEvent.click(checkbox)).toBeTruthy();
     });
 });
