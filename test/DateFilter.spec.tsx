@@ -12,7 +12,6 @@ describe('DateFilter', () => {
         const { container } = render(<DateFilter column={{...mockColumn }} onApply={() => {}}  />);
         
         const clearDateBtn = getByRole(container, 'button');
-        fireEvent.click(clearDateBtn);
 
         expect(getByRole(container, 'button')).toBeDefined();
     });
@@ -29,5 +28,13 @@ describe('DateFilter', () => {
         fireEvent.click(clearDateBtns[1]);
 
         expect(clearDateBtns[1]).toBeDefined();
+    });
+
+    it('should click first datePicker', async () => {
+        const { container } = render(<DateFilter column={{...mockColumn, filterOperator: CompareOperators.Between, filterText: '01/01/2020', filterArgument: ['01/01/2020', '01/01/2020'] }} onApply={() => {}}  />);
+
+        const clearDateBtns = getAllByRole(container, 'button');        
+
+        expect(fireEvent.click(clearDateBtns[0])).toBeTruthy();
     });
 });

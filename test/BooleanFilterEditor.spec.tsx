@@ -24,12 +24,10 @@ describe('BooleanFilterEditor', () => {
     });
 
     it('Key value should be all', async () => {
-        const { container, debug } = render(<BooleanFilterEditor column={{...mockColumn, name: 'all'}} onApply={() => {}} />);
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn, name: 'all'}} onApply={() => {}} />);
         
         const allRadios = getAllByRole(container, 'radio');
         const lastRadioBuutton = allRadios[allRadios.length - 1];
-
-        debug(lastRadioBuutton);
 
         expect(fireEvent.click(lastRadioBuutton)).toBeTruthy();
     });
