@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { StandardFilterEditor } from '../src/filterControls/StandardFilterEditor';
-import { render, getByRole, getByPlaceholderText, fireEvent } from '@testing-library/react';
+import { render, getByRole, getByPlaceholderText } from '@testing-library/react';
 import { mockColumn } from './mock';
 import { ColumnDataType } from 'tubular-common';
 

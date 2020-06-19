@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { SelectionBar } from '../src/index';
-import { render, getByRole } from '@testing-library/react';
+import { render } from '@testing-library/react';
 initializeIcons();
 
 describe('SelectionBar', () => {

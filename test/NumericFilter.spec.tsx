@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { initializeIcons, TextField } from '@fluentui/react';
+import { initializeIcons } from '@fluentui/react';
 import {  NumericFilter } from '../src/filterControls/NumericFilter';
-import { render, getByRole, getAllByRole, fireEvent, getByPlaceholderText } from '@testing-library/react';
+import { render, getByRole, fireEvent, getByPlaceholderText } from '@testing-library/react';
 import { mockColumn } from './mock';
 import { CompareOperators } from 'tubular-common';
 

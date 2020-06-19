@@ -3,7 +3,7 @@ import { initializeIcons } from '@fluentui/react';
 import { FiltersContainer } from '../src/index';
 import { render, getAllByRole, fireEvent, getByRole } from '@testing-library/react';
 import { mockColumn } from './mock';
-import { CompareOperators, ColumnDataType } from 'tubular-common';
+import { ColumnDataType } from 'tubular-common';
 
 initializeIcons();
 
