@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColumnDataType, CompareOperators } from 'tubular-common';
 import { registerIcons, getTheme } from '@fluentui/react/lib/Styling';
-import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { TextCell, CheckboxCell } from './cells';
 
 const theme = getTheme();
