@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stack,IStackItemStyles } from '@fluentui/react/lib/Stack';
+import { Stack, IStackItemStyles } from '@fluentui/react/lib/Stack';
 import { Selection } from '@uifabric/utilities';
 import { Label } from '@fluentui/react/lib/Label';
 import { ICommandBarItemProps, CommandBar } from '@fluentui/react/lib/CommandBar';

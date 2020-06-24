@@ -12,7 +12,6 @@ import { useTubular } from 'tubular-react-common/dist/useTubular';
 import * as React from 'react';
 import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
-// eslint-disable-next-line @typescript-eslint/camelcase
 import { unstable_batchedUpdates } from 'react-dom';
 
 const getShimmerSlots = (itemCount: number): any[] => {
@@ -24,7 +23,7 @@ const getShimmerSlots = (itemCount: number): any[] => {
 
 export const useTbFabric = (
     initColumns: ITbColumn[],
-    source: string | Request | TubularHttpClientAbstract | {}[],
+    source: string | Request | TubularHttpClientAbstract | any[],
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
     const tbInitColumns = initColumns.map((column) => {

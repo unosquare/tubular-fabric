@@ -1,89 +1,108 @@
 {
-  "name": "tubular-fabric",
-  "version": "0.0.3",
-  "description": "Unosquare Tubular for Fabric",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc --p ./tsconfig.json",
-    "start": "webpack && webpack-dev-server",
-    "check": "npm run build && npm test",
-    "lint": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet",
-    "lint:fix": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet --fix",
-    "test": "jest"
-  },
-  "jest": {
-    "automock": false,
-    "moduleNameMapper": {
-      "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
-      "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1",
-      "@uifabric/react-hooks/(.*)$": "@uifabric/react-hooks/lib-commonjs/$1",
-      "@uifabric/utilities/lib/(.*)$": "@uifabric/utilities/lib-commonjs/$1"
+    "name": "tubular-fabric",
+    "version": "0.0.3",
+    "description": "Unosquare Tubular for Fabric",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc --p ./tsconfig.json",
+        "start": "webpack && webpack-dev-server",
+        "check": "npm run build && npm test",
+        "lint": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet",
+        "lint:fix": "tsc --p ./tsconfig.json --noEmit && eslint ./src/**/*.ts --quiet --fix",
+        "prettier": "prettier --check src/**/*.ts*",
+        "prettier:fix": "prettier --write src/**/*.ts*",
+        "codestyle:fix": "npm run lint:fix && npm run prettier:fix",
+        "test": "jest"
     },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
+    "prettier": {
+        "endOfLine": "auto",
+        "semi": true,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "printWidth": 120,
+        "tabWidth": 4
     },
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "./src/**/*.{ts,tsx}",
-      "!**/node_modules/**",
-      "!./test/**"
-    ],
-    "testMatch": [
-      "<rootDir>/test/**/*.spec.(ts|tsx)"
-    ],
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false,
-        "tsConfig": "tsconfig.json"
-      }
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/unosquare/tubular-fabric.git"
-  },
-  "author": "Unosquare",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/unosquare/tubular-fabric/issues"
-  },
-  "homepage": "https://github.com/unosquare/tubular-fabric#readme",
-  "dependencies": {
-    "@fluentui/react": "^7.121.2",
-    "tubular-common": "^4.0.11",
-    "tubular-react-common": "2.0.17"
-  },
-  "devDependencies": {
-    "@testing-library/dom": "^7.16.2",
-    "@testing-library/react": "^10.3.0",
-    "@types/react": "^16.9.38",
-    "@types/jest": "^26.0.0",
-    "@types/react-dom": "^16.9.8",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
-    "eslint": "^7.3.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.0",
-    "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.0.1",
-    "prettier": "^2.0.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "source-map-loader": "^1.0.0",
-    "ts-jest": "^26.1.1",
-    "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
-  },
-  "files": [
-    "dist"
-  ]
+    "jest": {
+        "automock": false,
+        "moduleNameMapper": {
+            "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
+            "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1",
+            "@uifabric/react-hooks/(.*)$": "@uifabric/react-hooks/lib-commonjs/$1",
+            "@uifabric/utilities/lib/(.*)$": "@uifabric/utilities/lib-commonjs/$1"
+        },
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ],
+        "transform": {
+            "^.+\\.(ts|tsx)$": "ts-jest"
+        },
+        "collectCoverage": true,
+        "coverageThreshold": {
+            "global": {
+                "branches": 74,
+                "functions": 79,
+                "lines": 88,
+                "statements": -88
+            }
+        },
+        "collectCoverageFrom": [
+            "./src/**/*.{ts,tsx}",
+            "!**/node_modules/**",
+            "!./test/**"
+        ],
+        "testMatch": [
+            "<rootDir>/test/**/*.spec.(ts|tsx)"
+        ],
+        "globals": {
+            "ts-jest": {
+                "diagnostics": false,
+                "tsConfig": "tsconfig.json"
+            }
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/unosquare/tubular-fabric.git"
+    },
+    "author": "Unosquare",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/unosquare/tubular-fabric/issues"
+    },
+    "homepage": "https://github.com/unosquare/tubular-fabric#readme",
+    "dependencies": {
+        "@fluentui/react": "^7.121.2",
+        "tubular-common": "^4.0.12",
+        "tubular-react-common": "2.0.18"
+    },
+    "devDependencies": {
+        "@testing-library/dom": "^7.17.1",
+        "@testing-library/react": "^10.4.1",
+        "@types/react": "^16.9.38",
+        "@types/jest": "^26.0.0",
+        "@types/react-dom": "^16.9.8",
+        "@typescript-eslint/eslint-plugin": "^3.4.0",
+        "@typescript-eslint/parser": "^3.4.0",
+        "eslint": "^7.3.1",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "eslint-plugin-react": "^7.20.0",
+        "html-webpack-plugin": "^4.3.0",
+        "jest": "^26.1.0",
+        "prettier": "^2.0.5",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "source-map-loader": "^1.0.0",
+        "ts-jest": "^26.1.1",
+        "ts-loader": "^7.0.5",
+        "typescript": "^3.9.5",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.0"
+    },
+    "files": [
+        "dist"
+    ]
 }
