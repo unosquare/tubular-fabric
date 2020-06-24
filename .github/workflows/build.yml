@@ -9,10 +9,11 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v1
-    - name: npm install, build
+    - name: npm install, build and test
       run: |
         npm ci
         npm run build
+        npm test
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
