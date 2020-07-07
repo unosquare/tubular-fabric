@@ -212,6 +212,13 @@ export const useTbFabric = (
 
     React.useEffect(() => {
         setListState((state) => {
+            if (tubular.state.error) {
+                return {
+                    items: [],
+                    initialized: true,
+                };
+            }
+
             // We don't want to override the state for shimmer
             if (tubular.state.data.length === 0 && !state.initialized) {
                 return {
@@ -233,7 +240,7 @@ export const useTbFabric = (
                 items: newItems,
             };
         });
-    }, [tubular.state.data]);
+    }, [tubular.state.data, tubular.state.error]);
 
     const listDeps = deps || [];
 

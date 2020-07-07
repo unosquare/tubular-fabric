@@ -44,14 +44,14 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
 
     const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
         if (column.key == 'IsShipped') return <span>NOO</span>;
-        
+
         return getRenderByDataType(item, column);
     };
 
     return (
         <TbGrid
             columns={columns}
-            source={dataSource}
+            source={'http://somehwere/yeah'}
             onRenderItemColumn={onRenderItemColumn}
             options={{
                 deps: [refresh],
@@ -60,6 +60,9 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
                 commandBarItems: commandItems,
                 searchable: true,
                 recordCounter: true,
+                callbacks: {
+                    onError: (error) => alert(error),
+                },
                 pagination: {
                     itemsPerPage: 100,
                 },
