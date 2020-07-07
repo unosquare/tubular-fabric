@@ -73,33 +73,37 @@ export const useTbFabric = (
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
-        resetList();
-        const newFabricColumns = fabricColumns.map((col) => {
-            if (col.fieldName === column.fieldName) {
-                const isSortedDescending = col.isSorted && !col.isSortedDescending;
-                const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
+        unstable_batchedUpdates(() => {
+            resetList();
+            const newFabricColumns = fabricColumns.map((col) => {
+                if (col.fieldName === column.fieldName) {
+                    const isSortedDescending = col.isSorted && !col.isSortedDescending;
+                    const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
+
+                    return {
+                        ...col,
+                        isSorted: isSorted,
+                        isSortedDescending: isSortedDescending,
+                    };
+                }
 
                 return {
                     ...col,
-                    isSorted: isSorted,
-                    isSortedDescending: isSortedDescending,
+                    isSorted: false,
+                    isSortedDescending: false,
                 };
-            }
+            });
 
-            return {
-                ...col,
-                isSorted: false,
-                isSortedDescending: false,
-            };
+            setFabricColumns(newFabricColumns);
+            tubular.api.sortColumn(column.fieldName);
         });
-
-        setFabricColumns(newFabricColumns);
-        tubular.api.sortColumn(column.fieldName);
     };
 
     const search = (value: string) => {
-        resetList();
-        tubular.api.updateSearchText(value);
+        unstable_batchedUpdates(() => {
+            resetList();
+            tubular.api.updateSearchText(value);
+        });
     };
 
     const updateVisibleColumns = (columns: ColumnModel[]): [ITbColumn[], ColumnModel[]] => {
