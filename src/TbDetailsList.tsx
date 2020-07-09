@@ -60,7 +60,12 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     const handleMissingItems = (index?: number, rowProps?: IDetailsRowProps): React.ReactNode => {
         const newRowProps: IDetailsRowProps = { ...rowProps };
-        tbFabricInstance.api.loadMoreItems(index);
+
+        // We need to delay loadMoreItems since
+        // we are at the render phase here.
+        setTimeout(() => {
+            tbFabricInstance.api.loadMoreItems(index);
+        });
 
         return <DetailsRow {...newRowProps} item={DEFAULT_MISSING_ITEM} styles={shimmerWrapper} />;
     };
