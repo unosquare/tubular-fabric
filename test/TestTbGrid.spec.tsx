@@ -2,20 +2,7 @@ import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { initializeIcons } from '@fluentui/react';
 import { TestTbGrid } from './components/TestTbGrid';
-import {
-    render,
-    getAllByRole,
-    getByPlaceholderText,
-    fireEvent,
-    screen,
-    within,
-    getRoles,
-    logRoles,
-    RenderResult,
-    waitFor,
-} from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { columns } from '../sample/src/ColumnsDefinition';
+import { render, getAllByRole, within, RenderResult, waitFor } from '@testing-library/react';
 
 initializeIcons();
 
@@ -30,46 +17,32 @@ const getGridStructure = (sut: RenderResult) => {
     };
 };
 
-const waitForInitialLoad = (sut) => {
-    const grid = getGridStructure(sut);
-    const firstRow = within(grid.rows[0]);
-    const cells = firstRow.queryAllByRole('gridcell');
-    const firstCell = cells[0];
-    expect(cells).toHaveLength(columns.filter((f) => f.tb.visible).length);
-    expect(within(firstCell).queryByText(/^\d+$/)).not.toBeNull();
+const createSut = () => {
+    return render(
+        <TestTbGrid
+            filterable={false}
+            toggleColumns={false}
+            searchable={true}
+            recordCounter={false}
+            itemsPerPage={10}
+        />,
+    );
 };
 
 describe('TestTbGrid', () => {
-    let sut: RenderResult;
-    beforeEach(async () => {
-        sut = render(
-            <TestTbGrid
-                filterable={false}
-                toggleColumns={false}
-                searchable={true}
-                recordCounter={false}
-                itemsPerPage={10}
-            />,
-        );
-
-        await waitFor(() => waitForInitialLoad(sut));
+    it('should show shimmers', async () => {
+        const sut = createSut();
+        await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
     });
 
-    describe('Search', () => {
-        it('should search properly', async () => {
-            // screen.debug(sut.container);
-            const search = getByPlaceholderText(sut.container, 'Search');
-            fireEvent.change(search, { target: { value: 'lovely' } });
-            fireEvent.keyDown(search, { key: 'Enter', code: 'Enter' });
+    it('should render first column with sample data', async () => {
+        const sut = createSut();
 
+        await waitFor(() => {
             const grid = getGridStructure(sut);
-            await waitFor(() => {
-                const firstRow = within(grid.rows[0]);
-                const cells = firstRow.queryAllByRole('gridcell');
-                const customerNameCell = cells[1];
-                console.log(customerNameCell.innerHTML);
-                expect(within(customerNameCell).queryByText(/The/i)).not.toBeNull();
-            });
+            const firstRow = grid.rows[0];
+            const orderIdCell = within(firstRow).getAllByRole('gridcell')[0];
+            expect(within(orderIdCell).queryByText(/^\d+$/)).not.toBeNull();
         });
     });
 });
