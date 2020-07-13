@@ -12,7 +12,8 @@
         "prettier": "prettier --check src/**/*.ts*",
         "prettier:fix": "prettier --write src/**/*.ts*",
         "codestyle:fix": "npm run lint:fix && npm run prettier:fix",
-        "test": "jest"
+        "test": "jest",
+        "cest": "jest --coverage"
     },
     "prettier": {
         "endOfLine": "auto",
@@ -38,7 +39,6 @@
         "transform": {
             "^.+\\.(ts|tsx)$": "ts-jest"
         },
-        "collectCoverage": true,
         "coverageThreshold": {
             "global": {
                 "branches": 70,
@@ -73,18 +73,19 @@
     },
     "homepage": "https://github.com/unosquare/tubular-fabric#readme",
     "dependencies": {
-        "@fluentui/react": "^7.121.11",
+        "@fluentui/react": "^7.121.12",
         "tubular-common": "^4.0.13",
         "tubular-react-common": "2.1.2"
     },
     "devDependencies": {
-        "@testing-library/dom": "^7.20.0",
-        "@testing-library/react": "^10.4.5",
-        "@types/react": "^16.9.41",
+        "@testing-library/dom": "^7.20.1",
+        "@testing-library/jest-dom": "^5.11.0",
+        "@testing-library/react": "^10.4.6",
+        "@types/react": "^16.9.43",
         "@types/jest": "^26.0.4",
         "@types/react-dom": "^16.9.8",
-        "@typescript-eslint/eslint-plugin": "^3.6.0",
-        "@typescript-eslint/parser": "^3.6.0",
+        "@typescript-eslint/eslint-plugin": "^3.6.1",
+        "@typescript-eslint/parser": "^3.6.1",
         "eslint": "^7.4.0",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-prettier": "^3.1.4",
@@ -95,7 +96,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "source-map-loader": "^1.0.1",
-        "ts-jest": "^26.1.1",
+        "ts-jest": "^26.1.2",
         "ts-loader": "^8.0.0",
         "typescript": "^3.9.6",
         "webpack": "^4.43.0",

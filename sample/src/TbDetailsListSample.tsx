@@ -4,7 +4,7 @@ import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
 import { createFakeRows } from './utils';
 
-const dataSource = createFakeRows(columns, 500);
+const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
@@ -44,7 +44,7 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
 
     const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
         if (column.key == 'IsShipped') return <span>NOO</span>;
-        
+
         return getRenderByDataType(item, column);
     };
 
@@ -60,6 +60,9 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
                 commandBarItems: commandItems,
                 searchable: true,
                 recordCounter: true,
+                callbacks: {
+                    onError: (error) => alert(error),
+                },
                 pagination: {
                     itemsPerPage: 100,
                 },

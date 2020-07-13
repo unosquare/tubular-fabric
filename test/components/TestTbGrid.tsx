@@ -10,22 +10,14 @@ import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 
 export interface ITestTbGridrProps {
-    filterable: boolean,
-    toggleColumns: boolean,
-    searchable: boolean,
-    recordCounter: boolean,
-    itemsPerPage: number
+    filterable: boolean;
+    toggleColumns: boolean;
+    searchable: boolean;
+    recordCounter: boolean;
+    itemsPerPage: number;
 }
 
-export const TestTbGrid = (
-    {
-        filterable,
-        toggleColumns,
-        searchable,
-        recordCounter,
-        itemsPerPage
-    }
-) => {
+export const TestTbGrid = ({ filterable, toggleColumns, searchable, recordCounter, itemsPerPage }) => {
     const [refresh, forceRefresh] = useGridRefresh();
     const onForceRefresh = () => forceRefresh();
 
@@ -60,7 +52,7 @@ export const TestTbGrid = (
 
     const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
         if (column.key == 'IsShipped') return <span>NOO</span>;
-        
+
         return getRenderByDataType(item, column);
     };
 

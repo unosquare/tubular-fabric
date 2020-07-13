@@ -1,36 +1,48 @@
 import * as React from 'react';
+import '@testing-library/jest-dom/extend-expect';
 import { initializeIcons } from '@fluentui/react';
 import { TestTbGrid } from './components/TestTbGrid';
-import { render, getAllByRole, getByPlaceholderText, fireEvent } from '@testing-library/react';
+import { render, getAllByRole, within, RenderResult, waitFor } from '@testing-library/react';
 
 initializeIcons();
 
-describe('TestTbGrid', () => {
-    it('should render TestTbGrid initial state w/o problem', async () => {
-        const { container } = render(<TestTbGrid 
-            filterable={true}
-            toggleColumns={true}
-            searchable={true}
-            recordCounter={true}
-            itemsPerPage={10}
-         />);
+const getGridStructure = (sut: RenderResult) => {
+    const grid = within(sut.container).getByRole('grid');
+    const presentationRoles = getAllByRole(grid, 'presentation');
 
-        expect(getAllByRole(container, 'button').length > 0).toBeTruthy();
-    });
+    return {
+        header: presentationRoles[0],
+        body: presentationRoles[1],
+        rows: within(presentationRoles[1]).getAllByRole('row'),
+    };
+};
 
-    it('Search', async () => {
-        const { container } = render(<TestTbGrid 
+const createSut = () => {
+    return render(
+        <TestTbGrid
             filterable={false}
             toggleColumns={false}
             searchable={true}
             recordCounter={false}
             itemsPerPage={10}
-         />);
-        
-        const search = getByPlaceholderText(container, 'Search');
+        />,
+    );
+};
 
-        fireEvent.change(search);
+describe('TestTbGrid', () => {
+    it('should show shimmers', async () => {
+        const sut = createSut();
+        await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
+    });
 
-        expect(getByPlaceholderText(container, 'Search')).toBeDefined();
+    it('should render first column with sample data', async () => {
+        const sut = createSut();
+
+        await waitFor(() => {
+            const grid = getGridStructure(sut);
+            const firstRow = grid.rows[0];
+            const orderIdCell = within(firstRow).getAllByRole('gridcell')[0];
+            expect(within(orderIdCell).queryByText(/^\d+$/)).not.toBeNull();
+        });
     });
 });
