@@ -1,19 +1,4 @@
 # tubular-fabric
-Tubular for Fluent UI
-
-# Table of contents
-- [tubular-fabric](#tubular-fabric)
-- [Table of contents](#table-of-contents)
-  - [Purpose](#purpose)
-  - [Installation](#installation)
-  - [Usages](#usages)
-    - [Filters](#filters)
-    - [Sorting](#sorting)
-    - [Search](#search)
-    - [Code Sandbox Example](#code-sandbox-example)
-  - [Related Projects](#related-projects)
-
-## Purpose
 This project is intended to port several cool features from [tubular-react-common](https://github.com/unosquare/tubular-react-common) into Fluent UI.
 
 Features like:
@@ -26,6 +11,17 @@ Features like:
 
 tubular-fabric provides an easy way to create a DetailsList for Fluent UI enhanced with additional features.
 
+
+# Table of contents
+- [tubular-fabric](#tubular-fabric)
+- [Table of contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usages](#usages)
+    - [Filters](#filters)
+    - [Sorting](#sorting)
+    - [Search](#search)
+    - [Code Sandbox Example](#code-sandbox-example)
+  - [Related Projects](#related-projects)
 
 ## Installation
 
