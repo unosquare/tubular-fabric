@@ -35,8 +35,7 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
     });
 
-    // TODO: Alex can you take a look?
-    xit('should render first column with sample data', async () => {
+    it('should render first column with sample data', async () => {
         const sut = createSut();
 
         await waitFor(() => {
