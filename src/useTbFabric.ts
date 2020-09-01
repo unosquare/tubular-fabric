@@ -13,13 +13,7 @@ import * as React from 'react';
 import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { unstable_batchedUpdates } from 'react-dom';
-
-const getShimmerSlots = (itemCount: number): any[] => {
-    const initialShimmerItems = [];
-    [...Array(itemCount)].forEach(() => initialShimmerItems.push(null));
-
-    return initialShimmerItems;
-};
+import { ITbFabricApi } from './interfaces';
 
 export const useTbFabric = (
     initColumns: ITbColumn[],
@@ -58,12 +52,12 @@ export const useTbFabric = (
         initialized: false,
         // We need to hold all the items that we have loaded
         // This will be a cumulated of all of the rows from tubular instance
-        items: getShimmerSlots(tubular.state.itemsPerPage),
+        items: [null],
     });
 
     // Reset list is required
     const resetList = () => {
-        setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
+        setListState({ initialized: true, items: [null] });
 
         if (tubular.state.page === 0) {
             tubular.api.setColumns([...tubular.state.columns]);
@@ -116,18 +110,8 @@ export const useTbFabric = (
         return [newFabricColumns, columns];
     };
 
-    const loadMoreItems = (index?: number) => {
-        // Tubular core will load the first page by default
-        // That's why we don't need to do any call for the first
-        // page set
-        if (index < tubular.state.itemsPerPage) {
-            return;
-        }
-
-        const pageToLoad = Math.ceil(index / tubular.state.itemsPerPage) - 1;
-        if (!tubular.state.isLoading && pageToLoad > tubular.state.page) {
-            tubular.api.goToPage(pageToLoad);
-        }
+    const loadMoreItems = (pageToLoad: number) => {
+        tubular.api.goToPage(pageToLoad);
     };
 
     const applyFilters = (columns: ColumnModel[]): ColumnModel[] => {
@@ -171,8 +155,7 @@ export const useTbFabric = (
         });
 
         unstable_batchedUpdates(() => {
-            setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
-
+            resetList();
             tubular.api.setColumns(newColumns);
         });
     };
@@ -184,11 +167,8 @@ export const useTbFabric = (
         const tbColumns = applyFilters(result[1]);
 
         unstable_batchedUpdates(() => {
-            if (tbColumns.find((c) => columnHasFilter(c))) {
-                setListState({ initialized: true, items: getShimmerSlots(tubular.state.itemsPerPage) });
-            }
-
             setFabricColumns(result[0]);
+            resetList();
             tubular.api.setColumns(tbColumns);
         });
     };
@@ -233,10 +213,10 @@ export const useTbFabric = (
 
             const mapped = tubular.state.data.map(fabricColumnsMapper);
 
-            let newItems = [...state.items].slice(0, -1 * tubular.state.itemsPerPage).concat(mapped);
+            let newItems = [...state.items].slice(0, -1).concat(mapped);
 
             if (newItems.length < tubular.state.filteredRecordCount) {
-                newItems = newItems.concat(getShimmerSlots(tubular.state.itemsPerPage));
+                newItems = newItems.concat(null);
             }
 
             return {
@@ -252,24 +232,27 @@ export const useTbFabric = (
         resetList();
     }, listDeps);
 
+    const api: ITbFabricApi = {
+        loadMoreItems,
+        search,
+        sortByColumn,
+        applyFilters,
+        applyFilter,
+        clearFilter,
+        updateVisibleColumns,
+        applyFeatures,
+        ...tubular.api,
+    };
+
     return {
         // API fort a list should be simpler than
         // the one used for a grid
-        api: {
-            loadMoreItems,
-            search,
-            sortByColumn,
-            applyFilters,
-            applyFilter,
-            clearFilter,
-            updateVisibleColumns,
-            applyFeatures,
-            ...tubular.api,
-        },
+        // api: React.useMemo(() => api, []),
+        api,
         state: {
             ...tubular.state,
             list: { items: list.items },
-            fabricColumns: fabricColumns.filter((c) => c.tb.visible),
+            fabricColumns: React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]),
         },
     } as ITbFabricInstance;
 };
