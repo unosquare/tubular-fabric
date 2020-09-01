@@ -20,6 +20,7 @@ export interface ITbDetailsListProps {
     selectionMode?: number;
     onRemoveAction?: (selection: Selection) => void;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
+    shimmerRowCount?: number;
 }
 
 export const DEFAULT_MISSING_ITEM = {
@@ -43,6 +44,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     selectionMode,
     onRemoveAction,
     onRenderItemColumn,
+    shimmerRowCount = 5,
 }: ITbDetailsListProps) => {
     const [selectedRowsCount, setSelectedRowsCount] = React.useState(0);
     const [selection] = React.useState(
@@ -61,13 +63,32 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     const handleMissingItems = (index?: number, rowProps?: IDetailsRowProps): React.ReactNode => {
         const newRowProps: IDetailsRowProps = { ...rowProps };
 
-        // We need to delay loadMoreItems since
-        // we are at the render phase here.
-        setTimeout(() => {
-            tbFabricInstance.api.loadMoreItems(index);
-        });
+        // Tubular core will load the first page by default
+        // That's why we don't need to do any call for the first
+        // page set
 
-        return <DetailsRow {...newRowProps} item={DEFAULT_MISSING_ITEM} styles={shimmerWrapper} />;
+        const pageToLoad = Math.ceil(index / tbFabricInstance.state.itemsPerPage);
+
+        if (
+            index >= tbFabricInstance.state.itemsPerPage &&
+            !tbFabricInstance.state.isLoading &&
+            pageToLoad > tbFabricInstance.state.page
+        ) {
+            // We need to delay loadMoreItems since
+            // we are at the render phase here.
+            setTimeout(() => {
+                tbFabricInstance.api.loadMoreItems(pageToLoad);
+            });
+        }
+
+        return [...Array(shimmerRowCount)].map((value, index) => (
+            <DetailsRow
+                key={`shimmer-row-${index}`}
+                {...newRowProps}
+                item={DEFAULT_MISSING_ITEM}
+                styles={shimmerWrapper}
+            />
+        ));
     };
 
     const onInternalRenderItemColumn = (item: any, index: number, column: IColumn) => {
