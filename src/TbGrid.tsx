@@ -29,7 +29,7 @@ export interface ITbGridProps {
 }
 
 const classes = mergeStyleSets({
-    tbContainer: { margin: 'auto', display: 'flex', flexDirection: 'column', width: '100%', height: '100%' },
+    tbContainer: { display: 'flex', height: 700, width: '100%', flexDirection: 'column' },
 });
 
 export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
