@@ -25,7 +25,7 @@ export interface ITbGridProps {
     options: Partial<ITbExtendedOptions>;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
     columns: ITbColumn[];
-    source: string | Request | TubularHttpClientAbstract | {}[];
+    source: string | Request | TubularHttpClientAbstract | any[];
 }
 
 const classes = mergeStyleSets({
