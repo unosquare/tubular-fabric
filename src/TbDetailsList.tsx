@@ -30,7 +30,7 @@ export const DEFAULT_MISSING_ITEM = {
 };
 
 const classes = mergeStyleSets({
-    tbDetailsList: { overflowY: 'scroll', overflowX: 'auto' },
+    tbDetailsList: { overflow: 'auto' },
 });
 
 const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowStyles> = {
