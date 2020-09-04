@@ -3,13 +3,14 @@ import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar
 import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox, ISearchBoxStyles } from '@fluentui/react/lib/SearchBox';
-import { ITbFabricInstance } from './interfaces';
+import { IFabricTbState, ITbFabricApi } from './interfaces';
 import { FeaturesPanel } from './FeaturesPanel';
 
 registerTbIcons();
 
 export interface TbCommandBarProps {
-    tbFabricInstance: ITbFabricInstance;
+    tbState: IFabricTbState;
+    tbApi: ITbFabricApi;
     filterable?: boolean;
     searchable?: boolean;
     toggleColumns?: boolean;
@@ -20,7 +21,8 @@ export interface TbCommandBarProps {
 const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
 export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
-    tbFabricInstance,
+    tbState,
+    tbApi,
     filterable,
     searchable,
     toggleColumns,
@@ -31,13 +33,13 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     const closePanel = () => setShowPanel(false);
     const openPanel = () => setShowPanel(true);
 
-    const label = React.useMemo(
-        () => getPagingMessage(tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount),
-        [tbFabricInstance.state.totalRecordCount, tbFabricInstance.state.filteredRecordCount],
-    );
+    const label = React.useMemo(() => getPagingMessage(tbState.totalRecordCount, tbState.filteredRecordCount), [
+        tbState.totalRecordCount,
+        tbState.filteredRecordCount,
+    ]);
 
     const _farItems: ICommandBarItemProps[] = [];
-    const onClear = () => tbFabricInstance.api.search();
+    const onClear = () => tbApi.search();
 
     if (searchable) {
         items = [
@@ -46,10 +48,10 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                 // eslint-disable-next-line react/display-name
                 onRender: () => (
                     <SearchBox
-                        disabled={tbFabricInstance.state.isLoading}
+                        disabled={tbState.isLoading}
                         underlined={true}
                         placeholder="Search"
-                        onSearch={tbFabricInstance.api.search}
+                        onSearch={tbApi.search}
                         onClear={onClear}
                         styles={searchBoxStyles}
                     />
@@ -64,7 +66,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             key: 'gridFeatures',
             text: 'Grid Features',
             ariaLabel: 'Grid Features',
-            disabled: tbFabricInstance.state.isLoading,
+            disabled: tbState.isLoading,
             iconOnly: true,
             iconProps: { iconName: 'Equalizer' },
             onClick: () => openPanel(),
@@ -74,7 +76,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     if (recordCounter) {
         _farItems.push({
             key: 'recordCounter',
-            disabled: tbFabricInstance.state.isLoading,
+            disabled: tbState.isLoading,
             text: label,
         });
     }
@@ -82,14 +84,14 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
-            <ChipBar columns={tbFabricInstance.state.columns} onClearFilter={tbFabricInstance.api.clearFilter} />
+            <ChipBar columns={tbState.columns} onClearFilter={tbApi.clearFilter} />
             {showPanel && (
                 <FeaturesPanel
                     closePanel={closePanel}
-                    columns={tbFabricInstance.state.columns}
+                    columns={tbState.columns}
                     toggleColumns={toggleColumns}
                     filterable={filterable}
-                    onApplyFeatures={tbFabricInstance.api.applyFeatures}
+                    onApplyFeatures={tbApi.applyFeatures}
                 />
             )}
         </>

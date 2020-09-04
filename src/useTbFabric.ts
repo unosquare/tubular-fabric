@@ -46,7 +46,7 @@ export const useTbFabric = (
     const { deps, ...rest } = tubularOptions;
 
     const memoTbColumns = React.useMemo(() => tbInitColumns, [initColumns]);
-    const tubular = useTubular(memoTbColumns, source, rest);
+    const { state: tbState, api: tbApi } = useTubular(memoTbColumns, source, rest);
     const [fabricColumns, setFabricColumns] = React.useState(initColumns);
     const [list, setListState] = React.useState({
         initialized: false,
@@ -59,11 +59,11 @@ export const useTbFabric = (
     const resetList = () => {
         setListState({ initialized: true, items: [null] });
 
-        if (tubular.state.page === 0) {
-            tubular.api.setColumns([...tubular.state.columns]);
+        if (tbState.page === 0) {
+            tbApi.setColumns([...tbState.columns]);
         }
 
-        tubular.api.goToPage(0);
+        tbApi.goToPage(0);
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
@@ -89,14 +89,14 @@ export const useTbFabric = (
             });
 
             setFabricColumns(newFabricColumns);
-            tubular.api.sortColumn(column.fieldName);
+            tbApi.sortColumn(column.fieldName);
         });
     };
 
     const search = (value: string) => {
         unstable_batchedUpdates(() => {
             resetList();
-            tubular.api.updateSearchText(value);
+            tbApi.updateSearchText(value);
         });
     };
 
@@ -111,7 +111,7 @@ export const useTbFabric = (
     };
 
     const loadMoreItems = (pageToLoad: number) => {
-        tubular.api.goToPage(pageToLoad);
+        tbApi.goToPage(pageToLoad);
     };
 
     const applyFilters = (columns: ColumnModel[]): ColumnModel[] => {
@@ -141,7 +141,7 @@ export const useTbFabric = (
     };
 
     const applyOrResetFilter = (columnName: string, value?: string) => {
-        const newColumns = tubular.state.columns.map((column) => {
+        const newColumns = tbState.columns.map((column) => {
             if (column.name === columnName) {
                 return {
                     ...column,
@@ -156,7 +156,7 @@ export const useTbFabric = (
 
         unstable_batchedUpdates(() => {
             resetList();
-            tubular.api.setColumns(newColumns);
+            tbApi.setColumns(newColumns);
         });
     };
 
@@ -169,7 +169,7 @@ export const useTbFabric = (
         unstable_batchedUpdates(() => {
             setFabricColumns(result[0]);
             resetList();
-            tubular.api.setColumns(tbColumns);
+            tbApi.setColumns(tbColumns);
         });
     };
 
@@ -177,7 +177,7 @@ export const useTbFabric = (
 
     const fabricColumnsMapper = (item) => {
         const mapped: any = {};
-        const tbColumns = tubular.state.columns;
+        const tbColumns = tbState.columns;
 
         tbColumns.forEach((col) => {
             mapped[col.name] = item[col.name];
@@ -196,7 +196,7 @@ export const useTbFabric = (
 
     React.useEffect(() => {
         setListState((state) => {
-            if (tubular.state.error) {
+            if (tbState.error) {
                 return {
                     items: [],
                     initialized: true,
@@ -204,18 +204,18 @@ export const useTbFabric = (
             }
 
             // We don't want to override the state for shimmer
-            if (tubular.state.data.length === 0 && !state.initialized) {
+            if (tbState.data.length === 0 && !state.initialized) {
                 return {
                     ...state,
                     initialized: true,
                 };
             }
 
-            const mapped = tubular.state.data.map(fabricColumnsMapper);
+            const mapped = tbState.data.map(fabricColumnsMapper);
 
             let newItems = [...state.items].slice(0, -1).concat(mapped);
 
-            if (newItems.length < tubular.state.filteredRecordCount) {
+            if (newItems.length < tbState.filteredRecordCount) {
                 newItems = newItems.concat(null);
             }
 
@@ -224,7 +224,7 @@ export const useTbFabric = (
                 items: newItems,
             };
         });
-    }, [tubular.state.data, tubular.state.error]);
+    }, [tbState.data, tbState.error]);
 
     const listDeps = deps || [];
 
@@ -232,25 +232,25 @@ export const useTbFabric = (
         resetList();
     }, listDeps);
 
-    const api: ITbFabricApi = {
-        loadMoreItems,
-        search,
-        sortByColumn,
-        applyFilters,
-        applyFilter,
-        clearFilter,
-        updateVisibleColumns,
-        applyFeatures,
-        ...tubular.api,
-    };
+    const api: ITbFabricApi = React.useMemo(
+        () => ({
+            loadMoreItems,
+            search,
+            sortByColumn,
+            applyFilters,
+            applyFilter,
+            clearFilter,
+            updateVisibleColumns,
+            applyFeatures,
+            ...tbApi,
+        }),
+        [tbState, list, fabricColumns],
+    );
 
     return {
-        // API fort a list should be simpler than
-        // the one used for a grid
-        // api: React.useMemo(() => api, []),
         api,
         state: {
-            ...tubular.state,
+            ...tbState,
             list: { items: list.items },
             fabricColumns: React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]),
         },
