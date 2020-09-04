@@ -75,7 +75,7 @@
     "dependencies": {
         "@fluentui/react": "^7.134.1",
         "tubular-common": "^4.0.19",
-        "tubular-react-common": "2.1.7"
+        "tubular-react-common": "2.1.8"
     },
     "devDependencies": {
         "@testing-library/dom": "^7.24.1",
