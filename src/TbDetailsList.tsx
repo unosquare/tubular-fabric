@@ -10,13 +10,14 @@ import { SelectionBar } from './SelectionBar';
 import { Selection } from '@uifabric/utilities';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
-import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { IStyleFunctionOrObject, SelectionMode } from '@fluentui/react/lib/Utilities';
 import { ShimmerCell } from './cells';
 import { getRenderByDataType } from './utils';
+import { IFabricTbState, ITbFabricApi } from './interfaces';
 
 export interface ITbDetailsListProps {
-    tbFabricInstance: ITbFabricInstance;
+    tbState: IFabricTbState;
+    tbApi: ITbFabricApi;
     selectionMode?: number;
     onRemoveAction?: (selection: Selection) => void;
     onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
@@ -40,7 +41,8 @@ const shimmerWrapper: IStyleFunctionOrObject<IDetailsRowStyleProps, IDetailsRowS
 };
 
 export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
-    tbFabricInstance,
+    tbState,
+    tbApi,
     selectionMode,
     onRemoveAction,
     onRenderItemColumn,
@@ -67,17 +69,13 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         // That's why we don't need to do any call for the first
         // page set
 
-        const pageToLoad = Math.ceil(index / tbFabricInstance.state.itemsPerPage);
+        const pageToLoad = Math.ceil(index / tbState.itemsPerPage);
 
-        if (
-            index >= tbFabricInstance.state.itemsPerPage &&
-            !tbFabricInstance.state.isLoading &&
-            pageToLoad > tbFabricInstance.state.page
-        ) {
+        if (index >= tbState.itemsPerPage && !tbState.isLoading && pageToLoad > tbState.page) {
             // We need to delay loadMoreItems since
             // we are at the render phase here.
             setTimeout(() => {
-                tbFabricInstance.api.loadMoreItems(pageToLoad);
+                tbApi.loadMoreItems(pageToLoad);
             });
         }
 
@@ -108,11 +106,11 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
                 selection={selection}
                 onRenderItemColumn={onInternalRenderItemColumn}
                 constrainMode={ConstrainMode.unconstrained}
-                items={tbFabricInstance.state.list.items}
-                columns={tbFabricInstance.state.fabricColumns}
+                items={tbState.list.items}
+                columns={tbState.fabricColumns}
                 onRenderMissingItem={handleMissingItems}
                 selectionPreservedOnEmptyClick={true}
-                onColumnHeaderClick={tbFabricInstance.api.sortByColumn}
+                onColumnHeaderClick={tbApi.sortByColumn}
                 selectionMode={selectionMode || SelectionMode.none}
             />
         </div>

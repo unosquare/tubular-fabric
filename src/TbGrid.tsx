@@ -38,13 +38,14 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
     options,
     onRenderItemColumn,
 }: ITbGridProps) => {
-    const tbFabricInstance = useTbFabric(columns, source, options);
+    const { state, api } = useTbFabric(columns, source, options);
 
     return (
         <div className={classes.tbContainer}>
             {!options.hideCommandBar && (
                 <TbCommandBar
-                    tbFabricInstance={tbFabricInstance}
+                    tbState={state}
+                    tbApi={api}
                     filterable={options.filterable}
                     recordCounter={options.recordCounter}
                     searchable={options.searchable}
@@ -53,7 +54,8 @@ export const TbGrid: React.FunctionComponent<ITbGridProps> = ({
                 />
             )}
             <TbDetailsList
-                tbFabricInstance={tbFabricInstance}
+                tbState={state}
+                tbApi={api}
                 selectionMode={options.selectionMode}
                 onRemoveAction={options.onRemoveAction}
                 onRenderItemColumn={onRenderItemColumn}
