@@ -247,12 +247,19 @@ export const useTbFabric = (
         [tbState, list, fabricColumns],
     );
 
-    return {
-        api,
-        state: {
+    const filteredFabricColumns = React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]);
+
+    const state = React.useMemo(
+        () => ({
             ...tbState,
             list: { items: list.items },
-            fabricColumns: React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]),
-        },
+            fabricColumns: filteredFabricColumns,
+        }),
+        [tbState, list, fabricColumns, filteredFabricColumns],
+    );
+
+    return {
+        api,
+        state,
     } as ITbFabricInstance;
 };
