@@ -69,10 +69,6 @@ export const getOperatorIcon = (value: CompareOperators) => {
             return 'ends-with-svg';
         case CompareOperators.NotEndsWith:
             return 'not-ends-with-svg';
-        case CompareOperators.Equals:
-            return 'equals-svg';
-        case CompareOperators.NotEquals:
-            return 'not-equals-svg';
         case CompareOperators.Gt:
             return 'greater-than-svg';
         case CompareOperators.Gte:
