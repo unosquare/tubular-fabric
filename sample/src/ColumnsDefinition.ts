@@ -62,7 +62,7 @@ export const columns: ITbColumn[] = [
         maxWidth: 80,
         tb: {
             dataType: ColumnDataType.Boolean,
-            sortable: true,
+            sortable: false,
             filterable: false,
         },
     },
