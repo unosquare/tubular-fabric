@@ -67,6 +67,12 @@ export const useTbFabric = (
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
+        const tbColumn = tbState.columns.find((c) => c.name === column.fieldName);
+
+        if (!tbColumn.sortable) {
+            return;
+        }
+
         unstable_batchedUpdates(() => {
             resetList();
             const newFabricColumns = fabricColumns.map((col) => {
