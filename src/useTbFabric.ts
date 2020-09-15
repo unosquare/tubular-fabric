@@ -23,6 +23,7 @@ export const useTbFabric = (
     const tbInitColumns = initColumns.map((column) => {
         const tbColumn = createColumn(column.fieldName, {
             dataType: column.tb.dataType,
+            exportable: column.tb.exportable !== undefined ? column.tb.exportable : true,
             filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
             isKey: column.tb.isKey ? column.tb.isKey : false,
             label: column.name ? column.name : (column.fieldName || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
