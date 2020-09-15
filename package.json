@@ -74,7 +74,7 @@
     "homepage": "https://github.com/unosquare/tubular-fabric#readme",
     "dependencies": {
         "@fluentui/react": "^7.137.2",
-        "tubular-common": "^4.0.23",
+        "tubular-common": "^4.1.1",
         "tubular-react-common": "2.1.11"
     },
     "devDependencies": {
