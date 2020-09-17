@@ -60,11 +60,8 @@ export const useTbFabric = (
     const resetList = () => {
         setListState({ initialized: true, items: [null] });
 
-        if (tbState.page === 0) {
-            tbApi.setColumns([...tbState.columns]);
-        }
-
         tbApi.goToPage(0);
+        tbApi.reloadGrid();
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
