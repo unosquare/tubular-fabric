@@ -238,6 +238,7 @@ export const useTbFabric = (
 
     const api: ITbFabricApi = React.useMemo(
         () => ({
+            ...tbApi,
             loadMoreItems,
             search,
             sortByColumn,
@@ -246,7 +247,7 @@ export const useTbFabric = (
             clearFilter,
             updateVisibleColumns,
             applyFeatures,
-            ...tbApi,
+            reloadGrid: () => resetList(),
         }),
         [tbState, list, fabricColumns],
     );
