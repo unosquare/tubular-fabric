@@ -84,7 +84,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     return (
         <>
             <CommandBar items={items} overflowItems={[]} farItems={_farItems} />
-            <ChipBar columns={tbState.columns} onClearFilter={tbApi.clearFilter} />
+            <ChipBar columns={tbState.columns} onClearFilter={tbApi.clearFilter} isLoading={tbState.isLoading} />
             {showPanel && (
                 <FeaturesPanel
                     closePanel={closePanel}
