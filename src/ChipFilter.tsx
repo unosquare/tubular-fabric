@@ -48,6 +48,7 @@ const filterValueStyles: ITextStyles = {
 export interface IChipFilterProps {
     column: ColumnModel;
     onRemoveFilter: (columnName: string) => void;
+    isLoading: boolean;
 }
 
 const convertToFriendlyDateString = (date: string) => {
@@ -82,7 +83,11 @@ const getFilterText = (column: ColumnModel) => {
     return filterText;
 };
 
-export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, onRemoveFilter }: IChipFilterProps) => (
+export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({
+    column,
+    onRemoveFilter,
+    isLoading,
+}: IChipFilterProps) => (
     <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
         <Text styles={columnLabelStyles}>{column.label}</Text>
         <Icon styles={operatorIconStyles} iconName={getOperatorIcon(column.filterOperator)} />
@@ -92,6 +97,7 @@ export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({ column, 
             iconProps={closeIcon}
             title="Remove Filter"
             ariaLabel="Remove Filter"
+            disabled={isLoading}
         />
     </Stack>
 );
