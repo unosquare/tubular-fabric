@@ -59,9 +59,6 @@ export const useTbFabric = (
     // Reset list is required
     const resetList = () => {
         setListState({ initialized: true, items: [null] });
-
-        tbApi.goToPage(0);
-        tbApi.reloadGrid();
     };
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
@@ -236,32 +233,29 @@ export const useTbFabric = (
         resetList();
     }, listDeps);
 
-    const api: ITbFabricApi = React.useMemo(
-        () => ({
-            ...tbApi,
-            loadMoreItems,
-            search,
-            sortByColumn,
-            applyFilters,
-            applyFilter,
-            clearFilter,
-            updateVisibleColumns,
-            applyFeatures,
-            reloadGrid: () => resetList(),
-        }),
-        [tbState, list, fabricColumns],
-    );
+    const api: ITbFabricApi = {
+        ...tbApi,
+        loadMoreItems,
+        search,
+        sortByColumn,
+        applyFilters,
+        applyFilter,
+        clearFilter,
+        updateVisibleColumns,
+        applyFeatures,
+        reloadGrid: () => {
+            resetList();
+            tbApi.reloadGrid(true);
+        },
+    };
 
     const filteredFabricColumns = React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]);
 
-    const state = React.useMemo(
-        () => ({
-            ...tbState,
-            list: { items: list.items },
-            fabricColumns: filteredFabricColumns,
-        }),
-        [tbState, list, fabricColumns, filteredFabricColumns],
-    );
+    const state = {
+        ...tbState,
+        list: { items: list.items },
+        fabricColumns: filteredFabricColumns,
+    };
 
     return {
         api,
