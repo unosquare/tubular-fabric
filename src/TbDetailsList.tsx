@@ -97,6 +97,15 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         return onRenderItemColumn ? onRenderItemColumn(item, index, column) : getRenderByDataType(item, column);
     };
 
+    const onColumnHeaderClick = React.useCallback(
+        () => (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
+            if (!tbState.isLoading) {
+                tbApi.sortByColumn(ev, column);
+            }
+        },
+        [tbState.isLoading],
+    );
+
     return (
         <div className={classes.tbDetailsList} data-is-scrollable="true">
             {selectionMode && selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
@@ -110,7 +119,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
                 columns={tbState.fabricColumns}
                 onRenderMissingItem={handleMissingItems}
                 selectionPreservedOnEmptyClick={true}
-                onColumnHeaderClick={tbApi.sortByColumn}
+                onColumnHeaderClick={onColumnHeaderClick()}
                 selectionMode={selectionMode || SelectionMode.none}
             />
         </div>
