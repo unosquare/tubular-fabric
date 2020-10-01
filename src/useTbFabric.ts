@@ -15,12 +15,8 @@ import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { unstable_batchedUpdates } from 'react-dom';
 import { ITbFabricApi } from './interfaces';
 
-export const useTbFabric = (
-    initColumns: ITbColumn[],
-    source: string | Request | TubularHttpClientAbstract | any[],
-    tubularOptions?: Partial<ITbOptions>,
-): ITbFabricInstance => {
-    const tbInitColumns = initColumns.map((column) => {
+const createInitialTbColumns = (fabricColumns: ITbColumn[]) => {
+    return fabricColumns.map((column) => {
         const tbColumn = createColumn(column.fieldName, {
             dataType: column.tb.dataType,
             exportable: column.tb.exportable !== undefined ? column.tb.exportable : true,
@@ -37,18 +33,36 @@ export const useTbFabric = (
             filterOperator: column.tb.filterOperator || CompareOperators.None,
         });
 
+        return tbColumn;
+    });
+};
+
+const completeInitialFabricColumns = (fabricColumns: ITbColumn[], tbColumns: ColumnModel[]) => {
+    return fabricColumns.map((column) => {
+        const tbColumn = tbColumns.find((c) => c.name === column.fieldName);
         column.tb = { ...tbColumn };
+        column.isFiltered = columnHasFilter(tbColumn);
         column.isSorted = tbColumn.sortDirection !== ColumnSortDirection.None;
         column.isSortedDescending = column.isSorted ? tbColumn.sortDirection === ColumnSortDirection.Descending : false;
 
-        return tbColumn;
+        return column;
     });
+};
 
+export const useTbFabric = (
+    initColumns: ITbColumn[],
+    source: string | Request | TubularHttpClientAbstract | any[],
+    tubularOptions?: Partial<ITbOptions>,
+): ITbFabricInstance => {
     const { deps, ...rest } = tubularOptions;
+    const tbInitColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);
+    const initFabricColumns = React.useMemo(() => completeInitialFabricColumns(initColumns, tbInitColumns), [
+        initColumns,
+        tbInitColumns,
+    ]);
 
-    const memoTbColumns = React.useMemo(() => tbInitColumns, [initColumns]);
-    const { state: tbState, api: tbApi } = useTubular(memoTbColumns, source, rest);
-    const [fabricColumns, setFabricColumns] = React.useState(initColumns);
+    const { state: tbState, api: tbApi } = useTubular(tbInitColumns, source, rest);
+    const [fabricColumns, setFabricColumns] = React.useState(initFabricColumns);
     const [list, setListState] = React.useState({
         initialized: false,
         // We need to hold all the items that we have loaded
@@ -106,6 +120,7 @@ export const useTbFabric = (
         columns.forEach((tbColumn) => {
             const fabricColumn = newFabricColumns.find((c) => c.fieldName === tbColumn.name);
             fabricColumn.tb.visible = tbColumn.visible;
+            fabricColumn.isFiltered = columnHasFilter(tbColumn);
         });
 
         return [newFabricColumns, columns];
@@ -142,6 +157,10 @@ export const useTbFabric = (
     };
 
     const applyOrResetFilter = (columnName: string, value?: string) => {
+        const newFabricColumns = [...fabricColumns];
+        const fabricColumn = newFabricColumns.find((f) => f.fieldName === columnName);
+        fabricColumn.isFiltered = value !== null;
+
         const newColumns = tbState.columns.map((column) => {
             if (column.name === columnName) {
                 return {
@@ -157,6 +176,7 @@ export const useTbFabric = (
 
         unstable_batchedUpdates(() => {
             resetList();
+            setFabricColumns(newFabricColumns);
             tbApi.setColumns(newColumns);
         });
     };
