@@ -19,6 +19,10 @@ const createInitialTbColumns = (fabricColumns: ITbColumn[]) => {
     return fabricColumns.map((column) => {
         const tbColumn = createColumn(column.fieldName, {
             dataType: column.tb.dataType,
+            dateDisplayFormat: column.tb.dateDisplayFormat,
+            dateOriginFormat: column.tb.dateOriginFormat,
+            dateTimeDisplayFormat: column.tb.dateTimeDisplayFormat,
+            dateTimeOriginFormat: column.tb.dateTimeOriginFormat,
             exportable: column.tb.exportable !== undefined ? column.tb.exportable : true,
             filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
             isKey: column.tb.isKey ? column.tb.isKey : false,

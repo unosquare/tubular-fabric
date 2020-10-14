@@ -7,7 +7,7 @@ export const columns: ITbColumn[] = [
         name: 'Order ID',
         fieldName: 'OrderID',
         minWidth: 50,
-        maxWidth: 130,
+        maxWidth: 80,
         isResizable: true,
         tb: {
             isKey: true,
@@ -48,7 +48,7 @@ export const columns: ITbColumn[] = [
         name: 'Amount',
         fieldName: 'Amount',
         minWidth: 120,
-        maxWidth: 200,
+        maxWidth: 150,
         tb: {
             dataType: ColumnDataType.Numeric,
             sortable: true,
@@ -70,11 +70,12 @@ export const columns: ITbColumn[] = [
         key: 'ShippedDate',
         name: 'Shipped Date',
         fieldName: 'ShippedDate',
-        minWidth: 60,
-        maxWidth: 80,
+        minWidth: 120,
+        maxWidth: 140,
         tb: {
-            dataType: ColumnDataType.Date,
             sortable: true,
+            dataType: ColumnDataType.DateTime,
+            dateTimeDisplayFormat: 'DD/MM/YYYY - hh:mm:ss A',
         },
     },
 ];
