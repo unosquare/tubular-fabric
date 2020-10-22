@@ -8,6 +8,8 @@ const dataSource = createFakeRows(columns, 500);
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
+import { ITbColumn } from '../../src/interfaces';
+import { ColumnModel } from 'tubular-common';
 
 export interface ITestTbGridrProps {
     filterable: boolean;
@@ -51,9 +53,11 @@ export const TestTbGrid = ({ filterable, toggleColumns, searchable, recordCounte
     ];
 
     const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
-        if (column.key == 'IsShipped') return <span>NOO</span>;
+        if (column.key == 'Actions') return <span>NOO</span>;
 
-        return getRenderByDataType(item, column);
+        const tbColumn = column as ITbColumn;
+
+        return getRenderByDataType(tbColumn.tb as ColumnModel, item[column.fieldName]);
     };
 
     return (
