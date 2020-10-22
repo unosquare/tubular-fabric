@@ -3,11 +3,21 @@ import { ITbColumn } from '../../src/interfaces/ITbColumn';
 
 export const columns: ITbColumn[] = [
     {
+        key: 'Actions',
+        name: 'Actions',
+        fieldName: 'none',
+        minWidth: 50,
+        tb: {
+            isComputed: true,
+            dataType: ColumnDataType.String,
+        },
+    },
+    {
         key: 'OrderID',
         name: 'Order ID',
         fieldName: 'OrderID',
-        minWidth: 50,
-        maxWidth: 80,
+        minWidth: 100,
+        maxWidth: 110,
         isResizable: true,
         tb: {
             isKey: true,
@@ -47,8 +57,8 @@ export const columns: ITbColumn[] = [
         key: 'Amount',
         name: 'Amount',
         fieldName: 'Amount',
-        minWidth: 120,
-        maxWidth: 150,
+        minWidth: 100,
+        maxWidth: 110,
         tb: {
             dataType: ColumnDataType.Numeric,
             sortable: true,

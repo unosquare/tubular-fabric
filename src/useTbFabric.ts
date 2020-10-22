@@ -26,6 +26,8 @@ const createInitialTbColumns = (fabricColumns: ITbColumn[]) => {
             exportable: column.tb.exportable !== undefined ? column.tb.exportable : true,
             filterable: column.tb.hasOwnProperty('filterable') ? column.tb.filterable : true,
             isKey: column.tb.isKey ? column.tb.isKey : false,
+            isComputed: column.tb.isComputed !== undefined ? column.tb.isComputed : false,
+            getComputedStringValue: column.tb.getComputedStringValue || null,
             label: column.name ? column.name : (column.fieldName || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
             searchable: column.tb.searchable ? column.tb.searchable : false,
             sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,

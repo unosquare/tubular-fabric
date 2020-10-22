@@ -41,7 +41,7 @@ describe('TestTbGrid', () => {
         await waitFor(() => {
             const grid = getGridStructure(sut);
             const firstRow = grid.rows[0];
-            const orderIdCell = within(firstRow).getAllByRole('gridcell')[0];
+            const orderIdCell = within(firstRow).getAllByRole('gridcell')[1];
             expect(within(orderIdCell).queryByText(/^\d+$/)).not.toBeNull();
         });
     });

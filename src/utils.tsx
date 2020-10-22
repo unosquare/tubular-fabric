@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColumnDataType, CompareOperators } from 'tubular-common';
+import { ColumnDataType, ColumnModel, CompareOperators, parseDateColumnValue } from 'tubular-common';
 import { registerIcons, getTheme } from '@fluentui/react/lib/Styling';
 import { TextCell, CheckboxCell } from './cells';
 
@@ -19,14 +19,19 @@ const wrapSvg = (svgInner: JSX.Element, isStringOperator = true) => {
     );
 };
 
-export const getRenderByDataType = (item: any, column: any): React.ReactNode => {
-    switch (column.tb.dataType) {
+export const getRenderByDataType = (column: ColumnModel, value: any): React.ReactNode => {
+    switch (column.dataType) {
         case ColumnDataType.Boolean:
-            return <CheckboxCell checked={!!item[column.fieldName]} />;
+            return <CheckboxCell checked={!!value} />;
         case ColumnDataType.Numeric:
-            return <TextCell textAlign="Right" value={item[column.fieldName]} />;
+            return <TextCell textAlign="Right" value={value} />;
+        case ColumnDataType.Date:
+        case ColumnDataType.DateTime:
+        case ColumnDataType.DateTimeUtc:
+            const dateAsString = !value ? '' : parseDateColumnValue(column, value);
+            return <TextCell textAlign="Right" value={dateAsString} />;
         default:
-            return <TextCell value={item[column.fieldName]} />;
+            return <TextCell value={value} />;
     }
 };
 

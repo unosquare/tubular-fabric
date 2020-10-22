@@ -76,7 +76,10 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
             <Pivot>
                 {filterable && (
                     <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
-                        <FiltersContainer columns={tempColumns.filter((x) => x.filterable)} onApply={onApplyClick} />
+                        <FiltersContainer
+                            columns={tempColumns.filter((x) => x.filterable && !x.isComputed)}
+                            onApply={onApplyClick}
+                        />
                     </PivotItem>
                 )}
                 {toggleColumns && (

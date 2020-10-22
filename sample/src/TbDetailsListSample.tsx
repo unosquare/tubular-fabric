@@ -45,14 +45,11 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
     ];
 
     const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
-        if (column.key == 'IsShipped') return <span>NOO</span>;
+        if (column.key == 'Actions') return <span>NOO</span>;
 
         const tbColumn = column as ITbColumn;
-        if (tbColumn.key === 'ShippedDate') {
-            return <TextCell value={parseDateColumnValue(tbColumn.tb as ColumnModel, item[column.fieldName])} />;
-        }
 
-        return getRenderByDataType(item, column);
+        return getRenderByDataType(tbColumn.tb as ColumnModel, item[column.fieldName]);
     };
 
     return (
