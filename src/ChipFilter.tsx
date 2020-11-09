@@ -51,7 +51,7 @@ export interface IChipFilterProps {
     isLoading: boolean;
 }
 
-const convertToFriendlyDateString = (date: string) => {
+const convertToFriendlyDateString = (date: string | number) => {
     return new Date(date).toDateString();
 };
 
