@@ -42,7 +42,9 @@ export const NumericFilter = ({ column, onApply }: IFilterEditorProps) => {
                     type="number"
                     placeholder="To"
                     onChange={handleFilterChange(true)}
-                    defaultValue={column.filterArgument ? column.filterArgument[0].toString() : ''}
+                    defaultValue={
+                        column.filterArgument && column.filterArgument[0] ? column.filterArgument[0].toString() : ''
+                    }
                     onKeyDown={onKeyDown(onApply)}
                 />
             )}

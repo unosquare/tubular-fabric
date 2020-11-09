@@ -48,7 +48,7 @@ const filterValueStyles: ITextStyles = {
 export interface IChipFilterProps {
     column: ColumnModel;
     onRemoveFilter: (columnName: string) => void;
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
 const convertToFriendlyDateString = (date: string | number) => {
@@ -86,7 +86,7 @@ const getFilterText = (column: ColumnModel) => {
 export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({
     column,
     onRemoveFilter,
-    isLoading,
+    isLoading = false,
 }: IChipFilterProps) => (
     <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
         <Text styles={columnLabelStyles}>{column.label}</Text>
