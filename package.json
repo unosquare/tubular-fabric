@@ -73,19 +73,19 @@
     },
     "homepage": "https://github.com/unosquare/tubular-fabric#readme",
     "dependencies": {
-        "@fluentui/react": "^7.149.4",
-        "tubular-common": "^4.2.4",
-        "tubular-react-common": "2.2.7"
+        "@fluentui/react": "^7.151.0",
+        "tubular-common": "^4.2.6",
+        "tubular-react-common": "2.2.8"
     },
     "devDependencies": {
-        "@testing-library/dom": "^7.26.5",
-        "@testing-library/jest-dom": "^5.11.5",
-        "@testing-library/react": "^11.1.1",
+        "@testing-library/dom": "^7.27.1",
+        "@testing-library/jest-dom": "^5.11.6",
+        "@testing-library/react": "^11.2.0",
         "@types/react": "^16.9.56",
         "@types/jest": "^26.0.15",
         "@types/react-dom": "^16.9.9",
-        "@typescript-eslint/eslint-plugin": "^4.7.0",
-        "@typescript-eslint/parser": "^4.7.0",
+        "@typescript-eslint/eslint-plugin": "^4.8.1",
+        "@typescript-eslint/parser": "^4.8.1",
         "eslint": "^7.13.0",
         "eslint-config-prettier": "^6.15.0",
         "eslint-plugin-prettier": "^3.1.4",
@@ -99,7 +99,7 @@
         "ts-jest": "^26.4.4",
         "ts-loader": "^8.0.11",
         "typescript": "^4.0.5",
-        "webpack": "^5.4.0",
+        "webpack": "^5.5.1",
         "webpack-cli": "^4.2.0",
         "webpack-dev-server": "^3.11.0"
     },
