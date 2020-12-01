@@ -10,7 +10,7 @@ describe('RenderCell', () => {
     it('should render initial state w/o problem', async () => {
         const value = 'Lorem ipsum';
         const { container } = render(<RenderCell><InnerTextCell value={value} /></RenderCell>);
-        const htmlElement = getByText(container, value);
+        const htmlElement = getByText(container as HTMLElement, value);
         expect(htmlElement).toBeTruthy();
     });
 });

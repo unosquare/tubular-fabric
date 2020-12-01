@@ -10,7 +10,7 @@ describe('LinkCell', () => {
         const onClick = ()=>{};
         const title = 'Title';
         const { container } = render(<LinkCell value={title} onClick={onClick} />);
-        const titleBtn = getByText(container, title);
+        const titleBtn = getByText(container as HTMLElement, title);
         expect(titleBtn).toBeDefined();
     });
 });
