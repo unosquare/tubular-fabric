@@ -74,15 +74,15 @@
     "homepage": "https://github.com/unosquare/tubular-fabric#readme",
     "dependencies": {
         "@fluentui/react": "^7.153.2",
-        "tubular-common": "^4.2.7",
-        "tubular-react-common": "2.2.9"
+        "tubular-common": "^5.0.0",
+        "tubular-react-common": "3.0.0"
     },
     "devDependencies": {
         "@testing-library/dom": "^7.28.1",
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
         "@types/react": "^17.0.0",
-        "@types/jest": "^26.0.15",
+        "@types/jest": "^26.0.16",
         "@types/react-dom": "^17.0.0",
         "@typescript-eslint/eslint-plugin": "^4.9.0",
         "@typescript-eslint/parser": "^4.9.0",
