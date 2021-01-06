@@ -8,25 +8,28 @@ initializeIcons();
 
 describe('BooleanFilterEditor', () => {
     it('should render BooleanFilterEditor initial state w/o problem', async () => {
-        const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: null}} onApply={() => {}} />);
+        const emptyFn = jest.fn();
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn, filterText: null}} onApply={emptyFn} />);
         
-        const firstRadioBuutton = getAllByRole(container, 'radio')[0];
+        const firstRadioButton = getAllByRole(container as HTMLElement, 'radio')[0];
 
-        expect(firstRadioBuutton).toBeDefined();
+        expect(firstRadioButton).toBeDefined();
     });
 
     it('should render BooleanFilterEditor initial state w/o problem and click the firstRadioButton', async () => {
-        const { container } = render(<BooleanFilterEditor column={{...mockColumn}} onApply={() => {}} />);
+        const emptyFn = jest.fn();
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn}} onApply={emptyFn} />);
         
-        const firstRadioBuutton = getAllByRole(container, 'radio')[0];
+        const firstRadioBuutton = getAllByRole(container as HTMLElement, 'radio')[0];
 
         expect(fireEvent.click(firstRadioBuutton)).toBeTruthy();
     });
 
     it('Key value should be all', async () => {
-        const { container } = render(<BooleanFilterEditor column={{...mockColumn, name: 'all'}} onApply={() => {}} />);
+        const emptyFn = jest.fn();
+        const { container } = render(<BooleanFilterEditor column={{...mockColumn, name: 'all'}} onApply={emptyFn} />);
         
-        const allRadios = getAllByRole(container, 'radio');
+        const allRadios = getAllByRole(container as HTMLElement, 'radio');
         const lastRadioBuutton = allRadios[allRadios.length - 1];
 
         expect(fireEvent.click(lastRadioBuutton)).toBeTruthy();
