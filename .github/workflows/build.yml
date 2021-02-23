@@ -13,13 +13,7 @@ jobs:
       run: |
         npm ci
         npm run build
-        npm test
-    - name: debug
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: npmlogs
-        path: /home/runner/.npm/_logs
+        npm run cest
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
