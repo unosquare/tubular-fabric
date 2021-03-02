@@ -68,7 +68,6 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         // Tubular core will load the first page by default
         // That's why we don't need to do any call for the first
         // page set
-
         const pageToLoad = Math.ceil(index / tbState.itemsPerPage);
 
         if (index >= tbState.itemsPerPage && !tbState.isLoading && pageToLoad > tbState.page) {

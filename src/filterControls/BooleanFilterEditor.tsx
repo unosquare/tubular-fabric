@@ -56,6 +56,7 @@ export const BooleanFilterEditor = ({ column }: IFilterEditorProps) => {
     };
 
     const defaultSelectedKey = column.filterText || 'all';
+
     return (
         <Stack key={column.name} verticalAlign="center" styles={filterFieldWrapperStyles}>
             <ChoiceGroup onChange={onChoiceChange} defaultSelectedKey={defaultSelectedKey} options={options} />

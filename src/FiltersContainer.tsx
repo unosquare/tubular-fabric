@@ -38,35 +38,29 @@ const classNames = mergeStyleSets({
     },
 });
 
-const isStandardControl = (dataType: ColumnDataType) => {
-    return dataType !== ColumnDataType.Boolean;
-};
+const isStandardControl = (dataType: ColumnDataType) => dataType !== ColumnDataType.Boolean;
 
-const createGroups = (columns: ColumnModel[]) => {
-    return columns.map((column, index) => {
-        return {
-            count: 1,
-            key: column.name,
-            name: column.label,
-            startIndex: index,
-            level: 0,
-            isCollapsed: true,
-            data: {
-                hasFilter: columnHasFilter(column),
-            },
-        };
-    });
-};
+const createGroups = (columns: ColumnModel[]) =>
+    columns.map((column, index) => ({
+        count: 1,
+        key: column.name,
+        name: column.label,
+        startIndex: index,
+        level: 0,
+        isCollapsed: true,
+        data: {
+            hasFilter: columnHasFilter(column),
+        },
+    }));
 
-const createItems = (columns: ColumnModel[], onApply: () => void) => {
-    return columns.map((column) => {
+const createItems = (columns: ColumnModel[], onApply: () => void) =>
+    columns.map((column) => {
         if (isStandardControl(column.dataType)) {
             return <StandardFilterEditor key={column.name} column={column} onApply={onApply} />;
         }
 
         return <BooleanFilterEditor key={column.name} column={column} onApply={onApply} />;
     });
-};
 
 const onRenderHeader = (props: IGroupHeaderProps): JSX.Element => {
     const toggleCollapse = (): void => {

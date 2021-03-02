@@ -45,6 +45,7 @@ export const SelectionBar: React.FunctionComponent<ISelectionBarProps> = ({
     ];
 
     const itemsText = selection.getSelectedCount() > 1 ? 'items' : 'item';
+
     return (
         <div className={classes.selectionBar}>
             <Stack horizontal horizontalAlign="space-between">

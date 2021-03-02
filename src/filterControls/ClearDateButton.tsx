@@ -9,6 +9,6 @@ export interface IClearDateButtonProps {
     onClick: () => void;
 }
 
-export const ClearDateButton = ({ onClick }: IClearDateButtonProps) => {
-    return <IconButton styles={iconStyles} iconProps={{ iconName: 'Cancel' }} onClick={onClick} />;
-};
+export const ClearDateButton = ({ onClick }: IClearDateButtonProps) => (
+    <IconButton styles={iconStyles} iconProps={{ iconName: 'Cancel' }} onClick={onClick} />
+);

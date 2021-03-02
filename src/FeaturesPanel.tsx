@@ -40,7 +40,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
 }: FeaturesPanelProps) => {
     const [tempColumns, setTempColumns] = React.useState(copyColumns(columns));
 
-    const dismissPanel = useConstCallback(() => closePanel());
+    const dismissPanel = React.useCallback(() => closePanel(), []);
 
     const onApplyClick = () => {
         onApplyFeatures(tempColumns);
