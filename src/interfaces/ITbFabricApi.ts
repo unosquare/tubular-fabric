@@ -10,5 +10,5 @@ export interface ITbFabricApi extends ITbApi {
     applyFilter: (columnName: string, value: string) => void;
     clearFilter: (columnName: string) => void;
     updateVisibleColumns: (columns: ColumnModel[]) => void;
-    sortByColumn: (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => void;
+    sortByColumn: (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort?: boolean) => void;
 }
