@@ -72,11 +72,36 @@ export const useTbFabric = (
         items: [null],
     });
 
+    const isCtrlKeyPressed = React.useRef<boolean>(false);
+
+    const handleKeyDown = (event: any) => {
+        if (event.key === 'Control' && !isCtrlKeyPressed.current) {
+            isCtrlKeyPressed.current = true;
+        }
+    };
+
+    const handleKeyUp = (event: any) => {
+        if (event.key === 'Control' && isCtrlKeyPressed) {
+            isCtrlKeyPressed.current = false;
+        }
+    };
+
+    React.useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('keyup', handleKeyUp);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
+        };
+    }, []);
+
     // Reset list is required
     const resetList = () => setListState({ initialized: true, items: [null] });
 
-    const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
+    const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort = false) => {
         const tbColumn = tbState.columns.find((c) => c.name === column.fieldName);
+        isMultiSort = isMultiSort ? isMultiSort : isCtrlKeyPressed.current;
 
         if (!tbColumn.sortable) {
             return;
@@ -96,6 +121,10 @@ export const useTbFabric = (
                     };
                 }
 
+                if (isMultiSort) {
+                    return col;
+                }
+
                 return {
                     ...col,
                     isSorted: false,
@@ -104,7 +133,7 @@ export const useTbFabric = (
             });
 
             setFabricColumns(newFabricColumns);
-            tbApi.sortColumn(column.fieldName);
+            tbApi.sortColumn(column.fieldName, isMultiSort);
         });
     };
 
