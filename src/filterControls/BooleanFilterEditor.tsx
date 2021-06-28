@@ -1,10 +1,7 @@
 import * as React from 'react';
-import Stack from 'office-ui-fabric-react/lib/components/Stack/Stack';
 import { IFilterEditorProps } from './utils';
-import { IStackStyles } from 'office-ui-fabric-react/lib/components/Stack';
+import { IStackStyles, Stack, FontIcon, IChoiceGroupOption, ChoiceGroup } from '@fluentui/react';
 import { CompareOperators } from 'tubular-common';
-import { IChoiceGroupOption, ChoiceGroup } from 'office-ui-fabric-react/lib/components/ChoiceGroup';
-import { FontIcon } from 'office-ui-fabric-react/lib/components/Icon';
 
 const filterFieldWrapperStyles: IStackStyles = {
     root: {

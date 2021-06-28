@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Selection } from '@uifabric/utilities';
+import { Selection } from '@fluentui/react';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { DatePicker, DayOfWeek, IDatePickerStrings, IDatePickerStyles } from 'office-ui-fabric-react';
 import { IFilterEditorProps } from './utils';
 import { CompareOperators, ColumnModel } from 'tubular-common';
-import { mergeStyles } from '@fluentui/react';
+import { mergeStyles, DatePicker, DayOfWeek, IDatePickerStrings, IDatePickerStyles } from '@fluentui/react';
 
 import { ClearDateButton } from './ClearDateButton';
 
@@ -86,7 +85,10 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
         }
     };
 
-    const clearDate = (isSecondInput = false) => () => handleDateChange(isSecondInput)(null);
+    const clearDate =
+        (isSecondInput = false) =>
+        () =>
+            handleDateChange(isSecondInput)(null);
 
     const isBetween = column.filterOperator === CompareOperators.Between;
 

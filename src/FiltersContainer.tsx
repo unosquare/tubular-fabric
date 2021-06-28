@@ -8,7 +8,7 @@ import {
     mergeStyleSets,
     Stack,
     IGroup,
-} from 'office-ui-fabric-react';
+} from '@fluentui/react';
 import { ColumnModel, columnHasFilter, ColumnDataType } from 'tubular-common';
 import { StandardFilterEditor } from './filterControls/StandardFilterEditor';
 import { BooleanFilterEditor } from './filterControls/BooleanFilterEditor';

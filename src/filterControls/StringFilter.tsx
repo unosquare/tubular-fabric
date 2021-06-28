@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextField';
+import { TextField } from '@fluentui/react';
 import { handleFilterChange, onKeyDown } from './utils';
 
 export const StringFilter = ({ column, onEnter }) => (

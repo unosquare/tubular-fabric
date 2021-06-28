@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as React from 'react';
 import { initializeIcons } from '@fluentui/react';
 import { ChipFilter } from '../src/index';

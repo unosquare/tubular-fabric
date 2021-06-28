@@ -7,7 +7,7 @@ import {
     IDetailsRowStyles,
 } from '@fluentui/react/lib/DetailsList';
 import { SelectionBar } from './SelectionBar';
-import { Selection } from '@uifabric/utilities';
+import { Selection } from '@fluentui/react';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
 import { IStyleFunctionOrObject, SelectionMode } from '@fluentui/react/lib/Utilities';

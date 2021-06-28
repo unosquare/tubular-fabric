@@ -8,7 +8,7 @@ import {
     createColumn,
     columnHasFilter,
 } from 'tubular-common/dist/Models';
-import { useTubular } from 'tubular-react-common/dist/useTubular';
+import { useTubular } from 'tubular-react-common';
 import * as React from 'react';
 import { IColumn } from '@fluentui/react/lib/DetailsList';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
@@ -58,10 +58,10 @@ export const useTbFabric = (
 ): ITbFabricInstance => {
     const { deps, ...rest } = tubularOptions;
     const tbInitColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);
-    const initFabricColumns = React.useMemo(() => completeInitialFabricColumns(initColumns, tbInitColumns), [
-        initColumns,
-        tbInitColumns,
-    ]);
+    const initFabricColumns = React.useMemo(
+        () => completeInitialFabricColumns(initColumns, tbInitColumns),
+        [initColumns, tbInitColumns],
+    );
 
     const { state: tbState, api: tbApi } = useTubular(tbInitColumns, source, rest);
     const [fabricColumns, setFabricColumns] = React.useState(initFabricColumns);

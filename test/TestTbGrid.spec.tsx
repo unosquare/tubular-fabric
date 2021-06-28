@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import * as React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { initializeIcons } from '@fluentui/react';

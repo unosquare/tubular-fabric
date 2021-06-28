@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { TextField } from 'office-ui-fabric-react/lib/components/TextField/TextField';
+import { TextField, ITextStyles } from '@fluentui/react';
 import { onKeyDown, IFilterEditorProps } from './utils';
 import { CompareOperators } from 'tubular-common';
-import { ITextStyles } from 'office-ui-fabric-react';
 
 const secondInputStyle: ITextStyles = {
     root: {
@@ -11,17 +10,15 @@ const secondInputStyle: ITextStyles = {
 };
 
 export const NumericFilter = ({ column, onApply }: IFilterEditorProps) => {
-    const handleFilterChange = (isSecondInput?: boolean) => (
-        _event: React.FormEvent<HTMLInputElement>,
-        newValue: string,
-    ) => {
-        if (isSecondInput) {
-            column.filterArgument = [];
-            column.filterArgument[0] = newValue;
-        } else {
-            column.filterText = newValue;
-        }
-    };
+    const handleFilterChange =
+        (isSecondInput?: boolean) => (_event: React.FormEvent<HTMLInputElement>, newValue: string) => {
+            if (isSecondInput) {
+                column.filterArgument = [];
+                column.filterArgument[0] = newValue;
+            } else {
+                column.filterText = newValue;
+            }
+        };
 
     const isBetween = column.filterOperator === CompareOperators.Between;
 
