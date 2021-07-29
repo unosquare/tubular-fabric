@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
-import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
+import { useGridRefresh } from 'tubular-react-common/';
 
 const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
 import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';
-import { TextCell } from '../../src/cells';
-import { ColumnModel, parseDateColumnValue } from 'tubular-common';
+import { ColumnModel } from 'tubular-common';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
