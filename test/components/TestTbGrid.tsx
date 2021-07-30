@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from '../../sample/src/ColumnsDefinition';
-import { useGridRefresh } from 'tubular-react-common/dist/useGridRefresh';
+import { useGridRefresh } from 'tubular-react-common/';
 import { createFakeRows } from '../../sample/src/utils';
 
 const dataSource = createFakeRows(columns, 500);

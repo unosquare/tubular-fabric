@@ -33,10 +33,10 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     const closePanel = () => setShowPanel(false);
     const openPanel = () => setShowPanel(true);
 
-    const label = React.useMemo(() => getPagingMessage(tbState.totalRecordCount, tbState.filteredRecordCount), [
-        tbState.totalRecordCount,
-        tbState.filteredRecordCount,
-    ]);
+    const label = React.useMemo(
+        () => getPagingMessage(tbState.totalRecordCount, tbState.filteredRecordCount),
+        [tbState.totalRecordCount, tbState.filteredRecordCount],
+    );
 
     const _farItems: ICommandBarItemProps[] = [];
     const onClear = () => tbApi.search();

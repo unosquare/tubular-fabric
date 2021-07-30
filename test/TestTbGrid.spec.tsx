@@ -62,7 +62,7 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).toBeNull());
 
         customerHeader = within(screen.queryAllByRole('columnheader')[2]).getByRole('button');
-        expect(within(customerHeader).getByRole('presentation', { hidden: true })).toBeInTheDocument();
+        expect(within(customerHeader).getByText('Customer Name')).toBeInTheDocument();
     });
 
     it('should sort by Customer name and Shipper City', async () => {
@@ -88,8 +88,8 @@ describe('TestTbGrid', () => {
         customerHeader = within(screen.queryAllByRole('columnheader')[2]).getByRole('button');
         shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');
 
-        expect(within(customerHeader).getByRole('presentation', { hidden: true })).toBeInTheDocument();
-        expect(within(shipperCityHeader).getByRole('presentation', { hidden: true })).toBeInTheDocument();
+        expect(within(customerHeader).getByText('Customer Name')).toBeInTheDocument();
+        expect(within(shipperCityHeader).getByText('Shipper City')).toBeInTheDocument();
     });
 
     it('should sort by Shipper City when Control key is pressed and released', async () => {
@@ -119,6 +119,6 @@ describe('TestTbGrid', () => {
         shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');
 
         expect(within(customerHeader).queryByRole('presentation', { hidden: true })).not.toBeInTheDocument();
-        expect(within(shipperCityHeader).getByRole('presentation', { hidden: true })).toBeInTheDocument();
+        expect(within(shipperCityHeader).getByText('Shipper City')).toBeInTheDocument();
     });
 });
