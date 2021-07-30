@@ -1,10 +1,13 @@
 import * as React from 'react';
+
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+
 import { ChipBar } from './ChipBar';
 import { registerTbIcons, getPagingMessage } from './utils';
 import { SearchBox, ISearchBoxStyles } from '@fluentui/react/lib/SearchBox';
 import { IFabricTbState, ITbFabricApi } from './interfaces';
 import { FeaturesPanel } from './FeaturesPanel';
+import * as PropTypes from 'prop-types'
 
 registerTbIcons();
 
@@ -96,4 +99,10 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
             )}
         </>
     );
+};
+
+TbCommandBar.propTypes = {
+    tbState: PropTypes.any,
+    tbApi: PropTypes.any,
+
 };
