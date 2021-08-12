@@ -28,8 +28,7 @@ export const getRenderByDataType = (column: ColumnModel, value: any): React.Reac
         case ColumnDataType.Date:
         case ColumnDataType.DateTime:
         case ColumnDataType.DateTimeUtc:
-            const dateAsString = !value ? '' : parseDateColumnValue(column, value);
-            return <TextCell textAlign="Right" value={dateAsString} />;
+            return <TextCell textAlign="Right" value={!value ? '' : parseDateColumnValue(column, value)} />;
         default:
             return <TextCell value={value} />;
     }
