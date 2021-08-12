@@ -5,7 +5,7 @@ import { useGridRefresh } from 'tubular-react-common/';
 import { createFakeRows } from '../../sample/src/utils';
 
 const dataSource = createFakeRows(columns, 500);
-import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { ICommandBarItemProps } from '@fluentui/react';
 import { IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';

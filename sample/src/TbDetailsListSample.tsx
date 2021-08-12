@@ -4,8 +4,7 @@ import { columns } from './ColumnsDefinition';
 import { useGridRefresh } from 'tubular-react-common/';
 
 const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
-import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
-import { IColumn } from '@fluentui/react';
+import { ICommandBarItemProps, IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';
 import { ColumnModel } from 'tubular-common';

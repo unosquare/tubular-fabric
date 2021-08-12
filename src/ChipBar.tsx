@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ChipFilter } from './ChipFilter';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { IStackStyles } from '@fluentui/react';
+import { IStackStyles, Stack } from '@fluentui/react';
 import { ColumnModel, columnHasFilter } from 'tubular-common';
 
 const chipFilterContainerStyle: IStackStyles = { root: { paddingLeft: 14 } };

@@ -1,4 +1,4 @@
-import { Checkbox } from '@fluentui/react/lib/Checkbox';
+import { Checkbox } from '@fluentui/react';
 import * as React from 'react';
 import { RenderCell } from './RenderCell';
 

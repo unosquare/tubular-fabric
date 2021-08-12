@@ -10,7 +10,7 @@ import {
 } from 'tubular-common/dist/Models';
 import { useTubular } from 'tubular-react-common';
 import * as React from 'react';
-import { IColumn } from '@fluentui/react/lib/DetailsList';
+import { IColumn } from '@fluentui/react';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { unstable_batchedUpdates } from 'react-dom';
 import { ITbFabricApi } from './interfaces';

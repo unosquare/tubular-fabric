@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColumnModel } from 'tubular-common';
-import { Stack, IStackTokens } from '@fluentui/react/lib/Stack';
-import { Checkbox } from '@fluentui/react/lib/Checkbox';
+import { Stack, IStackTokens, Checkbox } from '@fluentui/react';
 
 export interface IToggleColumnsProps {
     columns: ColumnModel[];

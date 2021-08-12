@@ -1,4 +1,4 @@
-import { IColumn } from '@fluentui/react/lib/DetailsList';
+import { IColumn } from '@fluentui/react';
 import { ColumnModel } from 'tubular-common';
 
 export interface ITbColumn extends IColumn {

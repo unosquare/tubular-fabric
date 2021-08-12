@@ -5,12 +5,14 @@ import {
     DetailsRow,
     IDetailsRowStyleProps,
     IDetailsRowStyles,
-} from '@fluentui/react/lib/DetailsList';
+    mergeStyleSets,
+    IColumn,
+    ConstrainMode,
+    IStyleFunctionOrObject,
+    SelectionMode,
+} from '@fluentui/react';
 import { SelectionBar } from './SelectionBar';
 import { Selection } from '@fluentui/react';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
-import { IStyleFunctionOrObject, SelectionMode } from '@fluentui/react/lib/Utilities';
 import { ShimmerCell } from './cells';
 import { getRenderByDataType } from './utils';
 import { IFabricTbState, ITbFabricApi } from './interfaces';

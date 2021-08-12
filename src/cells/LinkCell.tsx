@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RenderCell } from './RenderCell';
-import { Link } from '@fluentui/react/lib/Link';
+import { Link } from '@fluentui/react';
 
 export interface LinkCellProps {
     value: string;
