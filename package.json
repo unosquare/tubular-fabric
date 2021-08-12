@@ -1,6 +1,6 @@
 {
     "name": "tubular-fabric",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Unosquare Tubular for Fabric",
     "main": "dist/index.js",
     "scripts": {

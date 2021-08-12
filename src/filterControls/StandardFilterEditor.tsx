@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { IconButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, getOperators, ColumnDataType } from 'tubular-common';
-import { IContextualMenuProps, IContextualMenuItem } from '@fluentui/react/lib/ContextualMenu';
+import {
+    IStackStyles,
+    IStackItemStyles,
+    IContextualMenuProps,
+    IContextualMenuItem,
+    IconButton,
+    Stack,
+} from '@fluentui/react';
 import { getOperatorIcon, getOperatorText } from '../utils';
-import { IStackStyles, IStackItemStyles } from '@fluentui/react';
-
 import { NumericFilter } from './NumericFilter';
 import { StringFilter } from './StringFilter';
 import { DateFilter } from './DateFilter';
-
 import { IFilterEditorProps } from './utils';
 
 const filterFieldWrapperStyles: IStackStyles = {

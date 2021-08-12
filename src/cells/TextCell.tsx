@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RenderCell } from './RenderCell';
-import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { TooltipHost } from '@fluentui/react';
 
 export type textAlignment = 'Left' | 'Center' | 'Right';
 

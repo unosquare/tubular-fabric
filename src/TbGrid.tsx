@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { Selection } from '@fluentui/react';
+import { Selection, IColumn, ICommandBarItemProps, mergeStyleSets } from '@fluentui/react';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
-import { IColumn } from '@fluentui/react/lib/DetailsList';
-import { ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 import { TbDetailsList } from './TbDetailsList';
-import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { TbCommandBar } from './TbCommandBar';
 import { ITbColumn } from './interfaces/ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common';

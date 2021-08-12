@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ColumnDataType, ColumnModel, CompareOperators, parseDateColumnValue } from 'tubular-common';
-import { registerIcons, getTheme } from '@fluentui/react/lib/Styling';
+import { registerIcons, getTheme } from '@fluentui/react';
 import { TextCell, CheckboxCell } from './cells';
 
 const theme = getTheme();

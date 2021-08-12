@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Panel } from '@fluentui/react/lib/Panel';
-import { PivotItem, Pivot } from '@fluentui/react/lib/Pivot';
+import { Panel, PivotItem, Pivot, PrimaryButton, DefaultButton } from '@fluentui/react';
 import { ToggleColumns } from './ToggleColumns';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { ColumnModel, CompareOperators, ColumnDataType } from 'tubular-common';
 import { FiltersContainer } from './FiltersContainer';
 

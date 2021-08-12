@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { keyframes, mergeStyles, mergeStyleSets } from '@fluentui/react/lib/Styling';
+import { keyframes, mergeStyles, mergeStyleSets } from '@fluentui/react';
 
 const holderAnimation = keyframes({
     '0%': {

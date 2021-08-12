@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { Stack, IStackStyles } from '@fluentui/react/lib/Stack';
-import { Text } from '@fluentui/react/lib/Text';
-import { Icon, IIconProps, IIconStyles, FontIcon } from '@fluentui/react/lib/Icon';
+import { Stack, IStackStyles, Text, Icon, IIconProps, IIconStyles, FontIcon, IconButton, ITextStyles, mergeStyles } from '@fluentui/react';
 import { getOperatorIcon } from './utils';
 import { ColumnModel, ColumnDataType, CompareOperators } from 'tubular-common';
-import { IconButton } from '@fluentui/react/lib/Button';
-import { ITextStyles, mergeStyles } from '@fluentui/react';
 
 const closeIcon: IIconProps = { iconName: 'ChromeClose' };
 
