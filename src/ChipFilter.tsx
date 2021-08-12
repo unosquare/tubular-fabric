@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { Stack, IStackStyles, Text, Icon, IIconProps, IIconStyles, FontIcon, IconButton, ITextStyles, mergeStyles } from '@fluentui/react';
+import {
+    Stack,
+    IStackStyles,
+    Text,
+    Icon,
+    IIconProps,
+    IIconStyles,
+    FontIcon,
+    IconButton,
+    ITextStyles,
+    mergeStyles,
+} from '@fluentui/react';
 import { getOperatorIcon } from './utils';
 import { ColumnModel, ColumnDataType, CompareOperators } from 'tubular-common';
 
