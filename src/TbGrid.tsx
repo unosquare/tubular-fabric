@@ -5,7 +5,7 @@ import { TbDetailsList } from './TbDetailsList';
 import { TbCommandBar } from './TbCommandBar';
 import { ITbColumn } from './interfaces/ITbColumn';
 import { TubularHttpClientAbstract } from 'tubular-common';
-import { useTbFabric } from './useTbFabric';
+import useTbFabric from './useTbFabric';
 
 export interface ITbExtendedOptions extends ITbOptions {
     onRemoveAction?: (selection: Selection) => void;

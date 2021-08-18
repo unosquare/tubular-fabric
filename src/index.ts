@@ -1,11 +1,10 @@
 export * from './ChipFilter';
 export * from './FiltersContainer';
-export * from './interfaces/ITbColumn';
 export * from './SelectionBar';
 export * from './TbCommandBar';
 export * from './TbDetailsList';
 export * from './TbGrid';
-export * from './useTbFabric';
+export { default as useTbFabric } from './useTbFabric';
 export * from './utils';
 export * from './interfaces';
 export * from './ChipBar';

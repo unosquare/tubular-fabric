@@ -1,4 +1,6 @@
-import { ITbColumn } from './interfaces/ITbColumn';
+import * as React from 'react';
+import { unstable_batchedUpdates } from 'react-dom';
+import { useTubular } from 'tubular-react-common';
 import { TubularHttpClientAbstract } from 'tubular-common/dist/Http';
 import { ITbOptions } from 'tubular-react-common/dist/types';
 import {
@@ -8,11 +10,9 @@ import {
     createColumn,
     columnHasFilter,
 } from 'tubular-common/dist/Models';
-import { useTubular } from 'tubular-react-common';
-import * as React from 'react';
 import { IColumn } from '@fluentui/react';
+import { ITbColumn } from './interfaces/ITbColumn';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
-import { unstable_batchedUpdates } from 'react-dom';
 import { ITbFabricApi } from './interfaces';
 
 const createInitialTbColumns = (fabricColumns: ITbColumn[]) =>
@@ -51,7 +51,7 @@ const completeInitialFabricColumns = (fabricColumns: ITbColumn[], tbColumns: Col
         return column;
     });
 
-export const useTbFabric = (
+const useTbFabric = (
     initColumns: ITbColumn[],
     source: string | Request | TubularHttpClientAbstract | any[],
     tubularOptions?: Partial<ITbOptions>,
@@ -101,7 +101,7 @@ export const useTbFabric = (
 
     const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort = false) => {
         const tbColumn = tbState.columns.find((c) => c.name === column.fieldName);
-        isMultiSort = isMultiSort ? isMultiSort : isCtrlKeyPressed.current;
+        isMultiSort = isMultiSort || isCtrlKeyPressed.current;
 
         if (!tbColumn.sortable) {
             return;
@@ -111,13 +111,10 @@ export const useTbFabric = (
             resetList();
             const newFabricColumns = fabricColumns.map((col) => {
                 if (col.fieldName === column.fieldName) {
-                    const isSortedDescending = col.isSorted && !col.isSortedDescending;
-                    const isSorted = col.isSorted ? (col.isSortedDescending ? false : true) : true;
-
                     return {
                         ...col,
-                        isSorted: isSorted,
-                        isSortedDescending: isSortedDescending,
+                        isSorted: col.isSorted ? !col.isSortedDescending : true,
+                        isSortedDescending: col.isSorted && !col.isSortedDescending,
                     };
                 }
 
@@ -226,7 +223,9 @@ export const useTbFabric = (
         const mapped: any = {};
         const tbColumns = tbState.columns;
 
-        tbColumns.forEach((col) => (mapped[col.name] = item[col.name]));
+        tbColumns.forEach((col) => {
+            mapped[col.name] = item[col.name];
+        });
 
         const keyColumn = tbColumns.find((col) => col.isKey);
 
@@ -306,3 +305,5 @@ export const useTbFabric = (
         state,
     } as ITbFabricInstance;
 };
+
+export default useTbFabric;
