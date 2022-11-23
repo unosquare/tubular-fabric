@@ -5,6 +5,13 @@
       "react-dom",
       "@types/react",
       "@types/react-dom",
-      "@fluentui/react"
+      "@fluentui/react",
+      "jest",
+      "@testing-library/dom",
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@types/jest",
+      "ts-jest",
+      "tubular-react-common"
     ]
   }

@@ -26,7 +26,7 @@ export const InnerTextCell: React.FunctionComponent<TextCellProps> = ({ value, t
 
 export const TextCell: React.FunctionComponent<TextCellProps> = ({ value, textAlign = 'Left' }: TextCellProps) => (
     <RenderCell>
-        {value && value.length > 5 ? (
+        {value && value.length > 15 ? (
             <TooltipHost content={value}>
                 <InnerTextCell value={value} textAlign={textAlign} />
             </TooltipHost>

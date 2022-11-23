@@ -12,6 +12,7 @@
         "jest": true
     },
     "extends": "eslint-config-unosquare",
+    "plugins": ["eslint-plugin-prettier"],
     "rules": {
         "no-extend-native": 0,
         "no-param-reassign": 0,

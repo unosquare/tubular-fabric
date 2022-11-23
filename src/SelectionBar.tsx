@@ -7,8 +7,8 @@ import {
     CommandBar,
     mergeStyleSets,
     getTheme,
+    Selection,
 } from '@fluentui/react';
-import { Selection } from '@fluentui/react';
 
 export interface ISelectionBarProps {
     selection: Selection;

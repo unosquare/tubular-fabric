@@ -10,9 +10,9 @@ import {
     ConstrainMode,
     IStyleFunctionOrObject,
     SelectionMode,
+    Selection,
 } from '@fluentui/react';
 import { SelectionBar } from './SelectionBar';
-import { Selection } from '@fluentui/react';
 import { ShimmerCell } from './cells';
 import { getRenderByDataType } from './utils';
 import { IFabricTbState, ITbFabricApi } from './interfaces';
@@ -109,7 +109,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
 
     return (
         <div className={classes.tbDetailsList} data-is-scrollable="true">
-            {selectionMode && selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
+            {selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
                 <SelectionBar selection={selection} onRemoveAction={onRemoveAction} />
             )}
             <DetailsList
