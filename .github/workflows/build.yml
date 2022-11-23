@@ -23,7 +23,3 @@ jobs:
           npm ci
           npm run build
           npm run cest
-      - name: 🎯 Coverage
-        uses: codecov/codecov-action@v3.1.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
