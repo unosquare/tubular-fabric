@@ -6,7 +6,7 @@ export const handleFilterChange =
     };
 
 export const onKeyDown = (onEnter: () => void) => (ev: React.KeyboardEvent) => {
-    if (ev.keyCode === 13) {
+    if (ev.key === 'Enter') {
         ev.preventDefault();
         ev.stopPropagation();
         onEnter();
