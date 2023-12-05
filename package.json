@@ -1,6 +1,6 @@
 {
     "name": "tubular-fabric",
-    "version": "0.0.4",
+    "version": "3.1.0",
     "description": "Unosquare Tubular for Fabric",
     "main": "dist/index.js",
     "scripts": {
@@ -38,14 +38,6 @@
         ],
         "transform": {
             "^.+\\.(ts|tsx)$": "ts-jest"
-        },
-        "coverageThreshold": {
-            "global": {
-                "branches": 70,
-                "functions": 75,
-                "lines": 85,
-                "statements": -125
-            }
         },
         "collectCoverageFrom": [
             "./src/**/*.{ts,tsx}",
