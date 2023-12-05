@@ -78,16 +78,16 @@
         "tubular-react-common": "3.0.15"
     },
     "peerDependencies": {
-        "react": "16.9.0",
-        "react-dom": "16.9.0"
+        "react": "17.0.1",
+        "react-dom": "17.0.1"
     },
     "devDependencies": {
         "@testing-library/dom": "^8.1.0",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^12.0.0",
         "@types/jest": "^27.0.1",
-        "@types/react": "16.9.36",
-        "@types/react-dom": "16.9.8",
+        "@types/react": "17.0.1",
+        "@types/react-dom": "17.0.1",
         "eslint": "^8.28.0",
         "eslint-config-unosquare": "^0.1.10",
         "html-webpack-plugin": "^5.5.0",
@@ -101,8 +101,8 @@
         "webpack": "^5.75.0",
         "webpack-cli": "^5.0.0",
         "webpack-dev-server": "^4.11.1",
-        "react": "16.9.0",
-        "react-dom": "16.9.0"
+        "react": "17.0.1",
+        "react-dom": "17.0.1"
     },
     "files": [
         "dist"
