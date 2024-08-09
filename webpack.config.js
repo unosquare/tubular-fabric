@@ -9,7 +9,7 @@ module.exports = {
     },
 
     devServer: {
-        contentBase: path.join(__dirname, 'sample/app'),
+        static: './sample/app',
         compress: true,
         port: 9000,
     },
@@ -18,9 +18,6 @@ module.exports = {
         path: path.resolve(__dirname, 'distsample'),
         filename: 'bundle.js',
     },
-
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: 'source-map',
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -44,12 +41,6 @@ module.exports = {
                         loader: 'ts-loader',
                     },
                 ],
-            },
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                loader: 'source-map-loader',
             },
         ],
     },

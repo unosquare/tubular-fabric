@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { TbDetailsListSample } from './TbDetailsListSample';
 
-const Main: React.FunctionComponent = () => (
+export default () => (
     <div
         style={{
             height: '100%',
@@ -16,5 +16,3 @@ const Main: React.FunctionComponent = () => (
         <TbDetailsListSample />
     </div>
 );
-
-export default Main;

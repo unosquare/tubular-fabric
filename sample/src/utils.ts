@@ -37,34 +37,7 @@ const sentence = () => {
     const rand5 = Math.floor(Math.random() * 10);
     const rand6 = Math.floor(Math.random() * 10);
 
-    const content =
-        'The ' +
-        adjectives[rand1] +
-        ' ' +
-        nouns[rand2] +
-        ' ' +
-        adverbs[rand3] +
-        ' ' +
-        verbs[rand4] +
-        ' because some ' +
-        nouns[rand1] +
-        ' ' +
-        adverbs[rand1] +
-        ' ' +
-        verbs[rand1] +
-        ' ' +
-        preposition[rand1] +
-        ' a ' +
-        adjectives[rand2] +
-        ' ' +
-        nouns[rand5] +
-        ' which, became a ' +
-        adjectives[rand3] +
-        ', ' +
-        adjectives[rand4] +
-        ' ' +
-        nouns[rand6] +
-        '.';
+    const content = `The ${adjectives[rand1]} ${nouns[rand2]} ${adverbs[rand3]} ${verbs[rand4]} because some ${nouns[rand1]} ${adverbs[rand1]} ${verbs[rand1]} ${preposition[rand1]} a ${adjectives[rand2]} ${nouns[rand5]} which, became a ${adjectives[rand3]}, ${adjectives[rand4]} ${nouns[rand6]}.`;
 
     return content;
 };
@@ -72,6 +45,7 @@ const sentence = () => {
 export const createFakeRows = (columnDefinition: ITbColumn[], numberOfRows = 100, intNumbers = true) => {
     const rows = [];
     const today = new Date();
+
     for (let i = 0; i < numberOfRows; i++) {
         const row = columnDefinition.reduce((accumulator, current) => {
             const newItem = {};

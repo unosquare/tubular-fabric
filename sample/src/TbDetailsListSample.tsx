@@ -1,13 +1,13 @@
 import * as React from 'react';
+import { useGridRefresh } from 'tubular-react-common/';
 import { TbGrid } from '../../src/TbGrid';
 import { columns } from './ColumnsDefinition';
-import { useGridRefresh } from 'tubular-react-common/';
-
-const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
 import { ICommandBarItemProps, IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';
 import { ColumnModel } from 'tubular-common';
+
+const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -25,7 +25,7 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
                         key: 'emailMessage',
                         text: 'Email message',
                         iconProps: { iconName: 'Mail' },
-                        ['data-automation-id']: 'newEmailButton', // optional
+                        'data-automation-id': 'newEmailButton', // optional
                     },
                     {
                         key: 'calendarEvent',
