@@ -11,9 +11,15 @@ importers:
       '@fluentui/react':
         specifier: 8.120.3
         version: 8.120.3(@types/react-dom@17.0.25)(@types/react@17.0.80)(react-dom@17.0.1(react@17.0.1))(react@17.0.1)
+      react:
+        specifier: 17.0.1
+        version: 17.0.1
+      react-dom:
+        specifier: 17.0.1
+        version: 17.0.1(react@17.0.1)
       tubular-common:
-        specifier: ^6.1.0
-        version: 6.1.0
+        specifier: ^6.3.0
+        version: 6.3.0
       tubular-react-common:
         specifier: 3.0.15
         version: 3.0.15
@@ -41,25 +47,19 @@ importers:
         version: 8.55.0
       eslint-config-unosquare:
         specifier: ^0.1.10
-        version: 0.1.18(eslint@8.55.0)(prettier@3.3.3)(typescript@4.9.5)
+        version: 0.1.18(eslint@8.55.0)(prettier@2.8.8)(typescript@4.9.5)
       eslint-plugin-prettier:
         specifier: ^4.2.1
-        version: 4.2.1(eslint@8.55.0)(prettier@3.3.3)
+        version: 4.2.1(eslint@8.55.0)(prettier@2.8.8)
       html-webpack-plugin:
-        specifier: ^5.5.0
-        version: 5.5.3(webpack@5.93.0(webpack-cli@5.1.4))
+        specifier: ^5.6.0
+        version: 5.6.0(webpack@5.93.0(webpack-cli@5.1.4))
       jest:
         specifier: ^27.0.6
         version: 27.5.1
       prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
-      react:
-        specifier: 17.0.1
-        version: 17.0.1
-      react-dom:
-        specifier: 17.0.1
-        version: 17.0.1(react@17.0.1)
+        specifier: ^2.5.1
+        version: 2.8.8
       ts-jest:
         specifier: ^27.0.5
         version: 27.1.5(@babel/core@7.23.5)(@types/jest@27.5.2)(babel-jest@27.5.1(@babel/core@7.23.5))(jest@27.5.1)(typescript@4.9.5)
@@ -1847,11 +1847,17 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
-  html-webpack-plugin@5.5.3:
-    resolution: {integrity: sha512-6YrDKTuqaP/TquFH7h4srYWsZx+x6k6+FbsTm0ziCwGHDP78Unr1r9F/H4+sGmMbX08GQcJ+K64x55b+7VM/jg==}
+  html-webpack-plugin@5.6.0:
+    resolution: {integrity: sha512-iwaY4wzbe48AfKLZ/Cc8k0L+FKG6oSNRaZ8x5A/T/IVDGyXcbHncM9TdDa93wn0FsSm82FhTKW7f3vS61thXAw==}
     engines: {node: '>=10.13.0'}
     peerDependencies:
+      '@rspack/core': 0.x || 1.x
       webpack: ^5.20.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
 
   htmlparser2@6.1.0:
     resolution: {integrity: sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==}
@@ -2685,9 +2691,9 @@ packages:
     resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
     engines: {node: '>=6.0.0'}
 
-  prettier@3.3.3:
-    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
-    engines: {node: '>=14'}
+  prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
+    engines: {node: '>=10.13.0'}
     hasBin: true
 
   pretty-error@4.0.0:
@@ -3103,11 +3109,6 @@ packages:
       uglify-js:
         optional: true
 
-  terser@5.25.0:
-    resolution: {integrity: sha512-we0I9SIsfvNUMP77zC9HG+MylwYYsGFSBG8qm+13oud2Yh+O104y614FRbyjpxys16jZwot72Fpi827YvGzuqg==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   terser@5.31.5:
     resolution: {integrity: sha512-YPmas0L0rE1UyLL/llTWA0SiDOqIcAQYLeUj7cJYzXHlRTAnMSg9pPe4VJ5PlKvTrPQsdVFuiRiwyeNlYgwh2Q==}
     engines: {node: '>=10'}
@@ -3207,8 +3208,8 @@ packages:
   tubular-common@5.0.61:
     resolution: {integrity: sha512-NKBcMY3DMcXtEEZuil6o/uwC2SeNbR3NDZNMUgRNgVbpLpy9aLgJNcEesqwdo/sFK25/+VW/GjQIhum12GXeIw==}
 
-  tubular-common@6.1.0:
-    resolution: {integrity: sha512-tOiKHLGeaXGRxA5No/5MhFlTpxxOjXiUPArBGRkgZbxRHEnkw6ArGSOLETAf/XQqI0aWMPbtqfyh/i/Jc8vFGQ==}
+  tubular-common@6.3.0:
+    resolution: {integrity: sha512-96mpp2rh7Jik2RPGdSQ4mREUeiKmY9ftkSIZVhqQJs1TtQ4mAwFvsCMBBPJJDUpXmSXZr45sJIfXAHZAMQoSuw==}
 
   tubular-react-common@3.0.15:
     resolution: {integrity: sha512-041L5ERfqPi3z/RMR3jTBLhGYRP7xYo1Tzk+b2JOlQwDtO/adlqDnljMaHDXiklv6xRsE4QCB+htln4BztT9rQ==}
@@ -5255,7 +5256,7 @@ snapshots:
     dependencies:
       eslint: 8.55.0
 
-  eslint-config-unosquare@0.1.18(eslint@8.55.0)(prettier@3.3.3)(typescript@4.9.5):
+  eslint-config-unosquare@0.1.18(eslint@8.55.0)(prettier@2.8.8)(typescript@4.9.5):
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.55.0)(typescript@4.9.5))(eslint@8.55.0)(typescript@4.9.5)
       '@typescript-eslint/parser': 5.62.0(eslint@8.55.0)(typescript@4.9.5)
@@ -5266,7 +5267,7 @@ snapshots:
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.55.0)
       eslint-plugin-react: 7.33.2(eslint@8.55.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.55.0)
-      prettier: 3.3.3
+      prettier: 2.8.8
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -5338,10 +5339,10 @@ snapshots:
       object.entries: 1.1.7
       object.fromentries: 2.0.7
 
-  eslint-plugin-prettier@4.2.1(eslint@8.55.0)(prettier@3.3.3):
+  eslint-plugin-prettier@4.2.1(eslint@8.55.0)(prettier@2.8.8):
     dependencies:
       eslint: 8.55.0
-      prettier: 3.3.3
+      prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
 
   eslint-plugin-react-hooks@4.6.0(eslint@8.55.0):
@@ -5739,15 +5740,16 @@ snapshots:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.25.0
+      terser: 5.31.5
 
-  html-webpack-plugin@5.5.3(webpack@5.93.0(webpack-cli@5.1.4)):
+  html-webpack-plugin@5.6.0(webpack@5.93.0(webpack-cli@5.1.4)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
       lodash: 4.17.21
       pretty-error: 4.0.0
       tapable: 2.2.1
+    optionalDependencies:
       webpack: 5.93.0(webpack-cli@5.1.4)
 
   htmlparser2@6.1.0:
@@ -6792,7 +6794,7 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier@3.3.3: {}
+  prettier@2.8.8: {}
 
   pretty-error@4.0.0:
     dependencies:
@@ -7268,13 +7270,6 @@ snapshots:
       terser: 5.31.5
       webpack: 5.93.0(webpack-cli@5.1.4)
 
-  terser@5.25.0:
-    dependencies:
-      '@jridgewell/source-map': 0.3.5
-      acorn: 8.11.2
-      commander: 2.20.3
-      source-map-support: 0.5.21
-
   terser@5.31.5:
     dependencies:
       '@jridgewell/source-map': 0.3.5
@@ -7370,7 +7365,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.10
 
-  tubular-common@6.1.0:
+  tubular-common@6.3.0:
     dependencies:
       dayjs: 1.11.12
 
