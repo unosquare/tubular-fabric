@@ -14,6 +14,7 @@
     "extends": "eslint-config-unosquare",
     "plugins": ["eslint-plugin-prettier"],
     "rules": {
+        "prettier/prettier": 0,
         "no-extend-native": 0,
         "no-param-reassign": 0,
         "import/first": 0,
