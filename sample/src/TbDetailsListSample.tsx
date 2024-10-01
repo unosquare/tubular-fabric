@@ -1,74 +1,21 @@
 import * as React from 'react';
-import { useGridRefresh } from 'tubular-react-common/';
+import { useGridRefresh, useTbList, useTubular } from 'tubular-react-common/';
 import { TbGrid } from '../../src/TbGrid';
-import { columns } from './ColumnsDefinition';
-import { ICommandBarItemProps, IColumn } from '@fluentui/react';
+import { columns, Item } from './ColumnsDefinition';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';
-import { ColumnModel } from 'tubular-common';
+import useTbFabric from '../../src/useTbFabric';
 
-const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
+import { ColumnModel } from 'tubular-common';
+import { PresenceBadgeStatus } from '@fluentui/react-components';
+import { createFakeRows } from './utils';
+
+const dataSource = createFakeRows(columns, 500);
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
     const onForceRefresh = () => forceRefresh();
+    const { state, api } = useTbFabric<Item>(columns, dataSource, {});
 
-    const commandItems: ICommandBarItemProps[] = [
-        {
-            key: 'newItem',
-            text: 'New',
-            cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
-            iconProps: { iconName: 'Add' },
-            subMenuProps: {
-                items: [
-                    {
-                        key: 'emailMessage',
-                        text: 'Email message',
-                        iconProps: { iconName: 'Mail' },
-                        'data-automation-id': 'newEmailButton', // optional
-                    },
-                    {
-                        key: 'calendarEvent',
-                        text: 'Calendar event',
-                        iconProps: { iconName: 'Calendar' },
-                    },
-                ],
-            },
-        },
-        {
-            key: 'forceRefresh',
-            text: 'Force Refresh',
-            onClick: onForceRefresh,
-        },
-    ];
-
-    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
-        if (column.key == 'Actions') return <span>NOO</span>;
-
-        const tbColumn = column as ITbColumn;
-
-        return getRenderByDataType(tbColumn.tb as ColumnModel, item[column.fieldName]);
-    };
-
-    return (
-        <TbGrid
-            columns={columns}
-            source={dataSource}
-            onRenderItemColumn={onRenderItemColumn}
-            options={{
-                deps: [refresh],
-                filterable: true,
-                toggleColumns: true,
-                commandBarItems: commandItems,
-                searchable: true,
-                recordCounter: true,
-                callbacks: {
-                    onError: (error) => alert(error),
-                },
-                pagination: {
-                    itemsPerPage: 100,
-                },
-            }}
-        />
-    );
+    return <TbGrid tbState={state} tbApi={api} />;
 };

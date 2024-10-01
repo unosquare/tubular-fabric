@@ -65,33 +65,36 @@
     },
     "homepage": "https://github.com/unosquare/tubular-fabric#readme",
     "dependencies": {
-        "@fluentui/react": "8.120.3",
-        "tubular-common": "^6.4.0",
+        "@fluentui-contrib/react-data-grid-react-window": "^1.2.0",
+        "@fluentui/react-components": "^9.54.13",
+        "@fluentui/react-icons": "^2.0.258",
+        "tubular-common": "^6.6.0",
         "tubular-react-common": "3.0.15"
     },
     "peerDependencies": {
-        "react": "17.0.1",
-        "react-dom": "17.0.1"
+        "react": ">=18.3.1",
+        "react-dom": ">=18.3.1"
     },
     "devDependencies": {
-        "@testing-library/dom": "^8.1.0",
-        "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^12.0.0",
-        "@types/jest": "^27.0.1",
-        "@types/react": "^17.0.0",
-        "@types/react-dom": "^17.0.11",
-        "eslint": "^8.28.0",
-        "eslint-config-unosquare": "0.19.0",
+        "@testing-library/dom": "^10.4.0",
+        "@testing-library/jest-dom": "^6.5.0",
+        "@testing-library/react": "^16.0.1",
+        "@types/jest": "^29.5.12",
+        "@types/react": "18.3.1",
+        "@types/react-dom": "18.3.0",
+        "eslint": "~9.10.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
         "html-webpack-plugin": "^5.6.0",
-        "jest": "^27.0.6",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
         "prettier": "^3.3.3",
-        "eslint-plugin-prettier": "^4.2.1",
-        "ts-jest": "^27.0.5",
+        "ts-jest": "^29.1.0",
         "ts-loader": "^9.5.1",
-        "typescript": "^5.5.4",
+        "typescript": "^5.6.2",
         "webpack": "^5.94.0",
         "webpack-cli": "^5.1.4",
-        "webpack-dev-server": "^5.0.4"
+        "webpack-dev-server": "^5.1.0"
     },
     "files": [
         "dist"

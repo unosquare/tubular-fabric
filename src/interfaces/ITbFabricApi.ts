@@ -1,6 +1,5 @@
 import { ITbApi } from 'tubular-react-common/dist/types';
 import { ColumnModel } from 'tubular-common';
-import { IColumn } from '@fluentui/react';
 
 export interface ITbFabricApi extends ITbApi {
     loadMoreItems: (index?: number) => void;
@@ -10,5 +9,5 @@ export interface ITbFabricApi extends ITbApi {
     applyFilter: (columnName: string, value: string) => void;
     clearFilter: (columnName: string) => void;
     updateVisibleColumns: (columns: ColumnModel[]) => void;
-    sortByColumn: (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort?: boolean) => void;
+    // sortByColumn: (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort?: boolean) => void;
 }

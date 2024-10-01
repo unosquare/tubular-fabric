@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { render } from 'react-dom';
 import Main from './main';
-import { initializeIcons } from '@fluentui/react';
+import { createRoot } from 'react-dom/client';
 
-initializeIcons(/* optional base url */);
-render(<Main />, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = createRoot(container!); // createRoot(container!) if you use TypeScript
+root.render(<Main />);
+

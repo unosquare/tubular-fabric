@@ -2,7 +2,6 @@ export * from './ChipFilter';
 export * from './FiltersContainer';
 export * from './SelectionBar';
 export * from './TbCommandBar';
-export * from './TbDetailsList';
 export * from './TbGrid';
 export { default as useTbFabric } from './useTbFabric';
 export * from './utils';

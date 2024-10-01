@@ -1,18 +1,9 @@
 import * as React from 'react';
-
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 import { TbDetailsListSample } from './TbDetailsListSample';
 
 export default () => (
-    <div
-        style={{
-            height: '100%',
-            display: 'flex',
-            position: 'relative',
-            width: 800,
-            margin: 'auto',
-            flexDirection: 'column',
-        }}
-    >
+    <FluentProvider theme={webLightTheme}>
         <TbDetailsListSample />
-    </div>
+    </FluentProvider>
 );

@@ -42,21 +42,21 @@ const sentence = () => {
     return content;
 };
 
-export const createFakeRows = (columnDefinition: ITbColumn[], numberOfRows = 100, intNumbers = true) => {
-    const rows = [];
+export const createFakeRows = <TItem>(columnDefinition: ITbColumn<TItem>[], numberOfRows = 100, intNumbers = true) => {
+    const rows: TItem[] = [];
     const today = new Date();
 
     for (let i = 0; i < numberOfRows; i++) {
         const row = columnDefinition.reduce((accumulator, current) => {
             const newItem = {};
-            switch (current.tb.dataType) {
+            switch (current.tb?.dataType) {
                 case ColumnDataType.Boolean:
-                    newItem[current.fieldName] = Math.random() > 0.5;
+                    newItem[current.columnId] = Math.random() > 0.5;
                     break;
                 case ColumnDataType.Date:
                 case ColumnDataType.DateTime:
                 case ColumnDataType.DateTimeUtc:
-                    newItem[current.fieldName] = new Date(
+                    newItem[current.columnId] = new Date(
                         today.getFullYear(),
                         Math.random() * 11,
                         Math.random() * 28,
@@ -64,21 +64,21 @@ export const createFakeRows = (columnDefinition: ITbColumn[], numberOfRows = 100
                     break;
                 case ColumnDataType.Numeric:
                     if (current.tb.isKey) {
-                        newItem[current.fieldName] = i;
+                        newItem[current.columnId] = i;
                         break;
                     }
 
                     const randNumber = Math.random() * 10000;
-                    newItem[current.fieldName] = intNumbers ? Math.round(randNumber) : randNumber;
+                    newItem[current.columnId] = intNumbers ? Math.round(randNumber) : randNumber;
                     break;
                 case ColumnDataType.String:
-                    newItem[current.fieldName] = sentence();
+                    newItem[current.columnId] = sentence();
                     break;
             }
             return { ...accumulator, ...newItem };
         }, {});
 
-        rows.push(row);
+        rows.push(row as TItem);
     }
 
     return rows;
