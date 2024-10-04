@@ -52,12 +52,10 @@ export const TestTbGrid = ({ filterable, toggleColumns, searchable, recordCounte
         },
     ];
 
-    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
-        if (column.key == 'Actions') return <span>NOO</span>;
+    const onRenderItemColumn = (item: any, index: number, column: ColumnModel) => {
+        if (column.name == 'Actions') return <span>NOO</span>;
 
-        const tbColumn = column as ITbColumn;
-
-        return getRenderByDataType(tbColumn.tb as ColumnModel, item[column.fieldName]);
+        return getRenderByDataType(column, item[column.name]);
     };
 
     return (

@@ -25,11 +25,11 @@
     },
     "jest": {
         "automock": false,
+        "setupFilesAfterEnv": [
+            "<rootDir>/jest-setup.ts"
+        ],
         "moduleNameMapper": {
-            "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
-            "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1",
-            "@uifabric/react-hooks/(.*)$": "@uifabric/react-hooks/lib-commonjs/$1",
-            "@uifabric/utilities/lib/(.*)$": "@uifabric/utilities/lib-commonjs/$1"
+            "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1"
         },
         "moduleFileExtensions": [
             "ts",

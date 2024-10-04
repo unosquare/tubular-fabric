@@ -1,5 +1,5 @@
 import { ColumnDataType } from 'tubular-common';
-import { ITbColumn } from '../../src/interfaces';
+import { ITbColumn, ITbColumnProxy } from '../../src/interfaces';
 
 const nouns = ['bird', 'clock', 'boy', 'plastic', 'duck', 'teacher', 'old lady', 'professor', 'hamster', 'dog'];
 const verbs = ['kicked', 'ran', 'flew', 'dodged', 'sliced', 'rolled', 'died', 'breathed', 'slept', 'killed'];
@@ -42,43 +42,43 @@ const sentence = () => {
     return content;
 };
 
-export const createFakeRows = (columnDefinition: ITbColumn[], numberOfRows = 100, intNumbers = true) => {
-    const rows = [];
+export const createFakeRows = (columnDefinition: ITbColumnProxy[], numberOfRows = 100, intNumbers = true) => {
+    const rows: ITbColumnProxy[] = [];
     const today = new Date();
 
     for (let i = 0; i < numberOfRows; i++) {
         const row = columnDefinition.reduce((accumulator, current) => {
             const newItem = {};
-            switch (current.tb.dataType) {
+            switch (current.dataType) {
                 case ColumnDataType.Boolean:
-                    newItem[current.fieldName] = Math.random() > 0.5;
+                    newItem[current.name!] = Math.random() > 0.5;
                     break;
                 case ColumnDataType.Date:
                 case ColumnDataType.DateTime:
                 case ColumnDataType.DateTimeUtc:
-                    newItem[current.fieldName] = new Date(
+                    newItem[current.name!] = new Date(
                         today.getFullYear(),
                         Math.random() * 11,
                         Math.random() * 28,
                     ).toISOString();
                     break;
                 case ColumnDataType.Numeric:
-                    if (current.tb.isKey) {
-                        newItem[current.fieldName] = i;
+                    if (current.isKey) {
+                        newItem[current.name!] = i;
                         break;
                     }
 
                     const randNumber = Math.random() * 10000;
-                    newItem[current.fieldName] = intNumbers ? Math.round(randNumber) : randNumber;
+                    newItem[current.name!] = intNumbers ? Math.round(randNumber) : randNumber;
                     break;
                 case ColumnDataType.String:
-                    newItem[current.fieldName] = sentence();
+                    newItem[current.name!] = sentence();
                     break;
             }
             return { ...accumulator, ...newItem };
         }, {});
 
-        rows.push(row);
+        rows.push(row as ITbColumnProxy);
     }
 
     return rows;

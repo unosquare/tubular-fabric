@@ -3,8 +3,8 @@ import { Selection, IColumn, ICommandBarItemProps, mergeStyleSets } from '@fluen
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { TbDetailsList } from './TbDetailsList';
 import { TbCommandBar } from './TbCommandBar';
-import { ITbColumn } from './interfaces/ITbColumn';
-import { TubularHttpClientAbstract } from 'tubular-common';
+import { ITbColumn, ITbColumnProxy } from './interfaces/ITbColumn';
+import { ColumnModel, TubularHttpClientAbstract } from 'tubular-common';
 import useTbFabric from './useTbFabric';
 
 export interface ITbExtendedOptions extends ITbOptions {
@@ -20,8 +20,8 @@ export interface ITbExtendedOptions extends ITbOptions {
 
 export interface ITbGridProps {
     options: Partial<ITbExtendedOptions>;
-    onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
-    columns: ITbColumn[];
+    onRenderItemColumn?: (item: any, index: number, column: ColumnModel) => React.ReactNode;
+    columns: ITbColumnProxy[];
     source: string | Request | TubularHttpClientAbstract | any[];
 }
 

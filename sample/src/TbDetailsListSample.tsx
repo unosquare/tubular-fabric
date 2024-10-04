@@ -6,8 +6,8 @@ import { ICommandBarItemProps, IColumn } from '@fluentui/react';
 import { getRenderByDataType } from '../../src/utils';
 import { ITbColumn } from '../../src/interfaces';
 import { ColumnModel } from 'tubular-common';
-
-const dataSource = 'https://tubular.azurewebsites.net/api/orders/paged';
+import { createFakeRows } from './utils';
+const dataSource = createFakeRows(columns, 500);
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
     const [refresh, forceRefresh] = useGridRefresh();
@@ -42,12 +42,10 @@ export const TbDetailsListSample: React.FunctionComponent = () => {
         },
     ];
 
-    const onRenderItemColumn = (item: any, index: number, column: IColumn) => {
-        if (column.key == 'Actions') return <span>NOO</span>;
+    const onRenderItemColumn = (item: any, index: number, column: ColumnModel) => {
+        if (column.name == 'Actions') return <span>NOO</span>;
 
-        const tbColumn = column as ITbColumn;
-
-        return getRenderByDataType(tbColumn.tb as ColumnModel, item[column.fieldName]);
+        return getRenderByDataType(column, item[column.name]);
     };
 
     return (
