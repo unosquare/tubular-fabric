@@ -26,7 +26,7 @@ export const NumericFilter = ({ column, onApply }: IFilterEditorProps) => {
         <>
             <TextField
                 label={''}
-                type="number"
+                type='number'
                 placeholder={isBetween ? 'From' : 'Type a number'}
                 onChange={handleFilterChange()}
                 defaultValue={column.filterText}
@@ -36,8 +36,8 @@ export const NumericFilter = ({ column, onApply }: IFilterEditorProps) => {
                 <TextField
                     styles={secondInputStyle}
                     label={''}
-                    type="number"
-                    placeholder="To"
+                    type='number'
+                    placeholder='To'
                     onChange={handleFilterChange(true)}
                     defaultValue={
                         column.filterArgument && column.filterArgument[0] ? column.filterArgument[0].toString() : ''

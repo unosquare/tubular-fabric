@@ -71,14 +71,14 @@ const onRenderHeader = (props: IGroupHeaderProps): JSX.Element => {
 
     return (
         <div onClick={toggleCollapse} className={classNames.header}>
-            <Stack horizontal horizontalAlign="start" verticalAlign="center">
+            <Stack horizontal horizontalAlign='start' verticalAlign='center'>
                 <Stack.Item>
                     <FontIcon iconName={collapseIcon} className={classNames.chevron} />
                 </Stack.Item>
                 <Stack.Item>{props.group.name}</Stack.Item>
                 {props.group.data.hasFilter && (
                     <Stack.Item>
-                        <FontIcon iconName="FilterSolid" className={classNames.hasFilter} />
+                        <FontIcon iconName='FilterSolid' className={classNames.hasFilter} />
                     </Stack.Item>
                 )}
             </Stack>

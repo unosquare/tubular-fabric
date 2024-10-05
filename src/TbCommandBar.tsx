@@ -49,7 +49,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
                     <SearchBox
                         disabled={tbState.isLoading}
                         underlined={true}
-                        placeholder="Search"
+                        placeholder='Search'
                         onSearch={tbApi.search}
                         onClear={onClear}
                         styles={searchBoxStyles}

@@ -16,7 +16,7 @@ export const ChipBar: React.FunctionComponent<ChipBarProps> = ({ columns, onClea
     const onRemove = (columnName: string) => () => onClearFilter(columnName);
 
     return (
-        <Stack horizontal horizontalAlign="start" wrap styles={chipFilterContainerStyle}>
+        <Stack horizontal horizontalAlign='start' wrap styles={chipFilterContainerStyle}>
             {filteredColumns.map((column) => (
                 <ChipFilter
                     key={column.name}

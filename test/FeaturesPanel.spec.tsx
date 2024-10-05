@@ -12,13 +12,15 @@ initializeIcons();
 
 describe('FeaturesPanel', () => {
     it('should render FeaturesPanel initial state w/o problem with filters and toggleColumns', async () => {
-        const { container } = render(<FeaturesPanel 
-            closePanel={() => {}}
-            columns={[mockColumn]}
-            onApplyFeatures={(value) => {}}
-            toggleColumns={true}
-            filterable={true}
-             />);
+        const { container } = render(
+            <FeaturesPanel
+                closePanel={jest.fn()}
+                columns={[mockColumn]}
+                onApplyFeatures={jest.fn()}
+                toggleColumns={true}
+                filterable={true}
+            />,
+        );
 
         expect(container.children.length > 0).toBeTruthy();
     });

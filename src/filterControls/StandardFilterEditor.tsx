@@ -74,9 +74,9 @@ export const StandardFilterEditor: React.FunctionComponent<IFilterEditorProps> =
     return (
         <Stack
             horizontal
-            horizontalAlign="space-between"
+            horizontalAlign='space-between'
             key={column.name}
-            verticalAlign="center"
+            verticalAlign='center'
             styles={filterFieldWrapperStyles}
         >
             <Stack.Item styles={filterButtonStyles}>

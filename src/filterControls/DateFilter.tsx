@@ -98,7 +98,7 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
                 firstDayOfWeek={DayOfWeek.Monday}
                 strings={DayPickerStrings}
                 placeholder={isBetween ? 'From' : 'Selec a date'}
-                ariaLabel="Select a date"
+                ariaLabel='Select a date'
                 value={dates[0]}
                 textField={{
                     inputClassName: dateInputClassName,
@@ -113,14 +113,14 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
                     styles={secondInputStyle}
                     firstDayOfWeek={DayOfWeek.Monday}
                     strings={DayPickerStrings}
-                    placeholder="To"
+                    placeholder='To'
                     value={dates[1]}
                     textField={{
                         inputClassName: dateInputClassName,
                         // eslint-disable-next-line react/display-name
                         onRenderSuffix: () => <ClearDateButton onClick={clearDate(true)} />,
                     }}
-                    ariaLabel="Select end date"
+                    ariaLabel='Select end date'
                     onSelectDate={handleDateChange(true)}
                 />
             )}

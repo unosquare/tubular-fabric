@@ -16,13 +16,14 @@ import { SelectionBar } from './SelectionBar';
 import { ShimmerCell } from './cells';
 import { getRenderByDataType } from './utils';
 import { IFabricTbState, ITbFabricApi } from './interfaces';
+import { ColumnModel } from 'tubular-common';
 
 export interface ITbDetailsListProps {
     tbState: IFabricTbState;
     tbApi: ITbFabricApi;
     selectionMode?: number;
     onRemoveAction?: (selection: Selection) => void;
-    onRenderItemColumn?: (item: any, index: number, column: IColumn) => React.ReactNode;
+    onRenderItemColumn?: (item: any, index: number, column: ColumnModel) => React.ReactNode;
     shimmerRowCount?: number;
 }
 
@@ -94,21 +95,31 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
         if (item.value === '-1') {
             return <ShimmerCell />;
         }
+        const tbColumn = tbState.columns.find((c) => c.name === column.key);
 
-        return onRenderItemColumn ? onRenderItemColumn(item, index, column) : getRenderByDataType(item, column);
+        if (!tbColumn) {
+            throw new Error('Invalid column name');
+        }
+        return onRenderItemColumn ? onRenderItemColumn(item, index, tbColumn) : getRenderByDataType(item, column);
     };
 
     const onColumnHeaderClick = React.useCallback(
         () => (ev?: React.MouseEvent<HTMLElement>, column?: IColumn) => {
             if (!tbState.isLoading) {
-                tbApi.sortByColumn(ev, column);
+                const tbColumn = tbState.columns.find((c) => c.name === column.key);
+
+                if (!tbColumn) {
+                    throw new Error('onColumnHeaderClick() Invalid column');
+                }
+
+                tbApi.sortByColumn(ev, tbColumn);
             }
         },
         [tbState.isLoading],
     );
 
     return (
-        <div className={classes.tbDetailsList} data-is-scrollable="true">
+        <div className={classes.tbDetailsList} data-is-scrollable='true'>
             {selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
                 <SelectionBar selection={selection} onRemoveAction={onRemoveAction} />
             )}
