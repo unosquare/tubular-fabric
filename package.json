@@ -7,10 +7,10 @@
         "build": "tsc",
         "start": "webpack serve",
         "check": "npm run build && npm test",
-        "lint": "tsc --noEmit && eslint ./src/**/*.ts --quiet",
-        "lint:fix": "eslint ./src/**/*.ts --quiet --fix",
-        "prettier": "prettier --check src/**/*.ts*",
-        "prettier:fix": "prettier --write src/**/*.ts*",
+        "lint": "tsc --noEmit && eslint ./src/**/*.{ts,tsx} --quiet",
+        "lint:fix": "eslint ./src/**/*.{ts,tsx} --quiet --fix",
+        "prettier": "prettier --check ./src/**/*.ts*",
+        "prettier:fix": "prettier --write ./src/**/*.ts*",
         "codestyle:fix": "npm run lint:fix && npm run prettier:fix",
         "test": "jest",
         "cest": "jest --coverage"
@@ -20,6 +20,7 @@
         "semi": true,
         "trailingComma": "all",
         "singleQuote": true,
+        "jsxSingleQuote": true,
         "printWidth": 120,
         "tabWidth": 4
     },

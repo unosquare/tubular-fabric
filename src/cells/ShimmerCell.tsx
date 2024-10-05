@@ -36,5 +36,5 @@ const classes = mergeStyleSets({
 });
 
 export const ShimmerCell: React.FunctionComponent = () => (
-    <div className={classes.shimmerAnimate} aria-busy="true"></div>
+    <div className={classes.shimmerAnimate} aria-busy='true'></div>
 );

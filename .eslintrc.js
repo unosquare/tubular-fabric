@@ -17,9 +17,10 @@ module.exports = {
     rules: {
         'react/display-name': 0,
         'no-unused-vars': 'off',
+        'react/prop-types': 'off',
         '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
-    settings: {
+        settings: {
         react: {
             version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
         },
