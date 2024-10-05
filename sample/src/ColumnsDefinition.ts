@@ -1,5 +1,5 @@
 import { ColumnDataType, CompareOperators, ColumnSortDirection } from 'tubular-common';
-import { ITbColumn, ITbColumnProxy } from '../../src/interfaces/ITbColumn';
+import { ITbColumnProxy } from '../../src/interfaces/ITbColumn';
 
 export const columns: ITbColumnProxy[] = [
     {

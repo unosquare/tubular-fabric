@@ -11,7 +11,7 @@ initializeIcons();
 
 describe('LinkCell', () => {
     it('should render initial state w/o problem', async () => {
-        const onClick = ()=>{};
+        const onClick = () => {};
         const title = 'Title';
         const { container } = render(<LinkCell value={title} onClick={onClick} />);
         const titleBtn = getByText(container as HTMLElement, title);

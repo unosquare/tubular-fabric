@@ -71,7 +71,7 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).toBeNull());
 
-        let keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
+        const keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
         document.dispatchEvent(keyDownEvent);
 
         let shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');
@@ -98,10 +98,10 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).toBeNull());
 
-        let keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
+        const keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
         document.dispatchEvent(keyDownEvent);
 
-        let keyupEvent = new KeyboardEvent('keyup', { key: 'Control' });
+        const keyupEvent = new KeyboardEvent('keyup', { key: 'Control' });
         document.dispatchEvent(keyupEvent);
 
         let shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');

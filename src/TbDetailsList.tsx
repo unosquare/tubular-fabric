@@ -119,7 +119,7 @@ export const TbDetailsList: React.FunctionComponent<ITbDetailsListProps> = ({
     );
 
     return (
-        <div className={classes.tbDetailsList} data-is-scrollable="true">
+        <div className={classes.tbDetailsList} data-is-scrollable='true'>
             {selectionMode !== SelectionMode.none && selectedRowsCount > 0 && (
                 <SelectionBar selection={selection} onRemoveAction={onRemoveAction} />
             )}

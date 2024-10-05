@@ -11,7 +11,7 @@ import {
     columnHasFilter,
 } from 'tubular-common/dist/Models';
 import { IColumn } from '@fluentui/react';
-import { ITbColumn, ITbColumnProxy } from './interfaces/ITbColumn';
+import { ITbColumnProxy } from './interfaces/ITbColumn';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { ITbFabricApi } from './interfaces';
 

@@ -1,5 +1,5 @@
 import { ColumnDataType } from 'tubular-common';
-import { ITbColumn, ITbColumnProxy } from '../../src/interfaces';
+import { ITbColumnProxy } from '../../src/interfaces';
 
 const nouns = ['bird', 'clock', 'boy', 'plastic', 'duck', 'teacher', 'old lady', 'professor', 'hamster', 'dog'];
 const verbs = ['kicked', 'ran', 'flew', 'dodged', 'sliced', 'rolled', 'died', 'breathed', 'slept', 'killed'];
@@ -68,6 +68,7 @@ export const createFakeRows = (columnDefinition: ITbColumnProxy[], numberOfRows 
                         break;
                     }
 
+                    // eslint-disable-next-line no-case-declarations
                     const randNumber = Math.random() * 10000;
                     newItem[current.name!] = intNumbers ? Math.round(randNumber) : randNumber;
                     break;

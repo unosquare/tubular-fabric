@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Selection, IColumn, ICommandBarItemProps, mergeStyleSets } from '@fluentui/react';
+import { Selection, ICommandBarItemProps, mergeStyleSets } from '@fluentui/react';
 import { ITbOptions } from 'tubular-react-common/dist/types/ITbOptions';
 import { TbDetailsList } from './TbDetailsList';
 import { TbCommandBar } from './TbCommandBar';
-import { ITbColumn, ITbColumnProxy } from './interfaces/ITbColumn';
+import { ITbColumnProxy } from './interfaces/ITbColumn';
 import { ColumnModel, TubularHttpClientAbstract } from 'tubular-common';
 import useTbFabric from './useTbFabric';
 
