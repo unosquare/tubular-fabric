@@ -13,14 +13,14 @@ initializeIcons();
 
 describe('FiltersContainer', () => {
     it('should render FiltersContainer initial state w/o problem', async () => {
-        const { container } = render(<FiltersContainer columns={[mockColumn]} onApply={() => {}} />);
+        const { container } = render(<FiltersContainer columns={[mockColumn]} onApply={jest.fn()} />);
 
         expect(getAllByRole(container as HTMLElement, 'presentation').length > 0).toBeTruthy();
     });
 
     it('should render FiltersContainer initial state w/o problem with BooleanFilterEditor', async () => {
-        const { container, debug } = render(
-            <FiltersContainer columns={[{ ...mockColumn, dataType: ColumnDataType.Boolean }]} onApply={() => {}} />,
+        const { container } = render(
+            <FiltersContainer columns={[{ ...mockColumn, dataType: ColumnDataType.Boolean }]} onApply={jest.fn()} />,
         );
         expect(getAllByRole(container as HTMLElement, 'presentation').length > 0).toBeTruthy();
     });
@@ -28,7 +28,7 @@ describe('FiltersContainer', () => {
     // TODO: FireEvent is not longer working :\
     xit('should render FiltersContainer initial state w/o problem and click to call toggleCollapse', async () => {
         const { container } = render(
-            <FiltersContainer columns={[{ ...mockColumn, dataType: ColumnDataType.Boolean }]} onApply={() => {}} />,
+            <FiltersContainer columns={[{ ...mockColumn, dataType: ColumnDataType.Boolean }]} onApply={jest.fn()} />,
         );
         const containerHtml = container as HTMLElement;
 

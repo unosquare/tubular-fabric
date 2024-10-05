@@ -12,7 +12,7 @@ initializeIcons();
 describe('StringFilter', () => {
     it('should render StringFilter initial state w/o problem', async () => {
         const column = { filterText: 'FilterText' };
-        const { container } = render(<StringFilter column={column} onEnter={() => {}} />);
+        const { container } = render(<StringFilter column={column} onEnter={jest.fn()} />);
         expect(getByRole(container, 'textbox')).toBeDefined();
     });
 });

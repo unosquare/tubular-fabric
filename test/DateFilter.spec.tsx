@@ -13,7 +13,7 @@ initializeIcons();
 
 describe('DateFilter', () => {
     it('should render DateFilter initial state w/o problem', async () => {
-        const { container } = render(<DateFilter column={{ ...mockColumn }} onApply={() => {}} />);
+        const { container } = render(<DateFilter column={{ ...mockColumn }} onApply={jest.fn()} />);
         expect(getByRole(container, 'button')).toBeDefined();
     });
 
@@ -21,7 +21,7 @@ describe('DateFilter', () => {
         const { container } = render(
             <DateFilter
                 column={{ ...mockColumn, filterOperator: CompareOperators.Between, filterArgument: ['x', 'x'] }}
-                onApply={() => {}}
+                onApply={jest.fn()}
             />,
         );
         expect(getAllByRole(container, 'button').length).toBe(2);
@@ -36,7 +36,7 @@ describe('DateFilter', () => {
                     filterText: '01/01/2020',
                     filterArgument: ['01/01/2020', '01/01/2020'],
                 }}
-                onApply={() => {}}
+                onApply={jest.fn()}
             />,
         );
 
@@ -55,7 +55,7 @@ describe('DateFilter', () => {
                     filterText: '01/01/2020',
                     filterArgument: ['01/01/2020', '01/01/2020'],
                 }}
-                onApply={() => {}}
+                onApply={jest.fn()}
             />,
         );
 

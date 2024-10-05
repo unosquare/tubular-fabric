@@ -13,7 +13,7 @@ initializeIcons();
 
 describe('NumericFilter', () => {
     it('should render NumericFilter initial state w/o problem', async () => {
-        const { container } = render(<NumericFilter column={mockColumn} onApply={() => {}} />);
+        const { container } = render(<NumericFilter column={mockColumn} onApply={jest.fn()} />);
         expect(getByRole(container, 'spinbutton')).toBeDefined();
     });
 
@@ -21,7 +21,7 @@ describe('NumericFilter', () => {
         const onApply = jest.fn();
         const { container } = render(
             <NumericFilter
-                column={{ ...mockColumn, filterArgument: null, filterOperator: CompareOperators.Between }}
+                column={{ ...mockColumn, filterArgument: undefined, filterOperator: CompareOperators.Between }}
                 onApply={onApply}
             />,
         );

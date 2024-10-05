@@ -14,7 +14,7 @@ initializeIcons();
 describe('StandardFilterEditor', () => {
     it('should render StandardFilterEditor initial state w/o problem', async () => {
         const { container } = render(
-            <StandardFilterEditor column={{ ...mockColumn, filterText: 'all' }} onApply={() => {}} />,
+            <StandardFilterEditor column={{ ...mockColumn, filterText: 'all' }} onApply={jest.fn()} />,
         );
 
         expect(getByRole(container, 'textbox')).toBeDefined();
@@ -24,7 +24,7 @@ describe('StandardFilterEditor', () => {
         const { container } = render(
             <StandardFilterEditor
                 column={{ ...mockColumn, filterText: 'all', dataType: ColumnDataType.Numeric }}
-                onApply={() => {}}
+                onApply={jest.fn()}
             />,
         );
         expect(getByPlaceholderText(container, 'Type a number')).toBeDefined();
@@ -34,7 +34,7 @@ describe('StandardFilterEditor', () => {
         const { container } = render(
             <StandardFilterEditor
                 column={{ ...mockColumn, filterText: 'all', dataType: ColumnDataType.DateTimeUtc }}
-                onApply={() => {}}
+                onApply={jest.fn()}
             />,
         );
         expect(getByRole(container, 'combobox')).toBeDefined();
@@ -45,7 +45,7 @@ describe('StandardFilterEditor', () => {
             render(
                 <StandardFilterEditor
                     column={{ ...mockColumn, dataType: ColumnDataType.Boolean }}
-                    onApply={() => {}}
+                    onApply={jest.fn()}
                 />,
             ),
         ).toThrowError();

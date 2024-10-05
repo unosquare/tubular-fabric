@@ -11,7 +11,7 @@ initializeIcons();
 
 describe('ClearDateButton', () => {
     it('should render initial state w/o problem', async () => {
-        const onClick = () => {};
+        const onClick = jest.fn();
         const { container } = render(<ClearDateButton onClick={onClick} />);
         expect(getByRole(container, 'button')).toBeDefined();
     });

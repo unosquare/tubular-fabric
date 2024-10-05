@@ -14,9 +14,9 @@ describe('FeaturesPanel', () => {
     it('should render FeaturesPanel initial state w/o problem with filters and toggleColumns', async () => {
         const { container } = render(
             <FeaturesPanel
-                closePanel={() => {}}
+                closePanel={jest.fn()}
                 columns={[mockColumn]}
-                onApplyFeatures={(value) => {}}
+                onApplyFeatures={jest.fn()}
                 toggleColumns={true}
                 filterable={true}
             />,

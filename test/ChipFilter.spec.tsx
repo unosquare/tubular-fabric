@@ -67,7 +67,7 @@ describe('ChipFilter', () => {
             />,
         );
 
-        const icon = container.firstChild.childNodes[2].firstChild.firstChild;
+        const icon = container.firstChild?.childNodes[2]?.firstChild?.firstChild;
         expect((icon as HTMLElement).getAttribute('data-icon-name')).toBe('CheckboxCompositeReversed');
     });
 
@@ -85,7 +85,7 @@ describe('ChipFilter', () => {
             />,
         );
 
-        const icon = container.firstChild.childNodes[2].firstChild.firstChild;
+        const icon = container?.firstChild?.childNodes[2]?.firstChild?.firstChild;
         expect((icon as HTMLElement).getAttribute('data-icon-name')).toBe('Checkbox');
     });
 });
