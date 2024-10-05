@@ -1,9 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-
 import * as React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { initializeIcons } from '@fluentui/react';
 import { TestTbGrid } from './components/TestTbGrid';
 import { render, screen, getAllByRole, within, RenderResult, waitFor, fireEvent } from '@testing-library/react';

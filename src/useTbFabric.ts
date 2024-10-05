@@ -28,7 +28,7 @@ const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =
             isKey: column.isKey ? column.isKey : false,
             isComputed: column.isComputed !== undefined ? column.isComputed : false,
             getComputedStringValue: column.getComputedStringValue || null,
-            label: column.name ? column.name : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+            label: column.label ? column.label : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
             searchable: column.searchable ? column.searchable : false,
             sortDirection: column.sortDirection ? column.sortDirection : ColumnSortDirection.None,
             sortOrder: column.sortOrder ? column.sortOrder : -1,
@@ -44,7 +44,7 @@ const mapToFabricColumns = (tbColumns: ColumnModel[]): Partial<IColumn>[] =>
     tbColumns.map((column) => {
         return {
             key: column.name!,
-            name: column.name,
+            name: column.label,
             isFiltered: columnHasFilter(column),
             isSorted: column.sortDirection !== ColumnSortDirection.None,
             isSortedDescending:
