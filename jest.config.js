@@ -21,10 +21,4 @@ module.exports = {
     automock: false,
     setupFilesAfterEnv: ['./jest-setup.ts'],
     setupFiles: ['@testing-library/react/dont-cleanup-after-each'],
-    globals: {
-        'ts-jest': {
-            diagnostics: false,
-            tsconfig: 'tsconfig.json',
-        },
-    },
 };

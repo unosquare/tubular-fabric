@@ -4,15 +4,14 @@ import { ITbColumnProxy } from '../../src/interfaces/ITbColumn';
 export const columns: ITbColumnProxy[] = [
     {
         name: 'Actions',
-        minWidth: 50,
         isComputed: true,
         dataType: ColumnDataType.String,
     },
     {
         name: 'OrderID',
         label: 'Order ID',
-        minWidth: 100,
-        maxWidth: 110,
+        minWidth: 80,
+        maxWidth: 90,
         isKey: true,
         dataType: ColumnDataType.Numeric,
         sortable: true,
@@ -42,8 +41,8 @@ export const columns: ITbColumnProxy[] = [
     {
         name: 'Amount',
         label: 'Amount',
-        minWidth: 100,
-        maxWidth: 110,
+        minWidth: 70,
+        maxWidth: 90,
         dataType: ColumnDataType.Numeric,
         sortable: true,
     },
