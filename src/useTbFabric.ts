@@ -11,7 +11,7 @@ import {
     columnHasFilter,
 } from 'tubular-common/dist/Models';
 import { IColumn } from '@fluentui/react';
-import { ITbColumnProxy } from './interfaces/ITbColumn';
+import { ITbColumnProxy, TbSupportedIColumnProps } from './interfaces/ITbColumn';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { ITbFabricApi } from './interfaces';
 
@@ -40,8 +40,12 @@ const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =
         }),
     );
 
-const mapToFabricColumns = (tbColumns: ColumnModel[]): Partial<IColumn>[] =>
+const mapToFabricColumns = (
+    tbColumns: ColumnModel[],
+    fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> },
+): Partial<IColumn>[] =>
     tbColumns.map((column) => {
+        const fabricProps = fabricColumnProps[column.name];
         return {
             key: column.name!,
             name: column.label,
@@ -51,6 +55,7 @@ const mapToFabricColumns = (tbColumns: ColumnModel[]): Partial<IColumn>[] =>
                 column.sortDirection !== ColumnSortDirection.None
                     ? column.sortDirection === ColumnSortDirection.Descending
                     : false,
+            ...fabricProps,
         };
     });
 
@@ -60,6 +65,13 @@ const useTbFabric = (
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
     const { deps, ...rest } = tubularOptions;
+    const fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> } = {};
+    initColumns.forEach((element) => {
+        fabricColumnProps[element.name] = {
+            maxWidth: element.maxWidth,
+            minWidth: element.minWidth,
+        };
+    });
     const tbColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);
     const { state: tbState, api: tbApi } = useTubular(tbColumns, source, rest);
     const [list, setListState] = React.useState({
@@ -248,7 +260,11 @@ const useTbFabric = (
     };
 
     const filteredFabricColumns = React.useMemo(
-        () => mapToFabricColumns(tbState.columns.filter((c) => c.visible)),
+        () =>
+            mapToFabricColumns(
+                tbState.columns.filter((c) => c.visible),
+                fabricColumnProps,
+            ),
         [tbState.columns],
     );
 
