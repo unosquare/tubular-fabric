@@ -1,16 +1,16 @@
 {
     "name": "tubular-fabric",
-    "version": "3.10.0",
+    "version": "3.13.0",
     "description": "Unosquare Tubular for Fabric",
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
         "start": "webpack serve",
         "check": "npm run build && npm test",
-        "lint": "tsc --noEmit && eslint ./src/**/*.ts --quiet",
-        "lint:fix": "eslint ./src/**/*.ts --quiet --fix",
-        "prettier": "prettier --check src/**/*.ts*",
-        "prettier:fix": "prettier --write src/**/*.ts*",
+        "lint": "tsc --noEmit && eslint **/*.{ts,tsx} --quiet",
+        "lint:fix": "eslint **/*.{ts,tsx} --quiet --fix",
+        "prettier": "prettier --check **/*.ts*",
+        "prettier:fix": "prettier --write **/*.ts*",
         "codestyle:fix": "npm run lint:fix && npm run prettier:fix",
         "test": "jest",
         "cest": "jest --coverage"
@@ -20,39 +20,9 @@
         "semi": true,
         "trailingComma": "all",
         "singleQuote": true,
+        "jsxSingleQuote": true,
         "printWidth": 120,
         "tabWidth": 4
-    },
-    "jest": {
-        "automock": false,
-        "moduleNameMapper": {
-            "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
-            "@fluentui/react/lib/(.*)$": "@fluentui/react/lib-commonjs/$1",
-            "@uifabric/react-hooks/(.*)$": "@uifabric/react-hooks/lib-commonjs/$1",
-            "@uifabric/utilities/lib/(.*)$": "@uifabric/utilities/lib-commonjs/$1"
-        },
-        "moduleFileExtensions": [
-            "ts",
-            "tsx",
-            "js"
-        ],
-        "transform": {
-            "^.+\\.(ts|tsx)$": "ts-jest"
-        },
-        "collectCoverageFrom": [
-            "./src/**/*.{ts,tsx}",
-            "!**/node_modules/**",
-            "!./test/**"
-        ],
-        "testMatch": [
-            "<rootDir>/test/**/*.spec.(ts|tsx)"
-        ],
-        "globals": {
-            "ts-jest": {
-                "diagnostics": false,
-                "tsconfig": "tsconfig.json"
-            }
-        }
     },
     "repository": {
         "type": "git",

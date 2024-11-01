@@ -16,7 +16,7 @@ const options: IChoiceGroupOption[] = [
         onRenderLabel: () => {
             return (
                 <span style={{ paddingLeft: 28, fontSize: 18 }}>
-                    <FontIcon iconName="CheckboxCompositeReversed" />
+                    <FontIcon iconName='CheckboxCompositeReversed' />
                 </span>
             );
         },
@@ -28,7 +28,7 @@ const options: IChoiceGroupOption[] = [
         onRenderLabel: () => {
             return (
                 <span style={{ paddingLeft: 28, fontSize: 18 }}>
-                    <FontIcon iconName="Checkbox" />
+                    <FontIcon iconName='Checkbox' />
                 </span>
             );
         },
@@ -55,7 +55,7 @@ export const BooleanFilterEditor = ({ column }: IFilterEditorProps) => {
     const defaultSelectedKey = column.filterText || 'all';
 
     return (
-        <Stack key={column.name} verticalAlign="center" styles={filterFieldWrapperStyles}>
+        <Stack key={column.name} verticalAlign='center' styles={filterFieldWrapperStyles}>
             <ChoiceGroup onChange={onChoiceChange} defaultSelectedKey={defaultSelectedKey} options={options} />
         </Stack>
     );

@@ -10,62 +10,70 @@ import {
     createColumn,
     columnHasFilter,
 } from 'tubular-common/dist/Models';
-import { ITbColumn } from './interfaces/ITbColumn';
+import { IColumn } from '@fluentui/react';
+import { ITbColumnProxy, TbSupportedIColumnProps } from './interfaces/ITbColumn';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { ITbFabricApi } from './interfaces';
 
-const createInitialTbColumns = <TItem>(fabricColumns: ITbColumn<TItem>[]) =>
-    fabricColumns.map((column) =>
-        createColumn(column.columnId.toString(), {
-            dataType: column.tb.dataType,
-            dateDisplayFormat: column.tb.dateDisplayFormat,
-            dateOriginFormat: column.tb.dateOriginFormat,
-            dateTimeDisplayFormat: column.tb.dateTimeDisplayFormat,
-            dateTimeOriginFormat: column.tb.dateTimeOriginFormat,
-            exportable: column.tb.exportable !== undefined ? column.tb.exportable : true,
-            filterable: Object.hasOwnProperty.call(column.tb, 'filterable') ? column.tb.filterable : true,
-            isKey: column.tb.isKey ? column.tb.isKey : false,
-            isComputed: column.tb.isComputed !== undefined ? column.tb.isComputed : false,
-            getComputedStringValue: column.tb.getComputedStringValue || null,
-            label: column.tb.name
-                ? column.tb.name
-                : (column.columnId || '').toString().replace(/([a-z])([A-Z])/g, '$1 $2'),
-            searchable: column.tb.searchable ? column.tb.searchable : false,
-            sortDirection: column.tb.sortDirection ? column.tb.sortDirection : ColumnSortDirection.None,
-            sortOrder: column.tb.sortOrder ? column.tb.sortOrder : -1,
-            sortable: column.tb.sortable ? column.tb.sortable : false,
-            visible: Object.hasOwnProperty.call(column.tb, 'visible') ? column.tb.visible : true,
-            filterText: column.tb.filterText,
-            filterArgument: column.tb.filterArgument,
-            filterOperator: column.tb.filterOperator || CompareOperators.None,
+const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =>
+    proxyColumns.map((column) =>
+        createColumn(column.name, {
+            dataType: column.dataType,
+            dateDisplayFormat: column.dateDisplayFormat,
+            dateOriginFormat: column.dateOriginFormat,
+            dateTimeDisplayFormat: column.dateTimeDisplayFormat,
+            dateTimeOriginFormat: column.dateTimeOriginFormat,
+            exportable: column.exportable !== undefined ? column.exportable : true,
+            filterable: Object.hasOwnProperty.call(column, 'filterable') ? column.filterable : true,
+            isKey: column.isKey ? column.isKey : false,
+            isComputed: column.isComputed !== undefined ? column.isComputed : false,
+            getComputedStringValue: column.getComputedStringValue || null,
+            label: column.label ? column.label : (column.name || '').replace(/([a-z])([A-Z])/g, '$1 $2'),
+            searchable: column.searchable ? column.searchable : false,
+            sortDirection: column.sortDirection ? column.sortDirection : ColumnSortDirection.None,
+            sortOrder: column.sortOrder ? column.sortOrder : -1,
+            sortable: column.sortable ? column.sortable : false,
+            visible: Object.hasOwnProperty.call(column, 'visible') ? column.visible : true,
+            filterText: column.filterText,
+            filterArgument: column.filterArgument,
+            filterOperator: column.filterOperator || CompareOperators.None,
         }),
     );
 
-const completeInitialFabricColumns = <TItem>(fabricColumns: ITbColumn<TItem>[], tbColumns: ColumnModel[]) =>
-    fabricColumns.map((column) => {
-        const tbColumn = tbColumns.find((c) => c.name === column.columnId);
-        column.tb = { ...tbColumn };
-        // column.isFiltered = columnHasFilter(tbColumn);
-        // column.isSorted = tbColumn.sortDirection !== ColumnSortDirection.None;
-        // column.isSortedDescending = column.isSorted ? tbColumn.sortDirection === ColumnSortDirection.Descending : false;
-
-        return column;
+const mapToFabricColumns = (
+    tbColumns: ColumnModel[],
+    fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> },
+): Partial<IColumn>[] =>
+    tbColumns.map((column) => {
+        const fabricProps = fabricColumnProps[column.name];
+        return {
+            key: column.name!,
+            name: column.label,
+            isFiltered: columnHasFilter(column),
+            isSorted: column.sortDirection !== ColumnSortDirection.None,
+            isSortedDescending:
+                column.sortDirection !== ColumnSortDirection.None
+                    ? column.sortDirection === ColumnSortDirection.Descending
+                    : false,
+            ...fabricProps,
+        };
     });
 
-const useTbFabric = <TItem>(
-    initColumns: ITbColumn<TItem>[],
+const useTbFabric = (
+    initColumns: ITbColumnProxy[],
     source: string | Request | TubularHttpClientAbstract | any[],
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
     const { deps, ...rest } = tubularOptions;
-    const tbInitColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);
-    const initFabricColumns = React.useMemo(
-        () => completeInitialFabricColumns(initColumns, tbInitColumns),
-        [initColumns, tbInitColumns],
-    );
-
-    const { state: tbState, api: tbApi } = useTubular(tbInitColumns, source, rest);
-    const [fabricColumns, setFabricColumns] = React.useState(initFabricColumns);
+    const fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> } = {};
+    initColumns.forEach((element) => {
+        fabricColumnProps[element.name] = {
+            maxWidth: element.maxWidth,
+            minWidth: element.minWidth,
+        };
+    });
+    const tbColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);
+    const { state: tbState, api: tbApi } = useTubular(tbColumns, source, rest);
     const [list, setListState] = React.useState({
         initialized: false,
         // We need to hold all the items that we have loaded
@@ -100,57 +108,26 @@ const useTbFabric = <TItem>(
     // Reset list is required
     const resetList = () => setListState({ initialized: true, items: [null] });
 
-    // const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: IColumn, isMultiSort = false) => {
-    //     const tbColumn = tbState.columns.find((c) => c.name === column.fieldName);
-    //     isMultiSort = isMultiSort || isCtrlKeyPressed.current;
+    const sortByColumn = (ev?: React.MouseEvent<HTMLElement>, column?: ColumnModel, isMultiSort = false) => {
+        const tbColumn = tbState.columns.find((c) => c.name === column.name);
+        isMultiSort = isMultiSort || isCtrlKeyPressed.current;
 
-    //     if (!tbColumn.sortable) {
-    //         return;
-    //     }
+        if (!tbColumn.sortable) {
+            return;
+        }
 
-    //     unstable_batchedUpdates(() => {
-    //         resetList();
-    //         const newFabricColumns = fabricColumns.map((col) => {
-    //             if (col.fieldName === column.fieldName) {
-    //                 return {
-    //                     ...col,
-    //                     isSorted: col.isSorted ? !col.isSortedDescending : true,
-    //                     isSortedDescending: col.isSorted && !col.isSortedDescending,
-    //                 };
-    //             }
+        unstable_batchedUpdates(() => {
+            resetList();
 
-    //             if (isMultiSort) {
-    //                 return col;
-    //             }
-
-    //             return {
-    //                 ...col,
-    //                 isSorted: false,
-    //                 isSortedDescending: false,
-    //             };
-    //         });
-
-    //         setFabricColumns(newFabricColumns);
-    //         tbApi.sortColumn(column.fieldName, isMultiSort);
-    //     });
-    // };
+            tbApi.sortColumn(column.name, isMultiSort);
+        });
+    };
 
     const search = (value: string) =>
         unstable_batchedUpdates(() => {
             resetList();
             tbApi.updateSearchText(value);
         });
-
-    const updateVisibleColumns = (columns: ColumnModel[]): [ITbColumn<TItem>[], ColumnModel[]] => {
-        const newFabricColumns = [...fabricColumns];
-        columns.forEach((tbColumn) => {
-            const fabricColumn = newFabricColumns.find((c) => c.columnId === tbColumn.name);
-            fabricColumn.tb.visible = tbColumn.visible;
-            // fabricColumn.isFiltered = columnHasFilter(tbColumn);
-        });
-
-        return [newFabricColumns, columns];
-    };
 
     const loadMoreItems = (pageToLoad: number) => tbApi.goToPage(pageToLoad);
 
@@ -181,10 +158,6 @@ const useTbFabric = <TItem>(
     };
 
     const applyOrResetFilter = (columnName: string, value?: string) => {
-        const newFabricColumns = [...fabricColumns];
-        const fabricColumn = newFabricColumns.find((f) => f.columnId === columnName);
-        // fabricColumn.isFiltered = value !== null;
-
         const newColumns = tbState.columns.map((column) => {
             if (column.name === columnName) {
                 return {
@@ -200,7 +173,6 @@ const useTbFabric = <TItem>(
 
         unstable_batchedUpdates(() => {
             resetList();
-            setFabricColumns(newFabricColumns);
             tbApi.setColumns(newColumns);
         });
     };
@@ -208,13 +180,9 @@ const useTbFabric = <TItem>(
     const applyFilter = (columnName: string, value: string) => applyOrResetFilter(columnName, value);
 
     const applyFeatures = (columns: ColumnModel[]) => {
-        const result = updateVisibleColumns(columns);
-        const tbColumns = applyFilters(result[1]);
-
         unstable_batchedUpdates(() => {
-            setFabricColumns(result[0]);
             resetList();
-            tbApi.setColumns(tbColumns);
+            tbApi.setColumns(columns);
         });
     };
 
@@ -257,7 +225,6 @@ const useTbFabric = <TItem>(
             }
 
             const mapped = tbState.data.map(fabricColumnsMapper);
-
             let newItems = [...state.items].slice(0, -1).concat(mapped);
 
             if (newItems.length < tbState.filteredRecordCount) {
@@ -281,11 +248,10 @@ const useTbFabric = <TItem>(
         ...tbApi,
         loadMoreItems,
         search,
-        // sortByColumn,
+        sortByColumn,
         applyFilters,
         applyFilter,
         clearFilter,
-        updateVisibleColumns,
         applyFeatures,
         reloadGrid: () => {
             resetList();
@@ -293,7 +259,14 @@ const useTbFabric = <TItem>(
         },
     };
 
-    const filteredFabricColumns = React.useMemo(() => fabricColumns.filter((c) => c.tb.visible), [fabricColumns]);
+    const filteredFabricColumns = React.useMemo(
+        () =>
+            mapToFabricColumns(
+                tbState.columns.filter((c) => c.visible),
+                fabricColumnProps,
+            ),
+        [tbState.columns],
+    );
 
     const state = {
         ...tbState,

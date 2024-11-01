@@ -14,7 +14,7 @@ describe('SelectionBar', () => {
         const selection = {
             getSelectedCount,
         } as Selection;
-        const { container } = render(<SelectionBar selection={selection} onRemoveAction={(x) => {}} />);
+        const { container } = render(<SelectionBar selection={selection} onRemoveAction={jest.fn()} />);
 
         expect(container.children.length > 0).toBeTruthy();
     });

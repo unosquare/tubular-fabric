@@ -13,7 +13,11 @@ initializeIcons();
 describe('RenderCell', () => {
     it('should render initial state w/o problem', async () => {
         const value = 'Lorem ipsum';
-        const { container } = render(<RenderCell><InnerTextCell value={value} /></RenderCell>);
+        const { container } = render(
+            <RenderCell>
+                <InnerTextCell value={value} />
+            </RenderCell>,
+        );
         const htmlElement = getByText(container as HTMLElement, value);
         expect(htmlElement).toBeTruthy();
     });

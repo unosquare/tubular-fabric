@@ -1,9 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-
 import * as React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { initializeIcons } from '@fluentui/react';
 import { TestTbGrid } from './components/TestTbGrid';
 import { render, screen, getAllByRole, within, RenderResult, waitFor, fireEvent } from '@testing-library/react';
@@ -76,7 +71,7 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).toBeNull());
 
-        let keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
+        const keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
         document.dispatchEvent(keyDownEvent);
 
         let shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');
@@ -103,10 +98,10 @@ describe('TestTbGrid', () => {
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).not.toBeNull());
         await waitFor(() => expect(sut.container.querySelector('[aria-busy="true"]')).toBeNull());
 
-        let keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
+        const keyDownEvent = new KeyboardEvent('keydown', { key: 'Control' });
         document.dispatchEvent(keyDownEvent);
 
-        let keyupEvent = new KeyboardEvent('keyup', { key: 'Control' });
+        const keyupEvent = new KeyboardEvent('keyup', { key: 'Control' });
         document.dispatchEvent(keyupEvent);
 
         let shipperCityHeader = within(screen.queryAllByRole('columnheader')[3]).getByRole('button');

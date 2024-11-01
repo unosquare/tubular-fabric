@@ -93,15 +93,15 @@ export const ChipFilter: React.FunctionComponent<IChipFilterProps> = ({
     onRemoveFilter,
     isLoading = false,
 }: IChipFilterProps) => (
-    <Stack horizontal verticalAlign="center" horizontalAlign="space-between" styles={chipFilterWrapperStyles}>
+    <Stack horizontal verticalAlign='center' horizontalAlign='space-between' styles={chipFilterWrapperStyles}>
         <Text styles={columnLabelStyles}>{column.label}</Text>
         <Icon styles={operatorIconStyles} iconName={getOperatorIcon(column.filterOperator)} />
         <Text styles={filterValueStyles}>{getFilterText(column)}</Text>
         <IconButton
             onClick={() => onRemoveFilter(column.name)}
             iconProps={closeIcon}
-            title="Remove Filter"
-            ariaLabel="Remove Filter"
+            title='Remove Filter'
+            ariaLabel='Remove Filter'
             disabled={isLoading}
         />
     </Stack>

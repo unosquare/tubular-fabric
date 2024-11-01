@@ -59,20 +59,20 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
 
     return (
         <Panel
-            headerText="Grid features"
+            headerText='Grid features'
             // this prop makes the panel non-modal
             isBlocking={false}
             isOpen={true}
             elementToFocusOnDismiss={null}
             onDismiss={dismissPanel}
-            closeButtonAriaLabel="Close"
+            closeButtonAriaLabel='Close'
             isHiddenOnDismiss={false}
             onRenderFooterContent={onRenderFooterContent}
             isFooterAtBottom={true}
         >
             <Pivot>
                 {filterable && (
-                    <PivotItem itemID="filters" headerText="Filters" itemIcon="Filter">
+                    <PivotItem itemID='filters' headerText='Filters' itemIcon='Filter'>
                         <FiltersContainer
                             columns={tempColumns.filter((x) => x.filterable && !x.isComputed)}
                             onApply={onApplyClick}
@@ -80,7 +80,7 @@ export const FeaturesPanel: React.FunctionComponent<FeaturesPanelProps> = ({
                     </PivotItem>
                 )}
                 {toggleColumns && (
-                    <PivotItem itemID="columns" headerText="Columns" itemIcon="TripleColumn">
+                    <PivotItem itemID='columns' headerText='Columns' itemIcon='TripleColumn'>
                         <ToggleColumns columns={tempColumns} setColumns={setTempColumns} />
                     </PivotItem>
                 )}

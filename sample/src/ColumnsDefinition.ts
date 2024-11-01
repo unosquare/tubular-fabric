@@ -1,0 +1,67 @@
+import { ColumnDataType, CompareOperators, ColumnSortDirection } from 'tubular-common';
+import { ITbColumnProxy } from '../../src/interfaces/ITbColumn';
+
+export const columns: ITbColumnProxy[] = [
+    {
+        name: 'Actions',
+        isComputed: true,
+        dataType: ColumnDataType.String,
+    },
+    {
+        name: 'OrderID',
+        label: 'Order ID',
+        minWidth: 80,
+        maxWidth: 90,
+        isKey: true,
+        dataType: ColumnDataType.Numeric,
+        sortable: true,
+        sortDirection: ColumnSortDirection.Descending,
+        sortOrder: 1,
+        filterText: '10',
+        filterOperator: CompareOperators.Gte,
+    },
+    {
+        name: 'CustomerName',
+        label: 'Customer Name',
+        minWidth: 120,
+        maxWidth: 200,
+        dataType: ColumnDataType.String,
+        sortable: true,
+        searchable: true,
+    },
+    {
+        name: 'ShipperCity',
+        label: 'Shipper City',
+        minWidth: 120,
+        maxWidth: 200,
+        dataType: ColumnDataType.String,
+        sortable: true,
+        searchable: true,
+    },
+    {
+        name: 'Amount',
+        label: 'Amount',
+        minWidth: 70,
+        maxWidth: 90,
+        dataType: ColumnDataType.Numeric,
+        sortable: true,
+    },
+    {
+        name: 'IsShipped',
+        label: 'Is Shipped?',
+        minWidth: 60,
+        maxWidth: 80,
+        dataType: ColumnDataType.Boolean,
+        sortable: false,
+        filterable: false,
+    },
+    {
+        name: 'ShippedDate',
+        label: 'Shipped Date',
+        minWidth: 120,
+        maxWidth: 140,
+        sortable: true,
+        dataType: ColumnDataType.DateTime,
+        dateTimeDisplayFormat: 'DD/MM/YYYY - hh:mm:ss A',
+    },
+];

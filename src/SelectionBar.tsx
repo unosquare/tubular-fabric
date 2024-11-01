@@ -53,7 +53,7 @@ export const SelectionBar: React.FunctionComponent<ISelectionBarProps> = ({
 
     return (
         <div className={classes.selectionBar}>
-            <Stack horizontal horizontalAlign="space-between">
+            <Stack horizontal horizontalAlign='space-between'>
                 <Stack.Item styles={countLabelStyle}>
                     <Label>
                         {selection.getSelectedCount()} {itemsText} selected
