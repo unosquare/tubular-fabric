@@ -1,7 +1,7 @@
 import { ITbFabricApi } from './ITbFabricApi';
 import { IFabricTbState } from './IFabricTbState';
 
-export interface ITbFabricInstance {
+export interface ITbFabricInstance<TItem> {
     api: ITbFabricApi;
-    state: IFabricTbState;
+    state: IFabricTbState<TItem>;
 }

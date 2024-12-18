@@ -5,6 +5,8 @@ export interface ITbColumn<TItem> extends TableColumnDefinition<TItem> {
     tb?: Partial<ColumnModel>;
 }
 
-export type TbSupportedIColumnProps = Partial<Pick<IColumn, 'minWidth' | 'maxWidth'>>;
+export type TbSupportedIColumnProps<TItem> = Partial<
+    Pick<TableColumnDefinition<TItem>, 'renderCell' | 'renderHeaderCell'>
+>;
 
-export interface ITbColumnProxy extends Partial<ColumnModel>, TbSupportedIColumnProps {}
+export interface ITbColumnProxy<TItem> extends Partial<ColumnModel>, TbSupportedIColumnProps<TItem> {}

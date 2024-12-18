@@ -10,12 +10,12 @@ import {
     createColumn,
     columnHasFilter,
 } from 'tubular-common/dist/Models';
-import { IColumn } from '@fluentui/react';
 import { ITbColumnProxy, TbSupportedIColumnProps } from './interfaces/ITbColumn';
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { ITbFabricApi } from './interfaces';
+import { TableColumnDefinition } from '@fluentui/react-components';
 
-const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =>
+const createInitialTbColumns = <TItem>(proxyColumns: ITbColumnProxy<TItem>[]): ColumnModel[] =>
     proxyColumns.map((column) =>
         createColumn(column.name, {
             dataType: column.dataType,
@@ -40,36 +40,29 @@ const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =
         }),
     );
 
-const mapToFabricColumns = (
+const mapToFabricColumns = <TItem>(
     tbColumns: ColumnModel[],
-    fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> },
-): Partial<IColumn>[] =>
+    fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps<TItem>> },
+): Partial<TableColumnDefinition<TItem>>[] =>
     tbColumns.map((column) => {
         const fabricProps = fabricColumnProps[column.name];
         return {
-            key: column.name!,
-            name: column.label,
-            isFiltered: columnHasFilter(column),
-            isSorted: column.sortDirection !== ColumnSortDirection.None,
-            isSortedDescending:
-                column.sortDirection !== ColumnSortDirection.None
-                    ? column.sortDirection === ColumnSortDirection.Descending
-                    : false,
+            columnId: column.name,
             ...fabricProps,
         };
     });
 
-const useTbFabric = (
-    initColumns: ITbColumnProxy[],
+const useTbFabric = <TItem>(
+    initColumns: ITbColumnProxy<TItem>[],
     source: string | Request | TubularHttpClientAbstract | any[],
     tubularOptions?: Partial<ITbOptions>,
 ): ITbFabricInstance => {
     const { deps, ...rest } = tubularOptions;
-    const fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps> } = {};
+    const fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps<TItem>> } = {};
     initColumns.forEach((element) => {
         fabricColumnProps[element.name] = {
-            maxWidth: element.maxWidth,
-            minWidth: element.minWidth,
+            renderCell: element.renderCell,
+            renderHeaderCell: element.renderHeaderCell,
         };
     });
     const tbColumns = React.useMemo(() => createInitialTbColumns(initColumns), [initColumns]);

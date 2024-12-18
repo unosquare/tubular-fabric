@@ -42,8 +42,12 @@ const sentence = () => {
     return content;
 };
 
-export const createFakeRows = (columnDefinition: ITbColumnProxy[], numberOfRows = 100, intNumbers = true) => {
-    const rows: ITbColumnProxy[] = [];
+export const createFakeRows = <TItem>(
+    columnDefinition: ITbColumnProxy<TItem>[],
+    numberOfRows = 100,
+    intNumbers = true,
+) => {
+    const rows: ITbColumnProxy<TItem>[] = [];
     const today = new Date();
 
     for (let i = 0; i < numberOfRows; i++) {
@@ -79,7 +83,7 @@ export const createFakeRows = (columnDefinition: ITbColumnProxy[], numberOfRows 
             return { ...accumulator, ...newItem };
         }, {});
 
-        rows.push(row as ITbColumnProxy);
+        rows.push(row as ITbColumnProxy<TItem>);
     }
 
     return rows;
