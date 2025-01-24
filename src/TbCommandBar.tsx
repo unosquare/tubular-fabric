@@ -7,8 +7,8 @@ import { FeaturesPanel } from './FeaturesPanel';
 
 registerTbIcons();
 
-export interface TbCommandBarProps {
-    tbState: IFabricTbState;
+export interface TbCommandBarProps<TItem> {
+    tbState: IFabricTbState<TItem>;
     tbApi: ITbFabricApi;
     filterable?: boolean;
     searchable?: boolean;
@@ -19,7 +19,7 @@ export interface TbCommandBarProps {
 
 const searchBoxStyles: ISearchBoxStyles = { root: { width: '300px', margin: '0px 10px 0px 10px' } };
 
-export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
+export const TbCommandBar = <TItem,>({
     tbState,
     tbApi,
     filterable,
@@ -27,7 +27,7 @@ export const TbCommandBar: React.FunctionComponent<TbCommandBarProps> = ({
     toggleColumns,
     recordCounter,
     items,
-}: TbCommandBarProps) => {
+}: TbCommandBarProps<TItem>) => {
     const [showPanel, setShowPanel] = React.useState(false);
     const closePanel = () => setShowPanel(false);
     const openPanel = () => setShowPanel(true);

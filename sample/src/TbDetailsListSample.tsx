@@ -5,11 +5,16 @@ import useTbFabric from '../../src/useTbFabric';
 
 import { createFakeRows } from './utils';
 import { Item, columns } from './ColumnsDefinition';
+import { TbList } from '../../src/TbList';
+import useTbInfiniteList from '../../src/useTbInfiniteList';
 
-const dataSource = createFakeRows(columns, 500);
+const dataSource = createFakeRows<Item>(columns, 500);
 
 export const TbDetailsListSample: React.FunctionComponent = () => {
-    const { state, api } = useTbFabric<Item>(columns, dataSource, {});
-
-    return <TbGrid tbState={state} tbApi={api} />;
+    const instance = useTbInfiniteList<Item>(columns, dataSource);
+    return (
+        <div style={{ width: '100%', height: 500 }}>
+            <TbList tbInstance={instance} rowSelectionEnabled={false} />
+        </div>
+    );
 };

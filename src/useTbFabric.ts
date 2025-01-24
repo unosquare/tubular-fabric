@@ -56,7 +56,7 @@ const useTbFabric = <TItem>(
     initColumns: ITbColumnProxy<TItem>[],
     source: string | Request | TubularHttpClientAbstract | any[],
     tubularOptions?: Partial<ITbOptions>,
-): ITbFabricInstance => {
+): ITbFabricInstance<TItem> => {
     const { deps, ...rest } = tubularOptions;
     const fabricColumnProps: { [key: string]: Partial<TbSupportedIColumnProps<TItem>> } = {};
     initColumns.forEach((element) => {
@@ -270,7 +270,7 @@ const useTbFabric = <TItem>(
     return {
         api,
         state,
-    } as ITbFabricInstance;
+    } as ITbFabricInstance<TItem>;
 };
 
 export default useTbFabric;

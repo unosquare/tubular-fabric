@@ -1,4 +1,4 @@
-import { ColumnDataType } from 'tubular-common';
+import { ColumnDataType, ColumnModel } from 'tubular-common';
 import { ITbColumnProxy } from '../../src/interfaces';
 
 const nouns = ['bird', 'clock', 'boy', 'plastic', 'duck', 'teacher', 'old lady', 'professor', 'hamster', 'dog'];
@@ -29,6 +29,14 @@ const adverbs = [
 ];
 const preposition = ['down', 'into', 'up', 'on', 'upon', 'below', 'above', 'through', 'across', 'towards'];
 
+const sentence2 = () => {
+    const rand2 = Math.floor(Math.random() * 10);
+
+    const content = `The ${nouns[rand2]}`;
+
+    return content;
+};
+
 const sentence = () => {
     const rand1 = Math.floor(Math.random() * 10);
     const rand2 = Math.floor(Math.random() * 10);
@@ -42,12 +50,8 @@ const sentence = () => {
     return content;
 };
 
-export const createFakeRows = <TItem>(
-    columnDefinition: ITbColumnProxy<TItem>[],
-    numberOfRows = 100,
-    intNumbers = true,
-) => {
-    const rows: ITbColumnProxy<TItem>[] = [];
+export const createFakeRows = <TItem>(columnDefinition: ColumnModel[], numberOfRows = 100, intNumbers = true) => {
+    const rows: TItem[] = [];
     const today = new Date();
 
     for (let i = 0; i < numberOfRows; i++) {
@@ -77,13 +81,13 @@ export const createFakeRows = <TItem>(
                     newItem[current.name!] = intNumbers ? Math.round(randNumber) : randNumber;
                     break;
                 case ColumnDataType.String:
-                    newItem[current.name!] = sentence();
+                    newItem[current.name!] = sentence2();
                     break;
             }
             return { ...accumulator, ...newItem };
         }, {});
 
-        rows.push(row as ITbColumnProxy<TItem>);
+        rows.push(row as TItem);
     }
 
     return rows;

@@ -18,8 +18,8 @@ import { getRenderByDataType } from './utils';
 import { IFabricTbState, ITbFabricApi } from './interfaces';
 import { ColumnModel } from 'tubular-common';
 
-export interface ITbDetailsListProps {
-    tbState: IFabricTbState;
+export interface ITbDetailsListProps<TItem> {
+    tbState: IFabricTbState<TItem>;
     tbApi: ITbFabricApi;
     selectionMode?: number;
     onRemoveAction?: (selection: Selection) => void;

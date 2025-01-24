@@ -1,47 +1,30 @@
-import { ColumnDataType, CompareOperators, ColumnSortDirection } from 'tubular-common';
-import { ITbColumnProxy } from '../../src/interfaces/ITbColumn';
+import { ColumnDataType, CompareOperators, ColumnSortDirection, createColumn, ColumnModel } from 'tubular-common';
+import { ITbColumn, ITbColumnProxy } from '../../src/interfaces/ITbColumn';
 import { TableCellLayout } from '@fluentui/react-components';
-import React from 'react';
 
 export type Item = {
     orderId: number;
     customerName: string;
 };
 
-export const columns: ITbColumnProxy<Item>[] = [
-    {
-        name: 'Actions',
+export const columns: ColumnModel[] = [
+    createColumn('Actions', {
         isComputed: true,
         dataType: ColumnDataType.String,
-        renderCell: (item) => {
-            return <TableCellLayout media={item.customerName}>Edit {item.orderId}</TableCellLayout>;
-        },
-        renderHeaderCell: () => 'Actions',
-    },
-    {
-        name: 'OrderID',
+        sortable: false,
+    }),
+    createColumn('orderId', {
         label: 'Order ID',
         isKey: true,
+        isComputed: false,
+        sortable: true,
         dataType: ColumnDataType.Numeric,
-        sortable: true,
-        sortDirection: ColumnSortDirection.Descending,
-        sortOrder: 1,
-        filterText: '10',
-        filterOperator: CompareOperators.Gte,
-        renderCell: (item) => {
-            return <TableCellLayout>{item.orderId}</TableCellLayout>;
-        },
-        renderHeaderCell: () => 'Order ID',
-    },
-    {
-        name: 'CustomerName',
+    }),
+    createColumn('customerName', {
         label: 'Customer Name',
-        dataType: ColumnDataType.String,
+        isKey: false,
+        isComputed: false,
         sortable: true,
-        searchable: true,
-        renderCell: (item) => {
-            return <TableCellLayout>{item.customerName}</TableCellLayout>;
-        },
-        renderHeaderCell: () => 'Customer Name',
-    },
+        dataType: ColumnDataType.String,
+    }),
 ];

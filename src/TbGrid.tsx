@@ -100,6 +100,9 @@ export const TbGrid = <TItem,>(props: ITbDetailsListProps<TItem>): React.ReactEl
     const { targetDocument } = useFluent();
     const scrollbarWidth = useScrollbarWidth({ targetDocument });
 
+    console.log(props.tbState.data)
+    console.log(props.tbState.fabricColumns)
+    
     return (
         <DataGrid
             items={props.tbState.data}
