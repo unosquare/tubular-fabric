@@ -9,9 +9,8 @@ on:
 
 jobs:
   build:    
-    uses: unosquare/bump-npm-version/.github/workflows/build-sonar.yml@master
+    uses: unosquare/bump-npm-version/.github/workflows/build.yml@master
     with:
       node-version: '18.20.4'
     secrets:
       github-token: ${{ secrets.GPR_ACCESS_TOKEN }}
-      sonar-token: ${{ secrets.SONAR_TOKEN }}
