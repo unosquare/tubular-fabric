@@ -8,9 +8,32 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:    
-    uses: unosquare/bump-npm-version/.github/workflows/build.yml@master
-    with:
-      node-version: '18.20.4'
-    secrets:
-      github-token: ${{ secrets.GPR_ACCESS_TOKEN }}
+  dpdm:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      NODE_AUTH_TOKEN: ${{ secrets.GPR_ACCESS_TOKEN }}
+
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟩 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.4'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@unosquare'
+          cache: 'npm'
+
+      - name: 🤠 npm install
+        run: npm ci
+
+      - name: 💅 Prettier
+        run: npm run prettier
+
+      - name: 🎠 Test
+        run: npm test
+
+      - name: 🏗 Build
+        run: npm run build
