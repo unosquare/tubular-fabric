@@ -81,7 +81,7 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
             column.filterArgument[0] = date ? setEndOfDay(date).toISOString() : null;
         } else {
             setDates([date, dates[1]]);
-            column.filterText = date ? setEndOfDay(date).toISOString() : null;
+            column.filterText = date ? date.toISOString() : null;
         }
     };
 
