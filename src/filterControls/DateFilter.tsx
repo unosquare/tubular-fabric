@@ -78,11 +78,17 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
         if (isSecondInput) {
             column.filterArgument = [];
             setDates([dates[0], date]);
-            column.filterArgument[0] = date ? date.toISOString() : null;
+            column.filterArgument[0] = date ? setEndOfDay(date).toISOString() : null;
         } else {
             setDates([date, dates[1]]);
-            column.filterText = date ? date.toISOString() : null;
+            column.filterText = date ? setEndOfDay(date).toISOString() : null;
         }
+    };
+
+    const setEndOfDay = (date: Date) => {
+        const newDate = new Date(date);
+        newDate.setUTCHours(23, 59, 59, 999);
+        return newDate;
     };
 
     const clearDate =
@@ -97,7 +103,7 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
             <DatePicker
                 firstDayOfWeek={DayOfWeek.Monday}
                 strings={DayPickerStrings}
-                placeholder={isBetween ? 'From' : 'Selec a date'}
+                placeholder={isBetween ? 'From' : 'Select a date'}
                 ariaLabel='Select a date'
                 value={dates[0]}
                 textField={{
