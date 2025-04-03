@@ -13,7 +13,8 @@
         "prettier:fix": "prettier --write **/*.ts*",
         "codestyle:fix": "npm run lint:fix && npm run prettier:fix",
         "test": "jest",
-        "cest": "jest --coverage"
+        "cest": "jest --coverage",
+        "dpdm": "npx dpdm --tree false --warning false --exit-code circular:1 ./src/*"
     },
     "prettier": {
         "endOfLine": "auto",
