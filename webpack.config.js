@@ -11,7 +11,7 @@ module.exports = {
     devServer: {
         static: './sample/app',
         compress: true,
-        port: 9001,
+        port: 9000,
     },
 
     output: {
