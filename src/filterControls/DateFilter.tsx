@@ -85,12 +85,6 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
         }
     };
 
-    const setEndOfDay = (date: Date) => {
-        const newDate = new Date(date);
-        newDate.setUTCHours(23, 59, 59, 999);
-        return newDate;
-    };
-
     const clearDate =
         (isSecondInput = false) =>
         () =>
@@ -132,4 +126,10 @@ export const DateFilter = ({ column }: IFilterEditorProps) => {
             )}
         </>
     );
+};
+
+const setEndOfDay = (date: Date) => {
+    const newDate = new Date(date);
+    newDate.setUTCHours(23, 59, 59, 999);
+    return newDate;
 };
