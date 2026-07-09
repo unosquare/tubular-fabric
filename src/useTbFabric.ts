@@ -15,6 +15,17 @@ import { ITbColumnProxy, TbSupportedIColumnProps } from './interfaces/ITbColumn'
 import { ITbFabricInstance } from './interfaces/ITbFabricInstance';
 import { ITbFabricApi } from './interfaces';
 
+// A "Between" filter needs both bounds. When the upper bound is missing (e.g. the user
+// switched to "Between" from a single-value operator but never picked the second value),
+// downgrade to ">=" so downstream consumers that dereference filterArgument[0] (local
+// transformer, chip rendering) don't crash on an incomplete filter.
+export const normalizeIncompleteBetween = (column: ColumnModel): void => {
+    if (column.filterOperator === CompareOperators.Between && (!column.filterArgument || !column.filterArgument[0])) {
+        column.filterOperator = CompareOperators.Gte;
+        column.filterArgument = null;
+    }
+};
+
 const createInitialTbColumns = (proxyColumns: ITbColumnProxy[]): ColumnModel[] =>
     proxyColumns.map((column) =>
         createColumn(column.name, {
@@ -140,13 +151,7 @@ const useTbFabric = (
                 column.filterOperator = fColumn.filterOperator;
                 column.filterArgument = fColumn.filterArgument;
 
-                if (
-                    column.filterOperator === CompareOperators.Between &&
-                    (!column.filterArgument || !column.filterArgument[0])
-                ) {
-                    column.filterOperator = CompareOperators.Gte;
-                    column.filterArgument = null;
-                }
+                normalizeIncompleteBetween(column);
             } else {
                 column.filterText = null;
                 column.filterOperator = CompareOperators.None;
@@ -180,6 +185,8 @@ const useTbFabric = (
     const applyFilter = (columnName: string, value: string) => applyOrResetFilter(columnName, value);
 
     const applyFeatures = (columns: ColumnModel[]) => {
+        columns.forEach(normalizeIncompleteBetween);
+
         unstable_batchedUpdates(() => {
             resetList();
             tbApi.setColumns(columns);
