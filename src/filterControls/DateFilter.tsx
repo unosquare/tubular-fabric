@@ -51,7 +51,7 @@ const dateInputClassName = mergeStyles({
     paddingRight: '8px',
 });
 
-const getInitialDates = (column: ColumnModel) => {
+export const getInitialDates = (column: ColumnModel) => {
     const dates = [null, null];
 
     const startDate = Date.parse(column.filterText);
@@ -64,7 +64,7 @@ const getInitialDates = (column: ColumnModel) => {
         column.filterArgument && column.filterArgument[0] ? column.filterArgument[0].toString() : null,
     );
 
-    if (!isNaN(startDate)) {
+    if (!isNaN(toDate)) {
         dates[1] = new Date(toDate);
     }
 
