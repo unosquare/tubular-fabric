@@ -64,7 +64,7 @@ const getInitialDates = (column: ColumnModel) => {
         column.filterArgument && column.filterArgument[0] ? column.filterArgument[0].toString() : null,
     );
 
-    if (!isNaN(startDate)) {
+    if (!isNaN(toDate)) {
         dates[1] = new Date(toDate);
     }
 

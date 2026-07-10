@@ -180,6 +180,16 @@ const useTbFabric = (
     const applyFilter = (columnName: string, value: string) => applyOrResetFilter(columnName, value);
 
     const applyFeatures = (columns: ColumnModel[]) => {
+        columns.forEach((column) => {
+            if (
+                column.filterOperator === CompareOperators.Between &&
+                (!column.filterArgument || !column.filterArgument[0])
+            ) {
+                column.filterOperator = CompareOperators.Gte;
+                column.filterArgument = null;
+            }
+        });
+
         unstable_batchedUpdates(() => {
             resetList();
             tbApi.setColumns(columns);
