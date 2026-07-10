@@ -1,0 +1,105 @@
+name: npm Publish (manual)
+
+# Manually publish tubular-fabric from ANY branch, on demand, from the Actions UI.
+#
+# Why this exists: the automatic "npm Publish" workflow only fires on push to
+# master and always bumps a minor on the master line. That is the wrong tool for
+# a maintenance/back-port release (e.g. shipping a fix on the 3.13.x line without
+# dragging in newer transitive dependencies from master).
+#
+# This workflow lives on the default branch (so it shows up in the "Run workflow"
+# UI) but publishes the CODE of whatever branch you pass in `branch`. The target
+# branch does NOT need to contain this file.
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to publish from (its code is what gets published)"
+        required: true
+        type: string
+      bump:
+        description: "Version bump to apply before publishing"
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - none
+      dist_tag:
+        description: "npm dist-tag to publish under. Keep 'latest' reserved for the master line; use e.g. v3-lts for back-ports."
+        required: true
+        default: v3-lts
+        type: string
+
+# Needed so the post-publish version bump can be committed back to the branch.
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: 🛎 Checkout selected branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.branch }}
+          token: ${{ secrets.GPR_ACCESS_TOKEN }}
+          fetch-depth: 0
+
+      - name: 🟩 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "18.20.4"
+          registry-url: https://registry.npmjs.org/
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          # Pinned to 9 to match the repo's lockfileVersion 9.0 and stay
+          # compatible with Node 18 (pnpm 11 requires Node >= 22.13).
+          version: 9
+          run_install: false
+
+      - name: 🤡 pnpm install
+        # Not --frozen-lockfile: this workflow may target older maintenance
+        # branches whose lockfile predates the current pnpm. Any incidental
+        # lockfile change is not committed back (see the commit step's `add`).
+        run: pnpm install
+
+      - name: 🏗 Build
+        run: pnpm build
+
+      - name: 🐝 Bump version
+        if: ${{ inputs.bump != 'none' }}
+        run: npm version --no-git-tag-version ${{ inputs.bump }}
+
+      - name: 🔖 Resolve published version
+        id: version
+        run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: 🍱 Publish
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          pnpm publish --no-git-checks --tag "${{ inputs.dist_tag }}"
+
+      - name: 📌 Commit version bump
+        if: ${{ inputs.bump != 'none' }}
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "package.json"
+          message: "[skip ci] Bump version to ${{ steps.version.outputs.value }} (manual publish from ${{ inputs.branch }})"
+          default_author: github_actions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GPR_ACCESS_TOKEN }}
+
+      - name: ✅ Summary
+        run: |
+          echo "Published **tubular-fabric@${{ steps.version.outputs.value }}** under dist-tag **${{ inputs.dist_tag }}** from branch **${{ inputs.branch }}**." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Install with: \`npm i tubular-fabric@${{ steps.version.outputs.value }}\` (the '${{ inputs.dist_tag }}' tag was used, so 'latest' is unchanged)." >> "$GITHUB_STEP_SUMMARY"
